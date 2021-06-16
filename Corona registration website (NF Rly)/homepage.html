@@ -1,0 +1,52 @@
+<html lang="en" dir="ltr">
+   <head>
+      <title>NF Railway Covid registration</title>
+      <link rel="stylesheet" href="styles.css">
+      <script src="frontend.js"></script>
+      <script src="https://kit.fontawesome.com/03d58ba9c7.js" crossorigin="anonymous"></script>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+
+
+   </head>
+
+   <body>
+      <h1>Covid Patients Details at Central Hospital - Maligaon</h1>
+
+      <i class="fa-solid fa-check-double"></i>
+
+        <h2 id="disclaimer_points" onclick="toggle()">Disclaimer</h2>
+          <div class="dropdown-content" id="myDIV" style="display:none;">
+          <nav >
+             <ol>
+               <li>THE INFORMATION PROVIDED IS MERELY FOR THE BENEFIT AND INTEREST OF RELATIVES AND BASED ON REQUEST RECEIVED FROM THE PATIENTS
+                   AND RELATIVES TO ENABLE INFORMATION FLOW DURING THE COVID CRISIS. THERE IS NO ATTEMPT TO INFRINGE ON PRIVACY AND ETHICAL CONCERNS.<br><br></li>
+               <li>THE STATUS OF THE PATIENT IS AS AT THE TIME OF THE LAST UPDATE AND DOES NOT NECESSARILY SHOW THE CURRENT STATUS, BUT UPDATED DAILY.<br><br></li>
+               <li>IF NO CHANGE IS SHOWN IN THAT DATE, IT MEANS THERE HAS BEEN NO CHANGE IN THE PATIENT'S CONDITION AT THE TIME OF DATA UPDATION.<br><br></li>
+               <li>ALL PATIENTS ON THIS TABLE SHOW COVID SYMPTOMS BASED ON RTPCR / RAT / CT SCAN / CLINICAL FINDINGS AND ARE THEREFORE ADMITTED TO HOSPITAL.<br><br></li>
+               <li> PATIENTS DISCHARGED AND ADVISED HOME QUARANTINE ARE ADVISED TO REPORT TO THE HOSPITAL AT ANY TIME IF ANY DIFFICULTY IS NOTICED.<br><br></li>
+               <li>TO AVOID CROWDING AT HOSPITAL BY PATIENT'S RELATIVES AND FOR BENIFIT OF THIER HEALTH, THIS HAS BEEN INITIATED.<br></li>
+             </ol>
+          </nav>
+        </div>
+
+        <div class="registration_content">
+            <h2 id="patient_status">Patient status</h2>
+            <p id="phone">Enter your mobile number:<input type="tel" ></input></p>
+            <input id="register" type="button" value="Register"></button>
+        </div>
+
+        <div id="mySidenav" class="sidenav">
+            <a href="#" id="disclaimer" onclick="toggle()">Disclaimer</a>
+            <a href="https://nfr.indianrailways.gov.in/" id="home">Homepage</a>
+            <a href="#" id="about">About</a>
+            <a href="#" id="contact" onclick="toggle_contact()">Contact</a>
+        </div>
+
+
+
+      <footer  id="contact_info" style="display:none;"  >
+         <p >For further Information/ Clarification contact No : Mob: <b>7099010103</b>.</p>
+      </footer>
+
+   </body>
+</html>

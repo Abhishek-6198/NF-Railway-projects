@@ -1,0 +1,112 @@
+body{
+  background-color: Lightblue;
+}
+
+#disclaimer_points{
+
+    text-align: center;
+    text-shadow: 2px 1px green;
+    display: block;
+    background-color: lightgreen;
+    height: 50px;
+    position: relative;
+    left: 3em;
+    right: 4em;
+    padding-right: 2em;
+    width: 56.6em;
+    float:center;
+    text-decoration-style:dashed;
+}
+
+#patient_status{
+  text-align: center;
+  text-shadow: 2px 1px pink;
+  display: block;
+  background-color: lightpink;
+  height: 50px;
+  position: relative;
+  left: 0.005em;
+  right: 4em;
+  padding-right: 2em;
+  bottom:20px;
+  width: 56.6em;
+  float:center;
+  text-decoration-style:dashed;
+}
+
+.fa-solid fa-check-double{
+  font-size: 80px;
+}
+#mySidenav a {
+  position: absolute; /* Position them relative to the browser window */
+  left: -80px; /* Position them outside of the screen */
+  transition: 0.3s; /* Add transition on hover */
+  padding: 15px; /* 15px padding */
+  width: 100px; /* Set a specific width */
+  text-decoration: none; /* Remove underline */
+  font-size: 15px; /* Increase font size */
+  color: white; /* White text color */
+  border-radius: 0 5px 5px 0; /* Rounded corners on the top right and bottom right side */
+}
+
+#mySidenav a:hover {
+  left: 0; /* On mouse-over, make the elements appear as they should */
+}
+
+/* The about link: 20px from the top with a green background */
+#disclaimer {
+  top: 20px;
+  background-color: #04AA6D;
+}
+
+#home {
+  top: 80px;
+  background-color: #2196F3; /* Blue */
+}
+
+#about {
+  top: 140px;
+  background-color: #f44336; /* Red */
+}
+
+#contact {
+  top: 200px;
+  background-color: #555 /* Light Black */
+}
+
+h1{
+  text-align: center;
+}
+
+#contact_info{
+  position: absolute;
+  bottom: 150px;
+  right: 50px;
+}
+
+#myDIV{
+  display: block;
+  top: 9em;
+  background-color: white;
+  position: absolute;
+  right: 50px;
+  left:80px;
+}
+
+#phone{
+  text-align: center;
+}
+
+#register{
+  position: absolute;
+  left: 50%;
+}
+
+.registration_content{
+  display: block;
+  background-color: lightyellow;
+  position: absolute;
+  right: 50px;
+  left:80px;
+  padding-bottom: 5em;
+}
