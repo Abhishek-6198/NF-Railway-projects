@@ -5,13 +5,16 @@
       <script src="frontend.js"></script>
       <script src="https://kit.fontawesome.com/03d58ba9c7.js" crossorigin="anonymous"></script>
       <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
-
+      <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+      <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
    </head>
 
    <body>
-      <h1>Covid Patients Details at Central Hospital - Maligaon</h1>
 
+      <h1>Covid Patients Details at Central Hospital - Maligaon</h1>
+      <div id="box">
       <i class="fa-solid fa-check-double"></i>
 
         <h2 id="disclaimer_points" onclick="toggle()">Disclaimer (Click to read)</h2>
@@ -43,11 +46,10 @@
         </div>
 
 
-        <div>
-        <dialog id="contact_info" style="width:50%;background-color:#F4FFEF;border:1px dotted black;">
-        <p>For further Information/ Clarification contact No : Mob: <b>7099010103</b>.</p>
-        <button id="hide">Close</button>  
-        </dialog>
+    </div>
+
+        <div id="contact_info" title="Contact us" style="display:none; background-color: DarkCyan;">
+          <p style="color:white;">For further Information/ Clarification contact No : Mob: 7099010103.</p>
         </div>
 
 

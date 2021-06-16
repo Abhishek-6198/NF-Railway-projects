@@ -78,11 +78,6 @@ h1{
   text-align: center;
 }
 
-#contact_info{
-  position: absolute;
-  bottom: 5px;
-  right: 50px;
-}
 
 #myDIV{
   display: block;
@@ -111,6 +106,13 @@ h1{
   padding-bottom: 5em;
 }
 
-#phone,#contact_info,#phone,#register{
+#phone,#contact_info,#phone,#register,#hide{
   font-size: 20px;
+  text-align: center;
+}
+
+#box{
+  display: block;
+  border: 2px 2px;
+  background-color: white;
 }

@@ -15,12 +15,24 @@ function toggle() {
  }
 
  function toggle_contact(){
-   var x = document.getElementById("contact_info");
    document.getElementById("contact").onclick = function(){
-     x.show();
-   }
-   document.getElementById("hide").onclick = function(){
-     x.close();
+     $( function() {
+     $( "#contact_info" ).dialog({
+       autoOpen: false,
+       show: {
+         effect: "blind",
+         duration: 1000
+       },
+       hide: {
+         effect: "explode",
+         duration: 1000
+       }
+     });
+
+     $( "#contact" ).on( "click", function() {
+       $( "#contact_info" ).dialog( "open" );
+     });
+   } );
    }
  }
 
