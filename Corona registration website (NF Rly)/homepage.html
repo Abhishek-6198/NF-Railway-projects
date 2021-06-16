@@ -14,7 +14,7 @@
 
       <i class="fa-solid fa-check-double"></i>
 
-        <h2 id="disclaimer_points" onclick="toggle()">Disclaimer</h2>
+        <h2 id="disclaimer_points" onclick="toggle()">Disclaimer (Click to read)</h2>
           <div class="dropdown-content" id="myDIV" style="display:none;">
           <nav >
              <ol>
@@ -31,7 +31,7 @@
 
         <div class="registration_content">
             <h2 id="patient_status">Patient status</h2>
-            <p id="phone">Enter your mobile number:<input type="tel" ></input></p>
+            <p id="phone">Enter your contact number:<input type="tel" placeholder="10 digit mobile number"></input></p>
             <input id="register" type="button" value="Register"></button>
         </div>
 
@@ -43,10 +43,13 @@
         </div>
 
 
+        <div>
+        <dialog id="contact_info" style="width:50%;background-color:#F4FFEF;border:1px dotted black;">
+        <p>For further Information/ Clarification contact No : Mob: <b>7099010103</b>.</p>
+        <button id="hide">Close</button>  
+        </dialog>
+        </div>
 
-      <footer  id="contact_info" style="display:none;"  >
-         <p >For further Information/ Clarification contact No : Mob: <b>7099010103</b>.</p>
-      </footer>
 
    </body>
 </html>
