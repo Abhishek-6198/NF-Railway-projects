@@ -55,6 +55,6 @@ function check_number(){
     }
   }
 
-  if((str.length!=10) || (!flag))
+  if((str.length!=10) || (!flag)
     alert("Please enter a valid number");
 }
