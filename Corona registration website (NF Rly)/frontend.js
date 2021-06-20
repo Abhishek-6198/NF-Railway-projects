@@ -46,15 +46,66 @@ function closeNav() {
 
 function check_number(){
   const alphabets=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
-  Boolean flag=true;
+  var flag = true;
   var str=document.getElementById("tel").value.toString();
-  for(int i=0; i<alphabets.length; i++){
+  for(var i=0; i<alphabets.length; i++){
     if(str.includes(alphabets[i])){
       flag=false;
       break;
     }
   }
 
-  if((str.length!=10) || (!flag)
+  if((str.length!=10) || (!flag))
     alert("Please enter a valid number");
+  else{
+    var number = $("#tel").val();
+    var input={"mobile_number" : number,
+               "action" : "get_otp"};
+    
+    $.ajax({
+            url : 'server.php',
+            type : 'POST',
+            data : input,
+            success : function(response) {
+              $(".container").html(response);
+              document.getElementById("phone").innerHTML.value="Please enter the OTP received : ";
+                document.getElementById("register").innerHTML.value="Verify";
+                document.getElementById("tel").placeholder="OTP";
+                document.getElementById("register").addEventListener("click",function(){
+                  $(".error").html("").hide();
+	                $(".success").html("").hide();
+	                var otp = $("#tel").val();
+	                var user_input = {
+		                                  "otp" : otp,
+		                                  "action" : "verify_otp"
+	                                  };
+	                if (otp.length == 6 && otp != null) {
+	                    $('#loading-image').show();
+		                  $.ajax({
+		                          url : 'server.php',
+		                          type : 'POST',
+		                          dataType : "json",
+		                          data : user_input,
+		                          success : function(response) {
+                                $(".container").html(response);
+		                          },
+		                          complete: function(){
+                                $(".container").html("You're all set!!");
+                              },
+		                          error : function() {
+			                            alert("Please try again!");
+		                          }
+		                        });
+	                } else {
+		                  $(".err").html('You have entered wrong OTP.')
+		                  $(".err").show();
+	                }
+
+                });
+            },
+            complete: function(){         
+              $(".container").html(response);
+            }
+          });        
+  }
 }
