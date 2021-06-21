@@ -68,43 +68,33 @@ function check_number(){
             data : input,
             success : function(response) {
               $(".container").html(response);
-              document.getElementById("phone").innerHTML.value="Please enter the OTP received : ";
-                document.getElementById("register").innerHTML.value="Verify";
-                document.getElementById("tel").placeholder="OTP";
-                document.getElementById("register").addEventListener("click",function(){
-                  $(".error").html("").hide();
-	                $(".success").html("").hide();
-	                var otp = $("#tel").val();
-	                var user_input = {
-		                                  "otp" : otp,
-		                                  "action" : "verify_otp"
-	                                  };
-	                if (otp.length == 6 && otp != null) {
-	                    $('#loading-image').show();
-		                  $.ajax({
-		                          url : 'server.php',
-		                          type : 'POST',
-		                          dataType : "json",
-		                          data : user_input,
-		                          success : function(response) {
-                                $(".container").html(response);
-		                          },
-		                          complete: function(){
-                                $(".container").html("You're all set!!");
-                              },
-		                          error : function() {
-			                            alert("Please try again!");
-		                          }
-		                        });
-	                } else {
-		                  $(".err").html('You have entered wrong OTP.')
-		                  $(".err").show();
-	                }
-
-                });
             },
             complete: function(){         
-              $(".container").html(response);
+              $(".container").html("complete");
+              document.getElementById("register").value="Verify OTP";
+              var p = document.getElementById("phone");
+              p.replaceChild(document.createTextNode("Enter the OTP received : "), p.firstChild);
+              document.getElementById("tel").value="";
+              document.getElementById("register").onclick=function(){
+                if(document.getElementById("tel").value.length!=0){
+                    input={"mobile_number" : number,
+                            "otp" : document.getElementById("tel").value,
+                            "action" : "verify_otp"};
+                  $.ajax({
+                      url : 'server.php',
+                      type : 'POST',
+                      data : input,
+                      success : function(response){
+                          $(".container").html(response);
+                      },
+                      complete: function(){
+                          $(".container").html(response);
+                      }
+                  })
+                }
+                else
+                  location.reload();
+              }
             }
           });        
   }
