@@ -70,7 +70,7 @@ function check_number(){
               $(".container").html(response);
             },
             complete: function(){         
-              $(".container").html("complete");
+              //$(".container").html("complete");
               document.getElementById("register").value="Verify OTP";
               var p = document.getElementById("phone");
               p.replaceChild(document.createTextNode("Enter the OTP received : "), p.firstChild);
@@ -88,7 +88,8 @@ function check_number(){
                           $(".container").html(response);
                       },
                       complete: function(){
-                          $(".container").html(response);
+                          //$(".container").html(response);
+                          window.open("registration.html", '_blank');
                       }
                   })
                 }
@@ -98,4 +99,8 @@ function check_number(){
             }
           });        
   }
+}
+
+function register(){
+
 }

@@ -1,0 +1,27 @@
+body{
+    background-color: rgb(230, 220, 173);
+}
+
+#box{
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.5s;
+    height:50em;
+    background-color: #F0F8FF;
+  }
+  
+  #box:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+
+#register{
+    position: relative;
+    top:4em;
+    left:35em;
+    font-family: cursive;
+    font-size: 20px;
+}
+
+#title{
+    text-align: center;
+}
+  
