@@ -45,62 +45,97 @@ function closeNav() {
 }
 
 function check_number(){
-  const alphabets=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
-  var flag = true;
-  var str=document.getElementById("tel").value.toString();
-  for(var i=0; i<alphabets.length; i++){
-    if(str.includes(alphabets[i])){
-      flag=false;
-      break;
-    }
-  }
+  if(document.getElementById("register").value === "Send OTP"){
+      const alphabets=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+      var flag = true;
+      var str=document.getElementById("tel").value.toString();
+      for(var i=0; i<alphabets.length; i++){
+          if(str.includes(alphabets[i])){
+              flag=false;
+              break;
+          }
+      }   
 
-  if((str.length!=10) || (!flag))
-    alert("Please enter a valid number");
-  else{
-    var number = $("#tel").val();
-    var input={"mobile_number" : number,
-               "action" : "get_otp"};
+      if((str.length!=10) || (!flag))
+          alert("Please enter a valid number");
+      else{
+          var number = $("#tel").val();
+          var input={"mobile_number" : number,
+                      "action" : "get_otp"};
     
-    $.ajax({
-            url : 'server.php',
-            type : 'POST',
-            data : input,
-            success : function(response) {
-              $(".container").html(response);
-            },
-            complete: function(){         
-              //$(".container").html("complete");
-              document.getElementById("register").value="Verify OTP";
-              var p = document.getElementById("phone");
-              p.replaceChild(document.createTextNode("Enter the OTP received : "), p.firstChild);
-              document.getElementById("tel").value="";
-              document.getElementById("register").onclick=function(){
-                if(document.getElementById("tel").value.length!=0){
-                    input={"mobile_number" : number,
-                            "otp" : document.getElementById("tel").value,
-                            "action" : "verify_otp"};
-                  $.ajax({
-                      url : 'server.php',
-                      type : 'POST',
-                      data : input,
-                      success : function(response){
-                          $(".container").html(response);
-                      },
-                      complete: function(){
-                          //$(".container").html(response);
-                          window.open("registration.html", '_blank');
+          $.ajax({
+                url : 'server.php',
+                type : 'POST',
+                data : input,
+                success : function(response) {
+                      $(".container").html(response);
+                },
+                complete: function(){         
+                      //$(".container").html("complete");
+                      document.getElementById("register").value="Verify OTP";
+                      var p = document.getElementById("phone");
+                      p.replaceChild(document.createTextNode("Enter the OTP received : "), p.firstChild);
+                      document.getElementById("tel").value="";
+                      document.getElementById("register").onclick=function(){
+                      if(document.getElementById("tel").value.length!=0){
+                            input={"mobile_number" : number,
+                                    "otp" : document.getElementById("tel").value,
+                                    "action" : "verify_otp"};
+                      $.ajax({
+                              url : 'server.php',
+                              type : 'POST',
+                              data : input,
+                              success : function(response){
+                              $(".container").html(response);
+                              },
+                              complete: function(){
+                              //$(".container").html(response);
+                              //window.open("registration.html", '_blank');
+                              }
+                        })
                       }
-                  })
-                }
-                else
-                  location.reload();
-              }
-            }
+                      else
+                        location.reload();
+                      }   
+                  }
           });        
-  }
+        }
+    }
+    else{
+      if(document.getElementById("uname").value.length!=0 || document.getElementById("uname").value.length!=0)
+        window.open("registration.html", '_blank');
+      else
+        alert("Please insert your credentials");
+    }
 }
 
-function register(){
+function change_status(){
 
+    var x = document.getElementById("phone");
+    var y = document.getElementById("register");
+    if(document.getElementById("yes").checked==true){
+      document.getElementById("patient_status").innerHTML="Patient login";
+      document.getElementById("username").style.display="none";
+      document.getElementById("password").style.display="none";
+      y.value="Send OTP";
+      x.style.display="block";
+      y.style.display="block";
+    }
+    else{
+      document.getElementById("uname").value="";
+      document.getElementById("pass").value="";
+      document.getElementById("patient_status").innerHTML="Staff login";
+      y.value="Login";
+      x.style.display="none";
+      y.style.display="block";
+      document.getElementById("username").style.display="block";
+      document.getElementById("password").style.display="block";
+      
+    }
+  
+}
+
+function expand(obj){
+  if (!obj.savesize) obj.savesize = obj.size;
+      obj.size = Math.min(100, Math.max(obj.savesize, obj.value.length)); 
 }

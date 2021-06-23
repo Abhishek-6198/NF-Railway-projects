@@ -1,6 +1,6 @@
 <html lang="en" dir="ltr">
    <head>
-      <title>NF Railway Covid registration</title>
+      <title>NF Railway patient registration</title>
       <link rel="stylesheet" href="styles.css">
       <script src="frontend.js"></script>
       <script src="https://kit.fontawesome.com/03d58ba9c7.js" crossorigin="anonymous"></script>
@@ -13,7 +13,7 @@
 
    <body>
 
-      <h1 id="title">Covid Patients Details at Central Hospital - Maligaon</h1>
+      <h1 id="title">Patient registration at Central Hospital - Maligaon</h1>
       <div id="box">
 
         <i class="fa-solid fa-check-double"></i>
@@ -34,9 +34,15 @@
           </div>
 
         <div class="registration_content">
-            <h2 id="patient_status">Patient status</h2>
-            <p id="phone">Enter your contact number : <input type="tel" id="tel"  style="font-family:cursive;"></input></p>
-            <input id="register" type="button" value="Send OTP" onclick="check_number()"></button>
+            <h2 id="patient_status">Patient/Staff login</h2>
+            <span class="choice" style="font-size: 20px; font-family: cursive; position:relative; left: 33%;">Are you a patient? 
+              <input type="radio" id="yes" name="choice" onclick="change_status()">Yes &nbsp; <input type="radio" id="no" name="choice"  onclick="change_status()">No</span>
+            <p id="phone" style="display: none;">Enter your contact number : <input type="tel" id="tel"  style="font-family:cursive;"></input></p>
+            <p id="username" style="font-size: 20px; font-family: cursive; position:relative; left: 33%; display: none;">
+              Username : <input type="text" id="uname" style="font-family:cursive; font-size: 20px;"></input></p>
+            <p id="password" style="font-size: 20px; font-family: cursive; position:relative; left: 33%; display: none;">
+              Password : <input type="password" id="pass" style="font-family:cursive; font-size: 20px;"></input></p>
+            <input id="register" type="button" value="Send OTP" onclick="check_number()" style="display: none;"></button>
             <span class="container"></span>
         </div>
 

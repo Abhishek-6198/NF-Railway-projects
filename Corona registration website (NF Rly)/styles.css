@@ -15,7 +15,6 @@ body{
 
 #disclaimer_points{
 
-    text-align: center;
     text-shadow: 2px 1px green;
     display: block;
     background-color: lightgreen;
@@ -25,12 +24,11 @@ body{
     right: 4em;
     padding-right: 2em;
     width: 56.6em;
-    float:center;
     text-decoration-style:dashed;
 }
 
 #patient_status{
-  text-align: center;
+
   text-shadow: 2px 1px pink;
   display: block;
   background-color: lightpink;
@@ -41,7 +39,6 @@ body{
   padding-right: 2em;
   bottom:20px;
   width: 56.6em;
-  float:center;
   text-decoration-style:dashed;
 }
 
@@ -99,9 +96,6 @@ h1{
   left:80px;
 }
 
-#phone{
-  text-align: center;
-}
 
 #register{
   position: absolute;
@@ -117,7 +111,7 @@ h1{
   padding-bottom: 5em;
 }
 
-#phone,#contact_info,#phone,#register,#hide{
+#contact_info,#register,#hide{
   font-size: 20px;
   text-align: center;
   font-family: cursive;
@@ -132,4 +126,11 @@ h1{
 
 #box:hover {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+#phone{
+  font-size: 20px;
+  font-family: cursive; 
+  position:relative; 
+  left: 33%;
 }

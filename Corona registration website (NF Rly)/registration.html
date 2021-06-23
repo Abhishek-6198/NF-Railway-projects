@@ -10,12 +10,16 @@
 <body>
     <h1 id="title">Patient Information System</h1>
     <div id="box">
-        <p id="name">Name : <input type="text" id="inp_name"  style="font-family:cursive;"></input></p><br>
-        <p id="age">Age : <input type="number" id="inp_age" style="font-family:cursive;"></input></p><br>
-        <p id="number">Contact number : <input type="tel" id="inp_number" style="font-family:cursive;"></input></p><br>
-        <p id="address">Address : <input type="text" id="inp_address"  style="font-family:cursive;"></input></p><br>
-        <p id="id">Patient ID : <input type="number" id="patient_id" style="font-family:cursive;"></input></p><br>
-        <input id="register" type="button" value="Register" onclick="register()"></button>
+        <div id="details">
+                <p id="id">1) Patient ID : <input type="number" id="patient_id" style="font-family:cursive;"></input></p><br>
+                <p id="name">2) Name : <input type="text" id="inp_name"  style="font-family:cursive;"></input></p><br>
+                <p id="age">3) Age : <input type="number" id="inp_age" style="font-family:cursive;"></input></p><br>
+                <p id="number">4) Patient's contact number : <input type="tel" id="inp_number" style="font-family:cursive;"></input></p><br>
+                <p id="advice">5) Doctor's advice : <input type="text" id="inp_adv"  style="font-family:cursive;" onkeyup="expand(this)"></input></p><br>
+                <p id="medicine">6) Medicines prescribed : <input type="text" id="meds"  style="font-family:cursive;" onkeyup="expand(this)"></input></p><br>
+        </div>
+                <input id="register" type="button" value="Register" onclick="register()"></button>
+        
     </div>
 </body>
 </html>
