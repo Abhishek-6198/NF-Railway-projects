@@ -47,9 +47,9 @@ if(isset($_POST["action"])){
         echo $response;
     }
   }
-  else{
+  else if($_POST["action"] == "verify_otp"){
     $timestamp =  $_SERVER["REQUEST_TIME"];  
-    if(($timestamp - $_SESSION['time']) <= 180){  //2 minutes timelimit for OTP
+    if(($timestamp - $_SESSION['time']) <= 180){  //3 minutes timelimit for OTP
         if($_POST["otp"]==$_SESSION["OTP"]){
             $fields = array(
                   "message" => "Your OTP is verified. Please revert back to the website to proceed further.",
@@ -99,6 +99,39 @@ if(isset($_POST["action"])){
         $response = "Your OTP has expired. Please reload the page and try again";
         echo $response;
       }
+  }
+  else{
+    $server="localhost";
+    $username="root";
+    $pass="";
+
+    $con=mysqli_connect($server,$username,$pass);
+    $connection=mysqli_select_db($con,"patient information");
+
+    if(!$connection)
+        echo "Connection to database failed! Please try again";
+    else{
+        if(isset($_POST["action"])){
+            $username=$_POST["uname"];
+            $password=$_POST["pass"];
+            $sql = "SELECT * FROM `staff` WHERE `Password`=".$password;
+            $result = $con->query($sql);
+            if ($result->num_rows > 0) {
+              while($row = $result->fetch_assoc()) {
+                  if($row["Username"]==$username){
+                    echo '<script type="text/javascript">
+                    location.href = "registration.html"
+                    </script>';
+                  }
+              }  
+            }
+            else{
+              echo $result->num_rows;
+            } 
+            }
+        }
+
+    $con->close();
   }
 }
 ?>

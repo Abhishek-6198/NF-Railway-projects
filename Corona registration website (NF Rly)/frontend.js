@@ -89,8 +89,7 @@ function check_number(){
                               $(".container").html(response);
                               },
                               complete: function(){
-                              //$(".container").html(response);
-                              //window.open("registration.html", '_blank');
+                              location.href="registration.html";
                               }
                         });
                       }
@@ -102,10 +101,26 @@ function check_number(){
         }
     }
     else{
-      if(document.getElementById("uname").value.length!=0 || document.getElementById("uname").value.length!=0)
-        window.open("registration.html", '_blank');
-      else
+      if(document.getElementById("uname").value.length==0 || document.getElementById("pass").value.length==0)
         alert("Please insert your credentials");
+      else{
+        var input={"uname" : document.getElementById("uname").value,
+                  "pass" : document.getElementById("pass").value,
+                  "action" : "Staff login"};
+
+        $.ajax({
+          url : 'server.php',
+          type : 'POST',
+          data:input,
+          success : function(response){
+            $(".container").html(response);
+          },
+          complete: function(){
+            //location.href="registration.html";
+          }
+        });
+        //location.href="registration.html";
+      }
     }
 }
 
@@ -141,6 +156,7 @@ function expand(obj){
 }
 
 function change_operation(){
+  document.getElementById("box").style.height="20em";
   if(document.getElementById("insert").checked==true){
     document.getElementById("id").style.display="block";
     document.getElementById("name").style.display="block";
