@@ -92,7 +92,7 @@ function check_number(){
                               //$(".container").html(response);
                               //window.open("registration.html", '_blank');
                               }
-                        })
+                        });
                       }
                       else
                         location.reload();
@@ -138,4 +138,85 @@ function change_status(){
 function expand(obj){
   if (!obj.savesize) obj.savesize = obj.size;
       obj.size = Math.min(100, Math.max(obj.savesize, obj.value.length)); 
+}
+
+function change_operation(){
+  if(document.getElementById("insert").checked==true){
+    document.getElementById("id").style.display="block";
+    document.getElementById("name").style.display="block";
+    document.getElementById("age").style.display="block";
+    document.getElementById("number").style.display="block";
+    document.getElementById("advice").style.display="block";
+    document.getElementById("medicine").style.display="block";
+    document.getElementById("register").value="Insert";
+    document.getElementById("register").style.display="block";
+    document.getElementById("box").style.height="40em";
+  }
+  else if(document.getElementById("update").checked==true){
+    document.getElementById("id").style.display="block";
+    document.getElementById("name").style.display="block";
+    document.getElementById("age").style.display="block";
+    document.getElementById("number").style.display="block";
+    document.getElementById("advice").style.display="block";
+    document.getElementById("medicine").style.display="block";
+    document.getElementById("register").value="Update";
+    document.getElementById("register").style.display="block";
+    document.getElementById("box").style.height="40em";
+  }
+  else{
+    document.getElementById("id").style.display="block";
+    document.getElementById("name").style.display="none";
+    document.getElementById("age").style.display="none";
+    document.getElementById("number").style.display="none";
+    document.getElementById("advice").style.display="none";
+    document.getElementById("medicine").style.display="none";
+    document.getElementById("register").value="Delete";
+    document.getElementById("register").style.display="block";
+    document.getElementById("box").style.height="20em";
+  }
+}
+
+function db_ops(){
+
+  if(document.getElementById("register").value=="Delete"){
+    
+    var input={"id" : document.getElementById("patient_id").value,
+                "op" : "Delete"};
+
+    $.ajax({
+          url : 'db_ops.php',
+          type : 'POST',
+          data : input,
+          success : function(response) {
+              //$(".container").html(response);
+              alert(response);
+          },
+          complete: function(){
+            //alert(response);
+          }
+  
+    });
+  }
+  else{
+    var input={"id" : document.getElementById("patient_id").value,
+                "name" : document.getElementById("inp_name").value,
+                "age" : document.getElementById("inp_age").value,
+                "number" : document.getElementById("inp_number").value,
+                "advice" : document.getElementById("inp_adv").value,
+                "medicine" : document.getElementById("meds").value,
+                "op" : document.getElementById("register").value};
+
+    $.ajax({
+          url : 'db_ops.php',
+          type : 'POST',
+          data : input,
+          success : function(response) {
+            alert(response);
+          },
+          complete: function(){
+            //alert(response);
+          }
+
+    });
+  }
 }

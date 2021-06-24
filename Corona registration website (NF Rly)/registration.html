@@ -6,19 +6,27 @@
     <title>Patient details</title>
     <link rel="stylesheet" href="reg_styles.css">
     <script src="frontend.js"></script>
+    <script src="https://kit.fontawesome.com/03d58ba9c7.js" crossorigin="anonymous"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 <body>
     <h1 id="title">Patient Information System</h1>
     <div id="box">
         <div id="details">
-                <p id="id">1) Patient ID : <input type="number" id="patient_id" style="font-family:cursive;"></input></p><br>
-                <p id="name">2) Name : <input type="text" id="inp_name"  style="font-family:cursive;"></input></p><br>
-                <p id="age">3) Age : <input type="number" id="inp_age" style="font-family:cursive;"></input></p><br>
-                <p id="number">4) Patient's contact number : <input type="tel" id="inp_number" style="font-family:cursive;"></input></p><br>
-                <p id="advice">5) Doctor's advice : <input type="text" id="inp_adv"  style="font-family:cursive;" onkeyup="expand(this)"></input></p><br>
-                <p id="medicine">6) Medicines prescribed : <input type="text" id="meds"  style="font-family:cursive;" onkeyup="expand(this)"></input></p><br>
+            <p class="ch" >What operation do you want to commit? 
+                <input type="radio" id="insert" name="choice" onclick="change_operation()">Insert &nbsp; <input type="radio" id="update" name="choice"  onclick="change_operation()">Update &nbsp;
+                <input type="radio" id="delete" name="choice"  onclick="change_operation()">Delete &nbsp;</p><br>
+                <p id="id" style="display: none;">1) Patient ID : <input type="number" id="patient_id" style="font-family:cursive;"></input></p><br>
+                <p id="name" style="display: none;">2) Name : <input type="text" id="inp_name"  style="font-family:cursive;"></input></p><br>
+                <p id="age" style="display: none;">3) Age : <input type="number" id="inp_age" style="font-family:cursive;"></input></p><br>
+                <p id="number" style="display: none;">4) Patient's contact number : <input type="tel" id="inp_number" style="font-family:cursive;"></input></p><br>
+                <p id="advice" style="display: none;">5) Doctor's advice : <input type="text" id="inp_adv"  style="font-family:cursive;" onkeyup="expand(this)"></input></p><br>
+                <p id="medicine" style="display: none;">6) Medicines prescribed : <input type="text" id="meds"  style="font-family:cursive;" onkeyup="expand(this)"></input></p><br>
         </div>
-                <input id="register" type="button" value="Register" onclick="register()"></button>
+                <input id="register" type="button" value="Register" onclick="db_ops()" style="display: none;"></button>
         
     </div>
 </body>

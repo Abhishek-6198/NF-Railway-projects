@@ -14,7 +14,7 @@ body{
 
 
 #disclaimer_points{
-
+    text-align: center;
     text-shadow: 2px 1px green;
     display: block;
     background-color: lightgreen;
@@ -28,7 +28,7 @@ body{
 }
 
 #patient_status{
-
+  text-align: center;
   text-shadow: 2px 1px pink;
   display: block;
   background-color: lightpink;
