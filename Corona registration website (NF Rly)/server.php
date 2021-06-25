@@ -86,9 +86,37 @@ if(isset($_POST["action"])){
   
             if ($err) {
                 echo "cURL Error #:" . $err;
-            } else {
-                echo $response;
             }
+            else{
+              $server="localhost";
+              $username="root";
+              $pass="";
+
+              $con=mysqli_connect($server,$username,$pass);
+              $connection=mysqli_select_db($con,"patient information");
+
+              if(!$connection)
+                    echo "Connection to database failed! Please try again";
+              else{
+                $sql = "SELECT * from patients";
+                $result = $con->query($sql);
+                if ($result->num_rows > 0) {
+                  while($row = $result->fetch_assoc()) {
+                    if($row["Patients Contact number"]==$_POST["mobile_number"]){
+                        echo "id: " . $row["Patient ID"]."<br>"."<br>";
+                        echo "Name: " . $row["Name"]."<br>"."<br>";
+                        echo "Age: " . $row["Age"]."<br>"."<br>";
+                        echo "Number: " . $row["Patients Contact number"]."<br>"."<br>";
+                        echo "Doctor's advice: " . $row["Doctor's advice"]."<br>"."<br>";
+                        echo "Medicines prescribed: " . $row["Medicines prescribed"]."<br>";
+                    }
+                  }
+                }
+                else
+                  echo "No records found for this phone number";
+                $con->close();
+              }
+            }  
         }
         else{
           $response = "OTP  invalid";
@@ -100,7 +128,8 @@ if(isset($_POST["action"])){
         echo $response;
       }
   }
-  else{
+  else if($_POST["action"] == "Staff login"){
+    $flag=0;
     $server="localhost";
     $username="root";
     $pass="";
@@ -114,22 +143,31 @@ if(isset($_POST["action"])){
         if(isset($_POST["action"])){
             $username=$_POST["uname"];
             $password=$_POST["pass"];
-            $sql = "SELECT * FROM `staff` WHERE `Password`=".$password;
+            $sql = "SELECT * from staff";
             $result = $con->query($sql);
+            $total = mysqli_num_rows($result);
+        
             if ($result->num_rows > 0) {
               while($row = $result->fetch_assoc()) {
-                  if($row["Username"]==$username){
+                  if($row["Username"]==$username && $row["Password"]==$password){
                     echo '<script type="text/javascript">
                     location.href = "registration.html"
                     </script>';
                   }
-              }  
+                  else
+                    $flag=$flag+1;
+              }
+              if($flag==$total)
+              echo '<script type="text/javascript">
+              alert("You cannot access the database");
+              </script>';
             }
             else{
-              echo $result->num_rows;
+              $response="No hospital staff are present at this moment";
+              echo $response;
             } 
-            }
-        }
+          }
+      }
 
     $con->close();
   }

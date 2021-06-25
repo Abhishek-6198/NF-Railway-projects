@@ -86,10 +86,27 @@ function check_number(){
                               type : 'POST',
                               data : input,
                               success : function(response){
-                              $(".container").html(response);
+                              $("#patient_info").html(response);
+                              $( function() {
+                                $( "#patient_info" ).dialog({
+                                      autoOpen: false,
+                                      show: {
+                                        effect: "Bounce",
+                                        duration: 1000
+                                      },
+                                      hide: {
+                                          effect: "Fade",
+                                          duration: 1000
+                                      }
+                                  });
+                        
+                            
+                                  $( "#patient_info" ).dialog( "open" );
+                              
+                               });
                               },
                               complete: function(){
-                              location.href="registration.html";
+                              //location.href="registration.html";  
                               }
                         });
                       }
