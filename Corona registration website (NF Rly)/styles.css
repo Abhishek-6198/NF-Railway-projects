@@ -19,11 +19,8 @@ body{
     display: block;
     background-color: lightgreen;
     height: 50px;
-    position: relative;
-    left: 3em;
-    right: 4em;
-    padding-right: 2em;
-    width: 56.6em;
+    margin-left: 70px;
+    margin-right: 25px;
     text-decoration-style:dashed;
 }
 
@@ -33,12 +30,8 @@ body{
   display: block;
   background-color: lightpink;
   height: 50px;
-  position: relative;
-  left: 0.005em;
-  right: 4em;
-  padding-right: 2em;
-  bottom:20px;
-  width: 56.6em;
+  margin-left: 1px;
+  margin-right: 1px;
   text-decoration-style:dashed;
 }
 
@@ -105,10 +98,10 @@ h1{
 .registration_content{
   display: block;
   background-color: lightyellow;
-  position: absolute;
-  right: 2em;
-  left:80px;
-  padding-bottom: 5em;
+  padding-bottom: 10em;
+  margin-left: 70px;
+  margin-right: 25px;
+  margin-top:2em;
 }
 
 #contact_info,#register,#hide{
@@ -120,7 +113,7 @@ h1{
 #box{
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.5s;
-  height:50em;
+  height:100em;
   background-color: #F0F8FF;
 }
 

@@ -30,8 +30,11 @@
                     `Doctor's advice`, `Medicines prescribed`) VALUES (?, ?, ?, ?, ?, ?)");
                     //echo $con->error;
                     $stmt->bind_param("isisss", $id, $name, $age, $no, $advice, $medicine);
-                    $stmt->execute();
-                    echo "Record was inserted";
+                   // $stmt->execute();
+                    if( $stmt->execute())
+                        echo "Record was inserted";
+                    else
+                        echo "Record is already present. (Hint: Please double check the patient id and contact number.)";
                     $stmt->close();
                 } 
             }
@@ -52,7 +55,7 @@
                         echo $response;
                     }
                     else{
-                        echo $con->error;
+                        echo "Something went wrong. (Hint: Please double check the patient id and contact number.)";
                     }
                     $stmt->close();
                 }

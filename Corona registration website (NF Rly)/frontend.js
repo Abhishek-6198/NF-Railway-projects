@@ -5,14 +5,34 @@ function toggle() {
    var y = document.getElementsByClassName("registration_content");
    if (x.style.display === "none") {
      x.style.display = "block";
-     y[0].style.top="30em";
+     y[0].style.marginTop="25em";
      z.innerHTML = "Disclaimer"
    } else {
      x.style.display = "none";
-     y[0].style.top="10em";
+     y[0].style.marginTop="2em";
      z.innerHTML = "Disclaimer (Click to read)"
    }
  }
+
+function toggle_info(){
+  $( function() {
+    $( "#about_this_site" ).dialog({
+      autoOpen: false,
+      show: {
+        effect: "blind",
+        duration: 1000
+      },
+      hide: {
+        effect: "explode",
+        duration: 1000
+      }
+    });
+  
+    $( "#about" ).on( "click", function() {
+      $( "#about_this_site" ).dialog( "open" );
+    });
+  } );
+}
 
 function toggle_contact(){
 $( function() {
@@ -216,7 +236,8 @@ function db_ops(){
     var input={"id" : document.getElementById("patient_id").value,
                 "op" : "Delete"};
 
-    $.ajax({
+    if(document.getElementById("patient_id").value.length!=0){
+        $.ajax({
           url : 'db_ops.php',
           type : 'POST',
           data : input,
@@ -228,7 +249,10 @@ function db_ops(){
             //alert(response);
           }
   
-    });
+        });
+    }
+    else
+      alert("Please insert all the values to proceed.");
   }
   else{
     var input={"id" : document.getElementById("patient_id").value,
@@ -238,18 +262,26 @@ function db_ops(){
                 "advice" : document.getElementById("inp_adv").value,
                 "medicine" : document.getElementById("meds").value,
                 "op" : document.getElementById("register").value};
+    if(document.getElementById("patient_id").value.length==0 || document.getElementById("inp_name").value.length==0 || 
+       document.getElementById("inp_age").value.length==0 || document.getElementById("inp_number").value.length==0 ||
+       document.getElementById("inp_adv").value.length==0 || document.getElementById("meds").value.length==0 
+      ){
+            
+            alert("Please insert all the values to proceed.");
+       }
+       else{
+            $.ajax({
+                url : 'db_ops.php',
+                type : 'POST',
+                data : input,
+                success : function(response) {
+                      alert(response);
+                },
+                complete: function(){
+                    //alert(response);
+                }
 
-    $.ajax({
-          url : 'db_ops.php',
-          type : 'POST',
-          data : input,
-          success : function(response) {
-            alert(response);
-          },
-          complete: function(){
-            //alert(response);
-          }
-
-    });
+            });
+        }
   }
 }
