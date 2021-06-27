@@ -14,9 +14,8 @@ body{
   }
 
 #register{
-    position: relative;
-    top:4em;
-    left:35em;
+  margin-top:5%;
+    margin-left: 50%;
     font-family: cursive;
     font-size: 20px;
 }
@@ -34,4 +33,4 @@ body{
   left:5em;
   top:2em;
 }
-  
+

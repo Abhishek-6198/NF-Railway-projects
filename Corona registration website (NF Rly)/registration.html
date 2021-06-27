@@ -19,12 +19,12 @@
             <p class="ch" >What operation do you want to commit? 
                 <input type="radio" id="insert" name="choice" onclick="change_operation()">Insert &nbsp; <input type="radio" id="update" name="choice"  onclick="change_operation()">Update &nbsp;
                 <input type="radio" id="delete" name="choice"  onclick="change_operation()">Delete &nbsp;</p><br>
-                <p id="id" style="display: none;">1) Patient ID : <input type="number" id="patient_id" style="font-family:cursive;"></input></p><br>
-                <p id="name" style="display: none;">2) Name : <input type="text" id="inp_name"  style="font-family:cursive;"></input></p><br>
-                <p id="age" style="display: none;">3) Age : <input type="number" id="inp_age" style="font-family:cursive;"></input></p><br>
-                <p id="number" style="display: none;">4) Patient's contact number : <input type="tel" id="inp_number" style="font-family:cursive;"></input></p><br>
-                <p id="advice" style="display: none;">5) Doctor's advice : <input type="text" id="inp_adv"  style="font-family:cursive;" onkeyup="expand(this)"></input></p><br>
-                <p id="medicine" style="display: none;">6) Medicines prescribed : <input type="text" id="meds"  style="font-family:cursive;" onkeyup="expand(this)"></input></p><br>
+                <p id="id" style="display: none;"><b>*</b> Patient ID : <input type="number" id="patient_id" style="font-family:cursive;"></input></p><br>
+                <p id="name" style="display: none;"><b>*</b> Name : <input type="text" id="inp_name"  style="font-family:cursive;"></input></p><br>
+                <p id="age" style="display: none;"><b>*</b> Age : <input type="number" id="inp_age" style="font-family:cursive;"></input></p><br>
+                <p id="number" style="display: none;"><b>*</b> Patient's contact number : <input type="tel" id="inp_number" style="font-family:cursive;"></input></p><br>
+                <p id="advice" style="display: none;"><b>*</b> Doctor's advice : <input type="text" id="inp_adv"  style="font-family:cursive;" onkeyup="expand(this)"></input></p><br>
+                <p id="medicine" style="display: none;"><b>*</b> Medicines prescribed : <input type="text" id="meds"  style="font-family:cursive;" onkeyup="expand(this)"></input></p><br>
         </div>
                 <input id="register" type="button" value="Register" onclick="db_ops()" style="display: none;"></button>
         

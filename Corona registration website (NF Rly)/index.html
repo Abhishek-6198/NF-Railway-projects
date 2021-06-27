@@ -1,0 +1,74 @@
+<html lang="en" dir="ltr">
+   <head>
+      <title>NF Railway patient registration</title>
+      <link rel="stylesheet" href="styles.css">
+      <script src="frontend.js"></script>
+      <script src="https://kit.fontawesome.com/03d58ba9c7.js" crossorigin="anonymous"></script>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+      <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+      <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+   </head>
+
+   <body>
+
+      <h1 id="title">Patient registration in Central Hospital - Maligaon</h1>
+      <div id="box">
+
+        <i class="fa-solid fa-check-double"></i>
+
+        <h2 id="disclaimer_points" onclick="toggle()">Disclaimer (Click to read)</h2>
+          <div class="dropdown-content" id="myDIV" style="display:none;">
+            <nav >
+               <ol>
+                 <li>THE INFORMATION PROVIDED IS MERELY FOR THE BENEFIT AND INTEREST OF RELATIVES AND BASED ON REQUEST RECEIVED FROM THE PATIENTS
+                   AND RELATIVES TO ENABLE INFORMATION FLOW DURING THE COVID CRISIS. THERE IS NO ATTEMPT TO INFRINGE ON PRIVACY AND ETHICAL CONCERNS.<br><br></li>
+                 <li>THE STATUS OF THE PATIENT IS AS AT THE TIME OF THE LAST UPDATE AND DOES NOT NECESSARILY SHOW THE CURRENT STATUS, BUT UPDATED DAILY.<br><br></li>
+                 <li>IF NO CHANGE IS SHOWN IN THAT DATE, IT MEANS THERE HAS BEEN NO CHANGE IN THE PATIENT'S CONDITION AT THE TIME OF DATA UPDATION.<br><br></li>
+                 <li>ALL PATIENTS ON THIS TABLE SHOW COVID SYMPTOMS BASED ON RTPCR / RAT / CT SCAN / CLINICAL FINDINGS AND ARE THEREFORE ADMITTED TO HOSPITAL.<br><br></li>
+                 <li> PATIENTS DISCHARGED AND ADVISED HOME QUARANTINE ARE ADVISED TO REPORT TO THE HOSPITAL AT ANY TIME IF ANY DIFFICULTY IS NOTICED.<br><br></li>
+                 <li>TO AVOID CROWDING AT HOSPITAL BY PATIENT'S RELATIVES AND FOR BENIFIT OF THIER HEALTH, THIS HAS BEEN INITIATED.<br></li>
+               </ol>
+            </nav>
+          </div>
+
+        <div class="registration_content">
+            <h2 id="patient_status">Patient/Staff login</h2>
+            <span class="choice" style="font-size: 20px; font-family: cursive; position:relative; left: 33%;">Are you a patient? 
+              <input type="radio" id="yes" name="choice" onclick="change_status()">Yes &nbsp; <input type="radio" id="no" name="choice"  onclick="change_status()">No</span>
+            <p id="phone" style="display: none;">Enter your contact number : <input type="tel" id="tel"  style="font-family:cursive;"></input></p>
+            <p id="username" style="font-size: 20px; font-family: cursive; position:relative; left: 33%; display: none;">
+              Username : <input type="text" id="uname" style="font-family:cursive; font-size: 20px;"></input></p>
+            <p id="password" style="font-size: 20px; font-family: cursive; position:relative; left: 33%; display: none;">
+              Password : <input type="password" id="pass" style="font-family:cursive; font-size: 20px;"></input></p>
+            <input id="register" type="button" value="Send OTP" onclick="check_number()" style="display: none;"></button>
+            <span class="container"></span>
+        </div>
+
+        <div id="mySidenav" class="sidenav">
+            <a href="#" id="disclaimer" onclick="toggle()">Disclaimer</a>
+            <a href="https://nfr.indianrailways.gov.in/" id="home">Homepage</a>
+            <a href="#" id="about" onclick="toggle_info()">About</a>
+            <a href="#" id="contact" onclick="toggle_contact()">Contact</a>
+        </div>
+
+
+        <div id="contact_info" title="Contact us" style="display:none; background-color: DarkCyan;">
+          <p style="color:white;">For further Information/ Clarification contact No : Mob: 7099010103.</p>
+        </div>
+
+        <div id="about_this_site" title="How this site works?" style="display:none; background-color:floralwhite;">
+          <p>1) Both patients and the hospital staff can use this site to view or register patient details accordingly.</p><br>
+          <p>2)<b>Patients</b> can only only view their records. Whereas the <b>hospital staff</b> can insert, update as well as delete records. </p><br>
+          <p>3) Patients can call <b>7099010103</b> for any type of query regarding hospital administration.</p><br><br>
+          <p style="margin-left:30px">Thank you for using this site</p>
+        </div>
+
+        <div id="patient_info" title="Patient details" style="display: none; background-color: beige;">
+          <p id="response" style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;"></p>
+        </div>
+
+     </div>
+   </body>
+</html>

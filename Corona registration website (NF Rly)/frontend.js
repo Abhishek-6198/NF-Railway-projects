@@ -217,8 +217,8 @@ function change_operation(){
     document.getElementById("box").style.height="40em";
   }
   else{
-    document.getElementById("id").style.display="block";
-    document.getElementById("name").style.display="none";
+    document.getElementById("id").style.display="none";
+    document.getElementById("name").style.display="block";
     document.getElementById("age").style.display="none";
     document.getElementById("number").style.display="none";
     document.getElementById("advice").style.display="none";
@@ -229,14 +229,25 @@ function change_operation(){
   }
 }
 
+function myFunction(x) {
+  if (x.matches) { // If media query matches
+    document.getElementById("box").style.width = "100%";
+    document.getElementById("box").style.width = "80%";
+  } 
+}
+
+var x = window.matchMedia("(min-width: 360px)")
+myFunction(x) // Call listener function at run time
+x.addListener(myFunction) // Attach listener function on state changes
+
 function db_ops(){
 
   if(document.getElementById("register").value=="Delete"){
     
-    var input={"id" : document.getElementById("patient_id").value,
+    var input={"name" : document.getElementById("inp_name").value,
                 "op" : "Delete"};
 
-    if(document.getElementById("patient_id").value.length!=0){
+    if(document.getElementById("inp_name").value.length!=0){
         $.ajax({
           url : 'db_ops.php',
           type : 'POST',
