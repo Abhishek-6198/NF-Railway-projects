@@ -65,6 +65,9 @@ function closeNav() {
 }
 
 function check_number(){
+  var p = document.getElementById("phone"); 
+  p.replaceChild(document.createTextNode("Enter your contact number : "), p.firstChild);
+  document.getElementsByClassName("container")[0].innerHTML="";
   if(document.getElementById("register").value === "Send OTP" || document.getElementById("register").value === "Verify OTP"){
       const alphabets=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
       var flag = true;
@@ -93,38 +96,37 @@ function check_number(){
                 complete: function(){         
                       //$(".container").html("complete");
                       document.getElementById("register").value="Verify OTP";
-                      var p = document.getElementById("phone");
                       p.replaceChild(document.createTextNode("Enter the OTP received : "), p.firstChild);
                       document.getElementById("tel").value="";
-                      document.getElementById("register").onclick=function(){
-                      if(document.getElementById("tel").value.length!=0){
-                            input={"mobile_number" : number,
-                                    "otp" : document.getElementById("tel").value,
-                                    "action" : "verify_otp"};
-                      $.ajax({
-                              url : 'server.php',
-                              type : 'POST',
-                              data : input,
-                              success : function(response){
-                              $("#patient_info").html(response);
-                              $( function() {
-                                $( "#patient_info" ).dialog({
-                                      autoOpen: false,
-                                      show: {
-                                        effect: "Bounce",
-                                        duration: 1000
-                                      },
-                                      hide: {
-                                          effect: "Fade",
-                                          duration: 1000
-                                      },
-                                      close: () => {
-                                        location.reload();
-                                        //console.log('Dialog is closed');
-                                      }
-                                  });
-                        
-                            
+                      if(document.getElementById("register").click==true){
+                          document.getElementById("register").onclick=function(){
+                          if(document.getElementById("tel").value.length!=0){
+                                input={"mobile_number" : number,
+                                        "otp" : document.getElementById("tel").value,
+                                        "action" : "verify_otp"};
+                                $.ajax({
+                                        url : 'server.php',
+                                        type : 'POST',
+                                        data : input,
+                                        success : function(response){
+                                              $("#patient_info").html(response);
+                                              $( function() {
+                                                    $( "#patient_info" ).dialog({
+                                                    autoOpen: false,
+                                                    show: {
+                                                          effect: "Bounce",
+                                                          duration: 1000
+                                                    },
+                                                    hide: {
+                                                          effect: "Fade",
+                                                          duration: 1000
+                                                    },
+                                                    close: () => {
+                                                          location.reload();
+                                                          //console.log('Dialog is closed');
+                                                    }
+                                });
+    
                                   $( "#patient_info" ).dialog( "open" );
                               
                                });
@@ -137,6 +139,12 @@ function check_number(){
                       else
                         alert("Please enter your OTP to proceed");
                       }   
+                    }
+                    else{
+                      document.getElementsByClassName("container")[0].innerHTML="";
+                      return;
+                    }
+                      
                   }
           });        
         }
