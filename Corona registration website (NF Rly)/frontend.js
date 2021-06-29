@@ -65,7 +65,7 @@ function closeNav() {
 }
 
 function check_number(){
-  if(document.getElementById("register").value === "Send OTP"){
+  if(document.getElementById("register").value === "Send OTP" || document.getElementById("register").value === "Verify OTP"){
       const alphabets=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
       var flag = true;
       var str=document.getElementById("tel").value.toString();
@@ -117,6 +117,10 @@ function check_number(){
                                       hide: {
                                           effect: "Fade",
                                           duration: 1000
+                                      },
+                                      close: () => {
+                                        location.reload();
+                                        //console.log('Dialog is closed');
                                       }
                                   });
                         
@@ -131,13 +135,13 @@ function check_number(){
                         });
                       }
                       else
-                        location.reload();
+                        alert("Please enter your OTP to proceed");
                       }   
                   }
           });        
         }
     }
-    else{
+    else if(document.getElementById("register").value="Login"){
       if(document.getElementById("uname").value.length==0 || document.getElementById("pass").value.length==0)
         alert("Please insert your credentials");
       else{
@@ -166,6 +170,7 @@ function change_status(){
     var x = document.getElementById("phone");
     var y = document.getElementById("register");
     if(document.getElementById("yes").checked==true){
+      //location.reload();
       document.getElementById("patient_status").innerHTML="Patient login";
       document.getElementById("username").style.display="none";
       document.getElementById("password").style.display="none";
@@ -173,7 +178,8 @@ function change_status(){
       x.style.display="block";
       y.style.display="block";
     }
-    else{
+    else if(document.getElementById("no").checked==true){
+      //location.reload();
       document.getElementById("uname").value="";
       document.getElementById("pass").value="";
       document.getElementById("patient_status").innerHTML="Staff login";
@@ -229,16 +235,6 @@ function change_operation(){
   }
 }
 
-function myFunction(x) {
-  if (x.matches) { // If media query matches
-    document.getElementById("box").style.width = "100%";
-    document.getElementById("box").style.width = "80%";
-  } 
-}
-
-var x = window.matchMedia("(min-width: 360px)")
-myFunction(x) // Call listener function at run time
-x.addListener(myFunction) // Attach listener function on state changes
 
 function db_ops(){
 
