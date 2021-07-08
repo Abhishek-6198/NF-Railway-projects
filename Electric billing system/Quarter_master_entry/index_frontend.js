@@ -84,26 +84,43 @@ function get_qid(){
                                       "number": document.getElementById("qtr_no").value,
                                       "type": colony_type}, // should 'code' be a variable...?
                 success: function(response) {
-
-                    if(response.includes('0')){
-                        document.getElementById("qid").style.display="block";
-                        $("#qrtr_id").html(response);
-                        setTimeout(function()
-                        { 
-                            var c= confirm("This record has been registered. Please insert the next record");
-                            if (c==true||c==false) {
+                    //console.log(response.length);
+                    if(response.includes("0")){
+                        document.getElementById("qid").style.display="inline";
+                        document.getElementById("qrtr_id").style.display="inline";
+                        if(response.length<70){
+                            $("#qrtr_id").html(response);
+                            if(window.innerWidth>=1300)
+                                document.getElementById("qrtr_id").style.left="19em";
+                            setTimeout(function()
+                            { 
+                                var c= confirm("This record has been inserted.");
+                                if (c==true||c==false) {
                             
+                                    window.location.reload();
+                                } 
+                            }, 2000);
+                        }
+                        else if(response.length>70){
+                            let str="";
+                            const arr=response.split(" ");
+                            for(var i=0; i<arr.length-1; i++){
+                                str=str.concat(" ",arr[i]);
+                            }
+                            //console.log(arr);
+                            //console.log(arr[arr.length-1]);
+                            $("#qid").html(str);
+                            $("#qrtr_id").html(arr[arr.length-1]);
+                            //document.getElementById("qrtr_id").innerHTML=arr[arr.length-1];
+                            setTimeout(function(){
                                 window.location.reload();
-                            } 
-                        }, 3000);
+                            }, 2000);
+                        }
                     }
                     else{
-                        document.getElementById("qid").style.display="block";
-                        $("#qid").html(response);
-                        setTimeout(function(){
-                            window.location.reload();
-                        }, 3000);
+                        alert(response);
                     }
+                    
                     
                     //alert(response);
                 },

@@ -81,7 +81,14 @@ if(isset($_POST["input"])){
                         $result = $con->query($sql);
                         //echo $result->num_rows;
                         if($result->num_rows > 0){
-                            echo "This Quarter number already exists, try a different one.";
+                            $sql = "SELECT Qtr_ID from quarter_master_entry WHERE Qtr_No='".$number."'";
+                            $result = $con->query($sql);
+                            if($result->num_rows > 0){
+                                while($row = $result->fetch_assoc()) {
+                                    $id=$row["Qtr_ID"];
+                                }
+                                echo "This Quarter number is already registered with the ID: ".$id;
+                            } 
                         }
                         else{
                             //Inserting record
@@ -96,7 +103,12 @@ if(isset($_POST["input"])){
                                 $result = $con->query($sql);
                                 if($result->num_rows > 0){
                                     while($row = $result->fetch_assoc()) {
-                                        $qid="00000000".(string)$row["Sl_No"];
+                                        if($type=="I")
+                                            $qid="01000000".(string)$row["Sl_No"];
+                                        elseif($type=="II")
+                                            $qid="02000000".(string)$row["Sl_No"];
+                                        else
+                                            $qid="03000000".(string)$row["Sl_No"];
                                         //echo (string)$row["Sl_No"]."<br>";
                                     }
                                     $statement = $con->prepare("UPDATE quarter_master_entry SET Qtr_ID=? WHERE Colony_code= '".$code. "'");
