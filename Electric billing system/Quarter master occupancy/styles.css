@@ -1,0 +1,120 @@
+body{
+    background-color:khaki;
+}
+
+
+h1{
+    text-align: center;
+    background-color: lightskyblue;
+    margin-left: 16em;
+    margin-right: 10em;
+    height: 40px;
+    border: 2px solid black;
+    border-radius: 2px;
+}
+
+
+
+#box{
+    box-shadow: 0 5px 8px 0 rgba(195, 143, 224, 0.26);
+    transition: 0.5s;
+    height:30em;
+    margin-left: 8em;
+    margin-top: 7em;
+    border-radius: 8px;
+    background-color: #cd9ee2;
+  }
+  
+#box:hover {
+    box-shadow: 0 8px 16px 0 rgba(190, 93, 219, 0.377);
+}
+
+#quarter{
+    display: flex;
+    flex-direction: row;
+}
+
+#cln_name{
+    position: absolute;
+    top:12em;
+    left: 10em;
+    font-size: 20px;
+}
+
+#cln_type{
+    position: absolute;
+    top:12em;
+    left: 35em;
+    font-size: 20px;
+}
+
+#qrtr_no{
+    position: absolute;
+    top:12em;
+    left: 60em;
+    font-size: 20px;
+}
+
+#emp_info{
+    position: absolute;
+    top:20em;
+    left:10em;
+    font-size: 20px;
+}
+
+#emp_details{
+    position: absolute;
+    top:24em;
+    left:27em;
+    font-size: 20px;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #ca7b7bbd;
+    text-align: left;
+    padding: 8px;
+}
+  
+tr:nth-child(even) {
+    background-color: #74e4d5;
+}
+
+#save{
+    font-size: 20px; 
+    position: absolute; 
+    left: 26em; 
+    top:31.5em; 
+    border-radius: 12px;
+    padding-left: 20px;
+    padding-right: 20px;
+    cursor: pointer;
+}
+
+#reset{
+    font-size: 20px; 
+    position: absolute; 
+    left: 59em; 
+    top:31.5em; 
+    border-radius: 12px;
+    padding-left: 20px;
+    padding-right: 20px;
+    cursor: pointer;
+}
+
+#qid{
+    position: absolute;
+    top:17em;
+    left:10em;
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+#qrtr_id{
+    position: absolute;
+    top:17em;
+    left:31em;
+    font-size: 20px;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; 
+}

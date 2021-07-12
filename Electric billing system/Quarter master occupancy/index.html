@@ -1,0 +1,50 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electric billing system</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+   
+
+    
+
+</head>
+<body>
+
+    <h1>Quarter Occupancy Entry</h1>
+    <div id="box">
+        <div id="quarter">
+            <p id="cln_name"><b>Colony name</b> :&nbsp;<select name="colony_name" id="colony_name" style="max-width:90%;" onclick="get_names()" onchange="check()">
+                <option value="default" selected="selected_code">Select your colony name</option>
+            </select></p>
+            <p id="cln_type"><b>Type</b> :&nbsp;<select name="colony_type" id="colony_type" onclick="get_types()" onchange="check()">
+                <option value="default" selected="selected_type">Select your colony type</option>
+            </select></p>
+            <p id="qrtr_no"><b>Quarter No</b> :&nbsp;<select name="quarter_no" id="quarter_no" onclick="get_numbers()" onchange="check()">
+                <option value="default" selected="selected_type">Select your quarter no</option>
+            </select></p>
+            <span id="qid" style="display: none;">This quarter no is registered with the quarter_ID :&nbsp;</span>
+            <span id="qrtr_id" style="display:none; color: crimson;"></span><br>
+            <p id="emp_info" style="display: none;"><b>Employee No</b> :&nbsp;<input id="emp_no" type="text" size="20" onkeyup="forceUpper(this)"
+                onchange="find_emp(this)"></input></p>
+            <table id="emp_details" style="display: none;">
+                <tr>
+                    <th>Name</th>
+                    <th>Designation</th>
+                    <th>Bill Unit</th>
+                    <th>Station</th>
+                </tr>
+            </table>
+            <button id="save"  onmouseover="mouseover()" onmouseout="mouseout()">Save</button>
+            <button id="reset" onclick="erase()">Reset</button>
+        </div>
+    </div>
+    
+    
+</body>
+</html>
