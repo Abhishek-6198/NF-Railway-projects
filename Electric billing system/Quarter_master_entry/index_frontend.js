@@ -114,7 +114,7 @@ function get_qid(){
                             //document.getElementById("qrtr_id").innerHTML=arr[arr.length-1];
                             setTimeout(function(){
                                 window.location.reload();
-                            }, 2000);
+                            }, 4000);
                         }
                     }
                     else{
