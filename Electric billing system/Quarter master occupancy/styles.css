@@ -13,20 +13,26 @@ h1{
     border-radius: 2px;
 }
 
-
+.fas.fa-arrow-circle-right{
+    font-size: 3em; 
+    position: absolute; 
+    top: 12.3em; 
+    left: 13em; 
+    display:none;
+}
 
 #box{
-    box-shadow: 0 5px 8px 0 rgba(195, 143, 224, 0.26);
+    box-shadow: 0 5px 8px 0 rgba(199, 189, 204, 0.26);
     transition: 0.5s;
     height:30em;
     margin-left: 8em;
     margin-top: 7em;
     border-radius: 8px;
-    background-color: #cd9ee2;
+    background-color: #f2f0f3;
   }
   
 #box:hover {
-    box-shadow: 0 8px 16px 0 rgba(190, 93, 219, 0.377);
+    box-shadow: 0 8px 16px 0 rgba(203, 201, 204, 0.377);
 }
 
 #quarter{
@@ -39,46 +45,72 @@ h1{
     top:12em;
     left: 10em;
     font-size: 20px;
+    border:dotted;
+    border-width: 2px;
+    padding-right: 3em;
+    padding-bottom: 0.5em;
+    padding-top: 0.5em;
+    padding-left: 1em;
+    border-radius: 5px;
 }
 
 #cln_type{
     position: absolute;
     top:12em;
-    left: 35em;
+    left: 36em;
     font-size: 20px;
+    border:dotted;
+    border-width: 2px;
+    padding-right: 6em;
+    padding-bottom: 0.5em;
+    padding-top: 0.5em;
+    padding-left: 1em;
 }
 
 #qrtr_no{
     position: absolute;
     top:12em;
-    left: 60em;
+    left: 59em;
     font-size: 20px;
+    border:dotted;
+    border-width: 2px;
+    padding-right: 1em;
+    padding-bottom: 0.5em;
+    padding-top: 0.5em;
+    padding-left: 1em;
 }
 
 #emp_info{
     position: absolute;
-    top:20em;
+    top:28em;
     left:10em;
     font-size: 20px;
+    border:dotted;
+    border-width: 2px;
+    padding-right: 3em;
+    padding-bottom: 0.5em;
+    padding-top: 0.5em;
+    padding-left: 1em;
+    border-radius: 5px;
 }
 
 #emp_details{
     position: absolute;
-    top:24em;
-    left:27em;
+    top:28em;
+    left:38em;
     font-size: 20px;
     border-collapse: collapse;
     width: 100%;
 }
 
 td, th {
-    border: 1px solid #ca7b7bbd;
+    border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
 }
   
 tr:nth-child(even) {
-    background-color: #74e4d5;
+    background-color: #dddddd;
 }
 
 #save{
@@ -105,16 +137,153 @@ tr:nth-child(even) {
 
 #qid{
     position: absolute;
-    top:17em;
-    left:10em;
+    top:21em;
+    left:33em;
     font-size: 20px;
     font-family: 'Times New Roman', Times, serif;
 }
 
 #qrtr_id{
     position: absolute;
-    top:17em;
-    left:31em;
+    top:21em;
+    left:39em;
     font-size: 20px;
     font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; 
+}
+
+@media only screen and (max-width: 1300px){
+    #box{
+        width:100%;
+    }
+}
+
+@media only screen and (max-width: 1024px){
+    #qrtr_no{
+        position: absolute;
+        top:17em;
+        left: 10em;
+        padding-right: 5em;
+    }
+
+    #qid{
+        position: absolute;
+        top:18em;
+        left:36em;
+    }
+    
+    #qrtr_id{
+        position: absolute;
+        top:20em;
+        left:36em;
+    }
+
+    #emp_details{
+        position: absolute;
+        left:36em;
+    }
+
+    #save{
+        position: absolute; 
+        left: 23em; 
+    }
+
+    #reset{
+        position: absolute; 
+        left: 36em;
+    }
+
+    h1{
+        font-size: x-large;
+    }
+}
+
+@media only screen and (max-width: 768px){
+    h1{
+        font-size: 20px;
+        margin-right: 8em;
+        margin-left: 4em;
+        position: relative;
+        top:7em;
+        left:5em;
+    }
+    #box{
+        padding-right: 15em;
+    }
+
+    #qid{
+        position: absolute;
+        top:21em;
+    }
+
+    #qrtr_id{
+        position: absolute;
+        top:22.3em;
+        left:37em;
+    }
+
+    #cln_type{
+        position: absolute;
+        top:16em;
+        left:10em;
+    }
+
+    #qrtr_no{
+        position: absolute;
+        top:20em;
+
+    }
+}
+
+@media only screen and (max-width: 540px){ /*work pending*/
+    #box{
+        width:150%;
+    }
+}
+
+@media only screen and (max-width: 414px){
+    h1{
+        margin-right: 3em;
+    }
+
+    #box{
+        width: 180%;
+    }
+
+    #save{
+        left:20em;
+    }
+
+    #reset{
+        left:38em;
+    }
+}
+
+@media only screen and (max-width: 280px){
+    h1{
+        font-size: medium;
+        top:8em;
+    }
+
+    #cln_name,#cln_type,#qrtr_no,#qid,#qrtr_id,#emp_info,#emp_details,#save,#reset{
+        font-size: medium;
+    }
+
+    #qrtr_no{
+        top:21em;
+    }
+
+    .fas.fa-arrow-circle-right{
+        font-size: 2em;
+        position: absolute;
+        top:17em;
+        left:15em;
+    }
+
+    #save,#reset{
+        top:40em;
+    }
+
+    #emp_info,#emp_details{
+        top:32em;
+    }
 }

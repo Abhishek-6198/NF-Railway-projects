@@ -10,6 +10,9 @@ function get_names() {
         let selectedValue = $select.val();
         let html = response.filter((e, i, a) => a.indexOf(e) === i).map(item => `<option value="${item}">${item}</option>`);
         $select.html(html).val(selectedValue);
+        document.getElementById("cln_name").style.backgroundColor="rgb(188, 247, 188)";
+        document.getElementById("cln_name").style.border="groove";
+        //document.getElementById("colony_name").disabled=true;
       },
       complete: function() {}
     });
@@ -21,12 +24,15 @@ function get_types() {
     $.ajax({
       url: 'server.php',
       type: 'POST',
-      data: { "input": "types" }, // should 'code' be a variable...?
+      data: { "input": "types",
+              "name": $("#colony_name").val() }, 
       dataType: 'json', // add this property to avoid the need to call JSON.parse in success
       success: function(response) {
         let selectedValue = $select.val();
         let html = response.filter((e, i, a) => a.indexOf(e) === i).map(item => `<option value="${item}">${item}</option>`);
         $select.html(html).val(selectedValue);
+        document.getElementById("cln_type").style.backgroundColor="rgb(188, 247, 188)";
+        document.getElementById("cln_type").style.border="groove";
       },
       complete: function() {}
     });
@@ -38,12 +44,15 @@ function get_numbers() {
   $.ajax({
     url: 'server.php',
     type: 'POST',
-    data: { "input": "numbers" }, // should 'code' be a variable...?
+    data: { "input": "numbers",
+            "type": $("#colony_type").val() }, // should 'code' be a variable...?
     dataType: 'json', // add this property to avoid the need to call JSON.parse in success
     success: function(response) {
       let selectedValue = $select.val();
       let html = response.filter((e, i, a) => a.indexOf(e) === i).map(item => `<option value="${item}">${item}</option>`);
       $select.html(html).val(selectedValue);
+      document.getElementById("qrtr_no").style.backgroundColor="rgb(188, 247, 188)";
+      document.getElementById("qrtr_no").style.border="groove";
     },
     complete: function() {}
   });
@@ -65,6 +74,7 @@ function check(){
               "c_type": colony_type,
               "q_no": quarter_no}, // should 'code' be a variable...?
       success: function(response) { 
+        $("#qrtr_id").html("");
         const arr=response.split(" ");       
         if(arr.length==1){
           document.getElementById("qid").style.display="inline";
@@ -73,8 +83,20 @@ function check(){
             document.getElementById("qid").style.left="12em";*/
           $("#qrtr_id").html(response);   
           document.getElementById("emp_info").style.display="block";
+          document.getElementById("box").style.height="40em";
+          if(document.documentElement.clientWidth>280){
+            //console.log(document.documentElement.clientWidth);
+            document.getElementById("save").style.top="39.8em";
+            document.getElementById("reset").style.top="39.8em";
+          }else{
+            document.getElementById("save").style.top="50em";
+            document.getElementById("reset").style.top="50em";
+          }
         }
         else{
+          document.getElementById("qid").style.display="none";
+          document.getElementById("qrtr_id").style.display="none";
+          document.getElementById("emp_info").style.display="none"
           alert(response);
         }
       },
@@ -90,6 +112,8 @@ function forceUpper(strInput)
 
 function find_emp(str){
   if(str.value.length===11){
+    document.getElementById("emp_info").style.backgroundColor="rgb(194, 219, 235)";
+    document.getElementById("emp_info").style.border="groove";
     $.ajax({
       url: 'server.php',
       type: 'POST',
@@ -97,29 +121,56 @@ function find_emp(str){
             "emp_no":  str.value},
       //dataType: 'json', 
       success: function(response) { 
+        if(document.getElementById("emp_details").rows.length>0)
+          $("#emp_details").html("");
         //console.log(typeof(response));
         if(response[0]=='['){
           const arr=JSON.parse(response);
           var table = document.getElementById("emp_details");
+          document.getElementsByClassName("fas fa-arrow-circle-right")[0].style.display="block";
           table.style.display="block";
-          var row = table.insertRow(1);
+          var row = table.insertRow(0);
           var cell1 = row.insertCell(0);
-          var cell2 = row.insertCell(1);
-          var cell3 = row.insertCell(2);
-          var cell4 = row.insertCell(3);
-          cell1.innerHTML=arr[0];
-          cell2.innerHTML=arr[1];
-          cell3.innerHTML=arr[2];
-          cell4.innerHTML=arr[3];
+          var cell2=row.insertCell(1)
+
+          var row1=table.insertRow(1)
+          var cell3 = row1.insertCell(0);
+          var cell4=row1.insertCell(1);
+
+          var row2=table.insertRow(2)
+          var cell5 = row2.insertCell(0);
+          var cell6 = row2.insertCell(1);
+
+          var row3=table.insertRow(3)
+          var cell7 = row3.insertCell(0);
+          var cell8 = row3.insertCell(1);
+
+          cell1.innerHTML="<b>Name</b>";
+          cell2.innerHTML=arr[0];
+
+          cell3.innerHTML="<b>Designation</b>";
+          cell4.innerHTML=arr[1];
+
+          cell5.innerHTML="<b>Billunit</b>";
+          cell6.innerHTML=arr[2];
+
+          cell7.innerHTML="<b>Station</b>";
+          cell8.innerHTML=arr[3];
         }
-        else
+        else{
+          document.getElementById("emp_details").style.display="none";
+          document.getElementsByClassName("fas fa-arrow-circle-right")[0].style.display="none";
           alert(response);
+        }
+         
         //$("#emp_details").html(response);
       },
       complete: function() {}
     });
   }
   else{
+    document.getElementById("emp_details").style.display="none";
+    document.getElementsByClassName("fas fa-arrow-circle-right")[0].style.display="none";
     alert("Incorrect emp no");
     str.value="";
   }
@@ -147,9 +198,12 @@ function mouseover(){
           type: 'POST',
           data: { "input": "register",
                   "emp_no": emp_no,
-                  "qtr_id": $("#qrtr_id").html()}, // should 'code' be a variable...?
+                  "qtr_id": $("#qrtr_id").html()}, 
           success: function(response) { 
-            alert(response);
+            var c= confirm(response);
+            if (c==true||c==false) {          
+                window.location.reload();
+            } 
           },
           complete: function() {}
         });
