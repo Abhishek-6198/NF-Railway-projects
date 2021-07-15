@@ -104,21 +104,22 @@ if(isset($_POST["input"])){
                                 if($result->num_rows > 0){
                                     while($row = $result->fetch_assoc()) {
                                         if($type=="I")
-                                            $qid="01000000".(string)$row["Sl_No"];
+                                            $qid="01000000";
                                         elseif($type=="II")
-                                            $qid="02000000".(string)$row["Sl_No"];
+                                            $qid="02000000";
                                         else
-                                            $qid="03000000".(string)$row["Sl_No"];
-                                        //echo (string)$row["Sl_No"]."<br>";
+                                            $qid="03000000";
+
+                                        $qid=$qid.(string)$row["Sl_No"];
                                     }
-                                    $statement = $con->prepare("UPDATE quarter_master_entry SET Qtr_ID=? WHERE Colony_code= '".$code. "'");
+                                    $statement = $con->prepare("UPDATE quarter_master_entry SET Qtr_ID=? WHERE Qtr_No= '".$number. "'");
                                     $code=$code.$qid;
                                     //$inp_code=(int)$code;
                                     $statement->bind_param("s",$code);
                                     if($statement->execute())
                                         echo $code;      
                                     else
-                                        echo "Some error in qid insertion";
+                                        echo $con->error();
 
                                     $statement->close();    
                                 }
