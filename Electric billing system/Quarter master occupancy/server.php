@@ -51,7 +51,7 @@
                                 }
                                 echo json_encode($codes);
                             }
-                            else{
+                            /*else{
                                 $sql = "SELECT * from quarter_master";
                                 $result = $con->query($sql);
                                 if ($result->num_rows > 0) {
@@ -63,7 +63,7 @@
                                 else
                                     echo "No quarter type information found in table!!";
                             }
-                            //echo json_encode($codes);
+                            //echo json_encode($codes);*/
                     }
                     else
                         echo "No colony code information found in table!!";
@@ -111,7 +111,7 @@
                                 if($name==$_POST["c_name"] && $type==$_POST["c_type"])
                                     echo $qid;
                                 else
-                                    echo "The quarter no is registered with the colony name: ".$name." and quarter_type: ".$type;
+                                    echo "This quarter no is registered with the colony name: ".$name." and quarter_type: ".$type.". Please rectify your selection.";
                             }
                             
                     }
@@ -157,13 +157,13 @@
                     while($row = $result->fetch_assoc()) {
                         $qid=$row["Qtr_ID"];
                     } 
-                   echo "This employee no is already registered with the quarter ID: ".$qid;
+                   echo "This employee no is already registered against the quarter ID: ".$qid;
                 }
                 else{
                     $stmt = $con->prepare("INSERT INTO quarter_occupancy(EmpNo, Qtr_ID) VALUES (?, ?)");
                     $stmt->bind_param("ss", $_POST["emp_no"], $_POST["qtr_id"]);
                     if( $stmt->execute()){
-                        echo "This employee number has been registered successfully.";
+                        echo "This employee number has been registered against ".$_POST["qtr_id"]." successfully.";
                     }
                     else{
                         echo $con->error;

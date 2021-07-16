@@ -1,7 +1,6 @@
 body{
-    background-color:khaki;
+    background-color: rgb(223, 219, 217);
 }
-
 
 h1{
     text-align: center;
@@ -14,6 +13,9 @@ h1{
 }
 
 .fas.fa-arrow-circle-right{
+    animation: fadeInAnimation ease 2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
     font-size: 3em; 
     position: absolute; 
     top: 12.3em; 
@@ -22,13 +24,13 @@ h1{
 }
 
 #box{
-    box-shadow: 0 5px 8px 0 rgba(199, 189, 204, 0.26);
+    box-shadow: 0 5px 8px 0 rgba(240, 236, 241, 0.26);
     transition: 0.5s;
     height:30em;
     margin-left: 8em;
     margin-top: 7em;
     border-radius: 8px;
-    background-color: #f2f0f3;
+    background-color: #ffffff;
   }
   
 #box:hover {
@@ -38,6 +40,11 @@ h1{
 #quarter{
     display: flex;
     flex-direction: row;
+    border:dotted;
+    padding-top: 13em;
+    border-width: 1px;
+    border-radius: 5px;
+    background-color: rgb(243, 241, 240);
 }
 
 #cln_name{
@@ -52,6 +59,7 @@ h1{
     padding-top: 0.5em;
     padding-left: 1em;
     border-radius: 5px;
+    background-color: rgb(252, 219, 215);
 }
 
 #cln_type{
@@ -65,6 +73,7 @@ h1{
     padding-bottom: 0.5em;
     padding-top: 0.5em;
     padding-left: 1em;
+    background-color: rgb(252, 219, 215);
 }
 
 #qrtr_no{
@@ -78,6 +87,7 @@ h1{
     padding-bottom: 0.5em;
     padding-top: 0.5em;
     padding-left: 1em;
+    background-color: rgb(252, 219, 215);
 }
 
 #emp_info{
@@ -92,9 +102,13 @@ h1{
     padding-top: 0.5em;
     padding-left: 1em;
     border-radius: 5px;
+    background-color: rgb(252, 219, 215);
 }
 
 #emp_details{
+    animation: fadeInAnimation ease 3s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
     position: absolute;
     top:28em;
     left:38em;
@@ -136,6 +150,9 @@ tr:nth-child(even) {
 }
 
 #qid{
+    animation: fadeInAnimation ease 2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
     position: absolute;
     top:21em;
     left:33em;
@@ -144,11 +161,23 @@ tr:nth-child(even) {
 }
 
 #qrtr_id{
+    animation: fadeInAnimation ease 2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
     position: absolute;
     top:21em;
     left:39em;
     font-size: 20px;
     font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; 
+}
+
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
 @media only screen and (max-width: 1300px){
@@ -195,6 +224,10 @@ tr:nth-child(even) {
     h1{
         font-size: x-large;
     }
+
+    #quarter{
+        padding-top: 18em;
+    }
 }
 
 @media only screen and (max-width: 768px){
@@ -206,6 +239,12 @@ tr:nth-child(even) {
         top:7em;
         left:5em;
     }
+
+    #quarter{
+        padding-top: 21em;
+        padding-right: 62em;
+    }
+
     #box{
         padding-right: 15em;
     }
@@ -218,7 +257,7 @@ tr:nth-child(even) {
     #qrtr_id{
         position: absolute;
         top:22.3em;
-        left:37em;
+        left:38em;
     }
 
     #cln_type{
@@ -234,9 +273,12 @@ tr:nth-child(even) {
     }
 }
 
-@media only screen and (max-width: 540px){ /*work pending*/
+@media only screen and (max-width: 540px){ 
     #box{
         width:150%;
+    }
+    #quarter{
+        padding-right:64em;
     }
 }
 
@@ -255,6 +297,11 @@ tr:nth-child(even) {
 
     #reset{
         left:38em;
+    }
+
+    #quarter{
+        padding-right:60em;
+        padding-top: 22em;
     }
 }
 
@@ -285,5 +332,10 @@ tr:nth-child(even) {
 
     #emp_info,#emp_details{
         top:32em;
+    }
+
+    #quarter{
+        padding-right:44.5em;
+        padding-top: 18em;
     }
 }

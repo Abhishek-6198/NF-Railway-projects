@@ -1,6 +1,6 @@
 function get_names() {
     let $select = $("#colony_name");
-  
+    //refresh_colony_name();
     $.ajax({
       url: 'server.php',
       type: 'POST',
@@ -20,7 +20,7 @@ function get_names() {
 
 function get_types() {
     let $select = $("#colony_type");
-  
+    //refresh_colony_type();
     $.ajax({
       url: 'server.php',
       type: 'POST',
@@ -40,7 +40,7 @@ function get_types() {
 
 function get_numbers() {
   let $select = $("#quarter_no");
-
+  //refresh_quarter_no();
   $.ajax({
     url: 'server.php',
     type: 'POST',
@@ -216,4 +216,28 @@ function mouseover(){
 
 function erase(){
   location.reload();
+}
+
+function refresh_colony_name(){
+  var select = document.getElementById("colony_name");
+  var length = select.options.length;
+  for (i = length-1; i >= 1; i--) {
+    select.options[i] = null;
+  }
+}
+
+function refresh_colony_type(){
+  var select = document.getElementById("colony_type");
+  var length = select.options.length;
+  for (i = length-1; i >= 1; i--) {
+    select.options[i] = null;
+  }
+}
+
+function refresh_quarter_no(){
+  var select = document.getElementById("quarter_no");
+  var length = select.options.length;
+  for (i = length-1; i >= 1; i--) {
+    select.options[i] = null;
+  }
 }
