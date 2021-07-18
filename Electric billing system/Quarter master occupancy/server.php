@@ -75,18 +75,40 @@
                     echo "Connection to database failed! Please try again";
             else{
                 $codes=array();
-                $sql = "SELECT * from quarter_master_entry WHERE Qtr_type='".$_POST["type"]."'";
-                $result = $con->query($sql);
-                if ($result->num_rows > 0) {
-                        while($row = $result->fetch_assoc()) {
-                            //array_push($codes,$row["Colony_code"]);
-                            //$code=$row["Colony_code"];
-                            array_push($codes,$row["Qtr_No"]);
-                        }
-                        echo json_encode($codes);
-                }
+                    $sql = "SELECT * from colony_master WHERE Colony_name='".$_POST["name"]."'";
+                    $result = $con->query($sql);
+                    if ($result->num_rows > 0) {
+                            while($row = $result->fetch_assoc()) {
+                                //array_push($codes,$row["Colony_code"]);
+                                $code=$row["Colony_code"];
+                            }
+                            $sql = "SELECT * from quarter_master_entry WHERE Colony_code='".$code."'";
+                            $result = $con->query($sql);
+                            if ($result->num_rows > 0) {
+                                while($row = $result->fetch_assoc()) {
+                                    //array_push($codes,$row["Qtr_type"]);
+                                    if($_POST["type"]==$row["Qtr_type"]){
+                                        array_push($codes,$row["Qtr_No"]);
+                                    }
+                                }
+                                echo json_encode($codes);
+                            }
+                            /*else{
+                                $sql = "SELECT * from quarter_master";
+                                $result = $con->query($sql);
+                                if ($result->num_rows > 0) {
+                                    while($row = $result->fetch_assoc()) {
+                                        array_push($codes,$row["Qtr_type"]);
+                                    }
+                                    echo json_encode($codes);
+                                }
+                                else
+                                    echo "No quarter type information found in table!!";
+                            }
+                            //echo json_encode($codes);*/
+                    }
                 else
-                    echo "No quarter no of this type found in table!!";
+                    echo "No colony code information found in table!!";
             }
         }
         elseif($_POST["input"] == "is it registered?"){

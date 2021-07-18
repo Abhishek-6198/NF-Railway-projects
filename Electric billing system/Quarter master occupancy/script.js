@@ -45,7 +45,8 @@ function get_numbers() {
     url: 'server.php',
     type: 'POST',
     data: { "input": "numbers",
-            "type": $("#colony_type").val() }, // should 'code' be a variable...?
+            "type": $("#colony_type").val(),
+            "name": $("#colony_name").val() }, // should 'code' be a variable...?
     dataType: 'json', // add this property to avoid the need to call JSON.parse in success
     success: function(response) {
       let selectedValue = $select.val();
