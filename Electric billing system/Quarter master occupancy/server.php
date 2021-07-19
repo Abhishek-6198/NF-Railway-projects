@@ -49,8 +49,11 @@
                                 while($row = $result->fetch_assoc()) {
                                     array_push($codes,$row["Qtr_type"]);
                                 }
-                                echo json_encode($codes);
+                                //echo json_encode($codes);
                             }
+                            else
+                                array_push($codes,"No quarter is registered against ".$_POST["name"].". Please ensure that you've registered your quarter before proceeding.");
+                            echo json_encode($codes);
                             /*else{
                                 $sql = "SELECT * from quarter_master";
                                 $result = $con->query($sql);
@@ -91,8 +94,11 @@
                                         array_push($codes,$row["Qtr_No"]);
                                     }
                                 }
-                                echo json_encode($codes);
+                                //echo json_encode($codes);
                             }
+                            else
+                                array_push($codes,"No quarter is registered against ".$_POST["name"].". Please ensure that you've registered your quarter before proceeding.");
+                            echo json_encode($codes);
                             /*else{
                                 $sql = "SELECT * from quarter_master";
                                 $result = $con->query($sql);
@@ -196,6 +202,6 @@
             }
         }
 
-    }
+    }   
     $con->close();
 ?>

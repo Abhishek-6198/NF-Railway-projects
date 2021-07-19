@@ -19,6 +19,7 @@ function get_names() {
 }
 
 function get_types() {
+    let flag=false; 
     let $select = $("#colony_type");
     //refresh_colony_type();
     $.ajax({
@@ -28,17 +29,29 @@ function get_types() {
               "name": $("#colony_name").val() }, 
       dataType: 'json', // add this property to avoid the need to call JSON.parse in success
       success: function(response) {
-        let selectedValue = $select.val();
-        let html = response.filter((e, i, a) => a.indexOf(e) === i).map(item => `<option value="${item}">${item}</option>`);
-        $select.html(html).val(selectedValue);
-        document.getElementById("cln_type").style.backgroundColor="rgb(188, 247, 188)";
-        document.getElementById("cln_type").style.border="groove";
+        for(var i=0; i<response.length; i++){
+          if(response[i].includes("No")){
+            flag=true;
+            var c= confirm(response[i]);
+                if (c==true||c==false) {
+                  window.open("http://localhost//Electric%20billing%20system/Quarter%20master%20entry/index.html");
+                } 
+          }
+        }
+        if(!flag){
+          let selectedValue = $select.val();
+          let html = response.filter((e, i, a) => a.indexOf(e) === i).map(item => `<option value="${item}">${item}</option>`);
+          $select.html(html).val(selectedValue);
+          document.getElementById("cln_type").style.backgroundColor="rgb(188, 247, 188)";
+          document.getElementById("cln_type").style.border="groove";
+        }
       },
       complete: function() {}
     });
 }
 
 function get_numbers() {
+  let flag=false;
   let $select = $("#quarter_no");
   //refresh_quarter_no();
   $.ajax({
@@ -49,11 +62,22 @@ function get_numbers() {
             "name": $("#colony_name").val() }, // should 'code' be a variable...?
     dataType: 'json', // add this property to avoid the need to call JSON.parse in success
     success: function(response) {
-      let selectedValue = $select.val();
-      let html = response.filter((e, i, a) => a.indexOf(e) === i).map(item => `<option value="${item}">${item}</option>`);
-      $select.html(html).val(selectedValue);
-      document.getElementById("qrtr_no").style.backgroundColor="rgb(188, 247, 188)";
-      document.getElementById("qrtr_no").style.border="groove";
+      for(var i=0; i<response.length; i++){
+        if(response[i].includes("No")){
+          flag=true;
+          var c= confirm(response[i]);
+              if (c==true||c==false) {
+                window.open("http://localhost//Electric%20billing%20system/Quarter%20master%20entry/index.html");
+              } 
+        }
+      }
+      if(!flag){
+        let selectedValue = $select.val();
+        let html = response.filter((e, i, a) => a.indexOf(e) === i).map(item => `<option value="${item}">${item}</option>`);
+        $select.html(html).val(selectedValue);
+        document.getElementById("qrtr_no").style.backgroundColor="rgb(188, 247, 188)";
+        document.getElementById("qrtr_no").style.border="groove";
+      }
     },
     complete: function() {}
   });
