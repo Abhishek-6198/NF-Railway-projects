@@ -6,12 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quarter Occupancy Entry</title>
     <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <script src="script.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-   
-
     
 
 </head>
@@ -24,18 +23,31 @@
                 <option value="default" selected="selected_code">Select your colony name</option>
             </select></p>
             <p id="cln_type"><b>Type</b> :<br><select name="colony_type" id="colony_type" onclick="get_types()" onchange="check()">
-                <option value="default" selected="selected_type">Select your colony type</option>
+                <option value="default" selected="selected_type">Select your quarter type</option>
             </select></p>
             <p id="qrtr_no"><b>Quarter No</b> :<br><select name="quarter_no" id="quarter_no" onclick="get_numbers()" onchange="check()">
                 <option value="default" selected="selected_type">Select your quarter no</option>
             </select></p>
         </div>
+
             <span id="qid" style="display: none;"><b>Quarter-ID :</b>&nbsp;</span>
             <span id="qrtr_id" style="display:none; color: crimson;"></span><br>
+            
+        <div id="employee">
             <p id="emp_info" style="display: none;"><b>Employee No</b> :<br><input id="emp_no" type="text" size="20" onkeyup="forceUpper(this)"
                 onchange="find_emp(this)"></input></p>
             <table id="emp_details" style="display: none;"></table>
             <i class="fas fa-arrow-circle-right"></i>
+        </div>
+
+        <div id="quarter_tenure">
+            <i class="fas fa-angle-right"></i>
+            <p id="date"><b>Occupancy Duration</b> :<br><input type="text" id="datepicker" name="datefilter" value="" 
+                placeholder="mm/dd/yyyy - mm/dd/yyyy" onfocus="increase_size()" onfocusout="reduce_size()" onchange="change_colour(this)"/></p>
+            <span id="date_info" style="display: none;"><b>Number of days :</b></span>
+            <span id="days" style="display:none; color: crimson;"></span>
+        </div>
+        
             <button id="save"  onmouseover="mouseover()" onmouseout="mouseout()">Save</button>
             <button id="reset" onclick="erase()">Reset</button>
         

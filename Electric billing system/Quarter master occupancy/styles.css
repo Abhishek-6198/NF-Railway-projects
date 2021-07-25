@@ -19,14 +19,43 @@ h1{
     font-size: 3em; 
     position: absolute; 
     top: 12.3em; 
-    left: 13em; 
+    left: 12.2em; 
     display:none;
 }
+
+.fas.fa-angle-right{
+    animation: fadeInAnimation ease 2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    font-size: 3em; 
+    position: absolute; 
+    top: 21em; 
+    left: 12.2em; 
+    display:none;
+}
+
+#date{
+    position: absolute;
+    top:49em;
+    left:10em;
+    font-size: 20px;
+    display: none;
+    border:dotted;
+    border-width: 2px;
+    padding-right: 3em;
+    padding-bottom: 0.5em;
+    padding-top: 0.5em;
+    padding-left: 1em;
+    border-radius: 5px;
+    background-color: rgb(252, 219, 215);
+}
+
+
 
 #box{
     box-shadow: 0 5px 8px 0 rgba(240, 236, 241, 0.26);
     transition: 0.5s;
-    height:30em;
+    height:20em;
     margin-left: 8em;
     margin-top: 7em;
     border-radius: 8px;
@@ -45,6 +74,30 @@ h1{
     border-width: 1px;
     border-radius: 5px;
     background-color: rgb(243, 241, 240);
+}
+
+#employee{
+    display: none;
+    flex-direction: row;
+    border:dotted;
+    margin-top: 6em ;
+    padding-top: 20em;
+    border-width: 1px;
+    border-radius: 5px;
+    background-color: rgb(245, 242, 235);
+    transition: 0.5s;
+}
+
+#quarter_tenure{
+    display: none;
+    flex-direction: row;
+    border:dotted;
+    margin-top: 8em ;
+    padding-top: 15em;
+    border-width: 1px;
+    border-radius: 5px;
+    background-color: rgb(228, 255, 254);
+    transition: 0.5s;
 }
 
 #cln_name{
@@ -117,13 +170,19 @@ h1{
     width: 100%;
 }
 
-td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
+#emp_details td{
+    border: 2px solid #000000;
+    text-align: center;
+    padding: 10px;
+}
+
+#emp_details th{
+    border: 2px solid #000000;
+    text-align: center;
+    padding: 10px;
 }
   
-tr:nth-child(even) {
+#emp_details tr:nth-child(even) {
     background-color: #dddddd;
 }
 
@@ -131,7 +190,7 @@ tr:nth-child(even) {
     font-size: 20px; 
     position: absolute; 
     left: 26em; 
-    top:31.5em; 
+    top:23.5em; 
     border-radius: 12px;
     padding-left: 20px;
     padding-right: 20px;
@@ -142,7 +201,7 @@ tr:nth-child(even) {
     font-size: 20px; 
     position: absolute; 
     left: 59em; 
-    top:31.5em; 
+    top:23.5em; 
     border-radius: 12px;
     padding-left: 20px;
     padding-right: 20px;
@@ -167,6 +226,28 @@ tr:nth-child(even) {
     position: absolute;
     top:21em;
     left:39em;
+    font-size: 20px;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; 
+}
+
+#date_info{
+    animation: fadeInAnimation ease 2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    position: absolute;
+    top:50.7em;
+    left:39em;
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+#days{
+    animation: fadeInAnimation ease 2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    position: absolute;
+    top:50.7em;
+    left:47em;
     font-size: 20px;
     font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; 
 }

@@ -104,19 +104,25 @@ function check(){
         if(arr.length==1){
           document.getElementById("qid").style.display="inline";
           document.getElementById("qrtr_id").style.display="inline";
+          document.getElementById("employee").style.display="flex";
+          document.getElementById("box").style.height="40em";
+          document.getElementById("save").style.top="40em";
+          document.getElementById("reset").style.top="40em";
           /*if(window.innerWidth>=1300)
             document.getElementById("qid").style.left="12em";*/
           $("#qrtr_id").html(response);   
           document.getElementById("emp_info").style.display="block";
-          document.getElementById("box").style.height="40em";
+          //document.getElementById("date").style.display="block";
+          /*document.getElementById("box").style.height="45em";
+          document.getElementById("employee").style.paddingTop="32em";
           if(document.documentElement.clientWidth>280){
             //console.log(document.documentElement.clientWidth);
-            document.getElementById("save").style.top="39.8em";
-            document.getElementById("reset").style.top="39.8em";
+            document.getElementById("save").style.top="44.8em";
+            document.getElementById("reset").style.top="44.8em";
           }else{
             document.getElementById("save").style.top="50em";
             document.getElementById("reset").style.top="50em";
-          }
+          }*/
         }
         else{
           document.getElementById("qid").style.display="none";
@@ -139,6 +145,7 @@ function find_emp(str){
   if(str.value.length===11){
     document.getElementById("emp_info").style.backgroundColor="rgb(194, 219, 235)";
     document.getElementById("emp_info").style.border="groove";
+
     $.ajax({
       url: 'server.php',
       type: 'POST',
@@ -146,6 +153,22 @@ function find_emp(str){
             "emp_no":  str.value},
       //dataType: 'json', 
       success: function(response) { 
+        document.getElementById("date").style.display="block";
+        document.getElementById("box").style.height="85em";
+        document.getElementById("employee").style.paddingTop="18em";
+        document.getElementById("quarter_tenure").style.display="flex";
+        document.getElementById("quarter_tenure").style.paddingTop="30em";
+        document.getElementById("save").style.top="75.5em";
+        document.getElementById("reset").style.top="75.5em";
+        /*if(document.documentElement.clientWidth>280){
+          //console.log(document.documentElement.clientWidth);
+          document.getElementById("save").style.top="44.8em";
+          document.getElementById("reset").style.top="44.8em";
+        }else{
+          document.getElementById("save").style.top="53em";
+          document.getElementById("reset").style.top="53em";
+        }*/
+
         if(document.getElementById("emp_details").rows.length>0)
           $("#emp_details").html("");
         //console.log(typeof(response));
@@ -154,6 +177,7 @@ function find_emp(str){
           var table = document.getElementById("emp_details");
           document.getElementsByClassName("fas fa-arrow-circle-right")[0].style.display="block";
           table.style.display="block";
+
           var row = table.insertRow(0);
           var cell1 = row.insertCell(0);
           var cell2=row.insertCell(1)
@@ -185,6 +209,7 @@ function find_emp(str){
         else{
           document.getElementById("emp_details").style.display="none";
           document.getElementsByClassName("fas fa-arrow-circle-right")[0].style.display="none";
+          document.getElementById("date").style.display="none";
           alert(response);
         }
          
@@ -196,6 +221,7 @@ function find_emp(str){
   else{
     document.getElementById("emp_details").style.display="none";
     document.getElementsByClassName("fas fa-arrow-circle-right")[0].style.display="none";
+    document.getElementById("date").style.display="none";
     alert("Incorrect emp no");
     str.value="";
   }
@@ -212,8 +238,9 @@ function mouseover(){
   var q_no = document.getElementById("quarter_no");
   var emp_no = document.getElementById("emp_no").value;
   var table = document.getElementById("emp_details").style.display;
+  var date = document.getElementById("datepicker").value;
 
-  if(code.selectedIndex <=-1 || type.selectedIndex <=-1 || q_no.selectedIndex <=-1 || emp_no=="" || table=="none")
+  if(code.selectedIndex <=-1 || type.selectedIndex <=-1 || q_no.selectedIndex <=-1 || emp_no=="" || table=="none" || date.length!=23)
       document.getElementById("save").style.backgroundColor="rgba(245, 175, 175, 0.945)";
   else{
       document.getElementById("save").style.backgroundColor="rgb(188, 247, 188)"; 
@@ -265,4 +292,100 @@ function refresh_quarter_no(){
   for (i = length-1; i >= 1; i--) {
     select.options[i] = null;
   }
+}
+
+$(function() {
+
+  $('input[name="datefilter"]').daterangepicker({
+      autoUpdateInput: false,
+      locale: {
+          cancelLabel: 'Clear'
+      }
+  });
+
+  $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
+      $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+      document.getElementById("quarter_tenure").style.paddingTop="15em";
+      document.getElementById("box").style.height="70em";
+      document.getElementById("save").style.top="63.5em";
+      document.getElementById("reset").style.top="63.5em";
+      if($(this).val.length!=0){
+        document.getElementById("date").style.backgroundColor="rgb(238, 223, 241)";
+        document.getElementById("date").style.border="groove";
+      }
+      document.getElementsByClassName("fas fa-angle-right")[0].style.display="block";
+      document.getElementById("days").style.display="block";
+      document.getElementById("date_info").style.display="block";
+      //document.getElementById("date_info").innerHTML="Days :";
+      let days=get_number0fdays($("#datepicker").val());
+      document.getElementById("days").innerHTML=days;
+  });
+
+  $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
+      $(this).val('');
+      document.getElementsByClassName("fas fa-angle-right")[0].style.display="none";
+      document.getElementById("days").style.display="none";
+      document.getElementById("date_info").style.display="none";
+  });
+
+  $('input[name="datefilter"]').on('show.daterangepicker', function(ev, picker) {
+    setTimeout(function(){
+        //alert("You have opened datepicker");
+        document.getElementById("quarter_tenure").style.paddingTop="30em";
+        document.getElementById("box").style.height="85em";
+        document.getElementById("save").style.top="75.5em";
+        document.getElementById("reset").style.top="75.5em";
+    }, 0);
+  });
+
+});
+
+function increase_size(){
+
+    document.getElementById("quarter_tenure").style.paddingTop="30em";
+    document.getElementById("box").style.height="85em";
+    document.getElementById("save").style.top="75.5em";
+    document.getElementById("reset").style.top="75.5em";
+
+}
+
+function reduce_size(){
+  document.getElementById("quarter_tenure").style.paddingTop="15em";
+  document.getElementById("box").style.height="70em";
+  document.getElementById("save").style.top="63.5em";
+  document.getElementById("reset").style.top="63.5em";
+}
+
+function change_colour(str){
+  if (str.value.length===23){
+    document.getElementById("date").style.backgroundColor="rgb(238, 223, 241)";
+    document.getElementById("date").style.border="groove";
+    document.getElementsByClassName("fas fa-angle-right")[0].style.display="block";
+    document.getElementById("days").style.display="block";
+    document.getElementById("date_info").style.display="block";
+    //document.getElementById("date_info").innerHTML="Days :";
+    let days=get_number0fdays($("#datepicker").val());
+    document.getElementById("days").innerHTML=days;
+  }
+  else{
+    document.getElementById("date").style.backgroundColor="rgb(252, 219, 215)";
+    document.getElementById("date").style.border="dotted";
+    document.getElementsByClassName("fas fa-angle-right")[0].style.display="none";
+    document.getElementById("days").style.display="none";
+    document.getElementById("date_info").style.display="none";
+  }
+}
+
+function get_number0fdays(str){
+  const a=str.split("-");
+  var date1 = new Date(a[0]);
+  var date2 = new Date(a[1]);
+    
+  // To calculate the time difference of two dates
+  var Difference_In_Time = date2.getTime() - date1.getTime();
+    
+  // To calculate the no. of days between two dates
+  var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+
+  return Difference_In_Days;
 }
