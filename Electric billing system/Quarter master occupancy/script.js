@@ -244,13 +244,31 @@ function mouseover(){
       document.getElementById("save").style.backgroundColor="rgba(245, 175, 175, 0.945)";
   else{
       document.getElementById("save").style.backgroundColor="rgb(188, 247, 188)"; 
+      const arr=document.getElementById("datepicker").value.split("-");
+      /*var str="";
+      var occ_date="";
+      var vac_date="";
+      for(var i=0; i<2; i++){
+        const a=arr[i].split("/");
+        if(i===0)
+          occ_date=str.concat(a[2],"-",a[0],"-",a[1]);
+        else
+          vac_date=str.concat(a[2],"-",a[0],"-",a[1]);
+        str="";
+      }
+      console.log(occ_date+", "+vac_date);*/
+      let days=get_number0fdays($("#datepicker").val());
       document.getElementById("save").addEventListener("click",function(){
         $.ajax({
           url: 'server.php',
           type: 'POST',
           data: { "input": "register",
                   "emp_no": emp_no,
-                  "qtr_id": $("#qrtr_id").html()}, 
+                  "qtr_id": $("#qrtr_id").html(),
+                  "occ_date": arr[0],
+                  "vac_date":arr[1],
+                  "days":days
+                }, 
           success: function(response) { 
             var c= confirm(response);
             if (c==true||c==false) {          
@@ -380,6 +398,8 @@ function get_number0fdays(str){
   const a=str.split("-");
   var date1 = new Date(a[0]);
   var date2 = new Date(a[1]);
+
+  //console.log(a[0]+" - "+a[1]);
     
   // To calculate the time difference of two dates
   var Difference_In_Time = date2.getTime() - date1.getTime();

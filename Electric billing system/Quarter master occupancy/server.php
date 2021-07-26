@@ -136,8 +136,23 @@
                                 while($row = $result->fetch_assoc()) {
                                     $name=$row["Colony_name"];
                                 }
-                                if($name==$_POST["c_name"] && $type==$_POST["c_type"])
-                                    echo $qid;
+                                if($name==$_POST["c_name"] && $type==$_POST["c_type"]){
+                                    $sql = "SELECT * from `quarter_occupancy` WHERE `Qtr_ID`='".$qid."'";
+                                    $result = $con->query($sql);
+                                    if ($result->num_rows > 0) {
+                                        while($row = $result->fetch_assoc()) {
+                                            $vac_date=$row["Vacation Date"];
+                                            $emp_no=$row["EmpNo"];
+                                        }
+                                        if(date("Y-m-d")>$vac_date)
+                                            echo $qid;
+                                        else{
+                                            echo "The quarter is already registered against ".$emp_no." and will be vacated only after ".date("d/m/Y",strtotime($vac_date)).".";
+                                        }
+                                    }
+                                    else
+                                        echo $qid;
+                                }    
                                 else
                                     echo "This quarter no is registered with the colony name: ".$name." and quarter_type: ".$type.". Please rectify your selection.";
                             }
@@ -188,10 +203,22 @@
                    echo "This employee no is already registered against the quarter ID: ".$qid;
                 }
                 else{
-                    $stmt = $con->prepare("INSERT INTO quarter_occupancy(EmpNo, Qtr_ID) VALUES (?, ?)");
-                    $stmt->bind_param("ss", $_POST["emp_no"], $_POST["qtr_id"]);
+                    //$handle->execute(array(":date"=>date("Y-d-m", strtotime($_POST["occ_date"])), PDO::PARAM_STR));
+                    //var_dump($_POST["occ_date"]);
+                    //echo $_POST["occ_date"];
+                    //$occ_date = DateTime::createFromFormat('Y -d -m', $_POST['occ_date']);
+                    //$vac_date = DateTime::createFromFormat('Y -d -m', $_POST['vac_date']);
+                    $occ_date=date('Y-m-d', strtotime($_POST["occ_date"]));
+                    $vac_date=date('Y-m-d', strtotime($_POST["vac_date"]));
+                    echo $occ_date." ".$vac_date;
+                    $stmt = $con->prepare("INSERT INTO quarter_occupancy(EmpNo, Qtr_ID, `Occupation Date`, `Vacation Date`) 
+                                            VALUES (?, ?, ?, ?)");
+                    $stmt->bind_param("ssss", $_POST["emp_no"], $_POST["qtr_id"], $occ_date, $vac_date);
                     if( $stmt->execute()){
-                        echo "This employee number has been registered against ".$_POST["qtr_id"]." successfully.";
+                        if($_POST["days"]!=0)
+                            echo "The quarter id ".$_POST["qtr_id"]." has been registered against the employee no ".$_POST["emp_no"]." for a period of ".$_POST["days"]." days successfully.";
+                        else
+                            echo "The quarter id ".$_POST["qtr_id"]." has been registered against the employee no ".$_POST["emp_no"]." for today itself.";
                     }
                     else{
                         echo $con->error;
