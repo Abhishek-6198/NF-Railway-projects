@@ -118,45 +118,39 @@
             }
         }
         elseif($_POST["input"] == "is it registered?"){
-
+            $details=array();
             if(!$connection)
                     echo "Connection to database failed! Please try again";
             else{
                     $sql = "SELECT * from `quarter_master_entry` WHERE `Qtr_No`='".$_POST["q_no"]."'";
                     $result = $con->query($sql);
                     if ($result->num_rows > 0) {
-                            while($row = $result->fetch_assoc()) {
-                                $qid=$row["Qtr_ID"];
-                                $type=$row["Qtr_type"];
-                                $code=$row["Colony_code"];
-                            }
-                            $sql = "SELECT * from `colony_master` WHERE `Colony_code`='".$code."'";
+                        while($row = $result->fetch_assoc()) {
+                            array_push($details,$row["Qtr_ID"]);
+                        }
+
+                        if(count($details)==1){
+                            $sql="SELECT * from `quarter_occupancy` WHERE `Qtr_ID`='".$details[0]."' AND `Vacation Date` IS NULL";
                             $result = $con->query($sql);
                             if ($result->num_rows > 0) {
                                 while($row = $result->fetch_assoc()) {
-                                    $name=$row["Colony_name"];
+                                    array_push($details,$row["Occupation Date"]);
+                                    array_push($details,$row["EmpNo"]);
                                 }
-                                if($name==$_POST["c_name"] && $type==$_POST["c_type"]){
-                                    $sql = "SELECT * from `quarter_occupancy` WHERE `Qtr_ID`='".$qid."'";
-                                    $result = $con->query($sql);
-                                    if ($result->num_rows > 0) {
-                                        while($row = $result->fetch_assoc()) {
-                                            $vac_date=$row["Vacation Date"];
-                                            $emp_no=$row["EmpNo"];
-                                        }
-                                        if(date("Y-m-d")>$vac_date)
-                                            echo $qid;
-                                        else{
-                                            echo "The quarter is already registered against ".$emp_no." and will be vacated only after ".date("d/m/Y",strtotime($vac_date)).".";
-                                        }
+
+                                $sql="SELECT * from `employee_master` WHERE `EmpNo`='".$details[2]."'";
+                                $result = $con->query($sql);
+                                if ($result->num_rows > 0) {
+                                    while($row = $result->fetch_assoc()) {
+                                        array_push($details,$row["Name"]);
                                     }
-                                    else
-                                        echo $qid;
-                                }    
-                                else
-                                    echo "This quarter no is registered with the colony name: ".$name." and quarter_type: ".$type.". Please rectify your selection.";
+                                    
+                                }
+
                             }
-                            
+                        }
+                        //echo $qid;
+                        echo json_encode($details);
                     }
                     else
                         echo "This quarter no is not yet registered.";
@@ -183,7 +177,17 @@
                         //echo "<tr><td>".$name."</td><td>".$des."</td><td>".$billunit."</td><td>".$station."</td></tr>";
                     } 
                    // echo "</table>";
-                   echo json_encode($array);
+                   //echo json_encode($array);
+
+                   $sql="SELECT * from `quarter_occupancy`WHERE `EmpNo`='".$_POST["emp_no"]."' AND `Vacation Date` IS NULL";
+                   $result = $con->query($sql);
+                    if ($result->num_rows > 0) {
+                        while($row = $result->fetch_assoc()) {
+                            array_push($array,$row["Qtr_ID"]);
+                            array_push($array,$row["Occupation Date"]);
+                        }
+                    }
+                    echo json_encode($array);
                 }
                 else{
                     echo "No employee information is registered for this no.";
@@ -191,40 +195,49 @@
             }
         }
         elseif($_POST["input"] == "register"){
+            //$flag=false;
             if(!$connection)
                 echo "Connection to database failed! Please try again";
             else{
-                $sql = "SELECT * from `quarter_occupancy` WHERE `EmpNo`='".$_POST["emp_no"]."'";
-                $result = $con->query($sql);
-                if ($result->num_rows > 0) {
-                    while($row = $result->fetch_assoc()) {
-                        $qid=$row["Qtr_ID"];
-                    } 
-                   echo "This employee no is already registered against the quarter ID: ".$qid;
+                if(isset($_POST["count"])){
+                    $sql="SELECT * FROM `employee_master` WHERE `Name`= '".$_POST["emp_name"]."'";
+                    $result = $con->query($sql);
+                    if ($result->num_rows > 0) {
+                        while($row = $result->fetch_assoc()) {
+                            $number=$row["EmpNo"];
+                        }
+                        $sql="UPDATE `quarter_occupancy` SET `Vacation Date`=? WHERE `Qtr_ID`= '".$_POST["qtr_id"]. "' AND (`EmpNo`= '".$number."' AND `Vacation Date`IS NULL)";
+                        $statement = $con->prepare($sql);
+                        //echo $_POST["occ_date"];
+                        $statement->bind_param("s",$_POST["vac_date"]);
+                        if($statement->execute())
+                            echo "Vacation date ".$_POST["vac_date"]." added for emp no ".$number." occupying qtr id ".$_POST["qtr_id"];
+                        else
+                            $con->error();
+                    }
                 }
                 else{
-                    //$handle->execute(array(":date"=>date("Y-d-m", strtotime($_POST["occ_date"])), PDO::PARAM_STR));
-                    //var_dump($_POST["occ_date"]);
-                    //echo $_POST["occ_date"];
-                    //$occ_date = DateTime::createFromFormat('Y -d -m', $_POST['occ_date']);
-                    //$vac_date = DateTime::createFromFormat('Y -d -m', $_POST['vac_date']);
-                    $occ_date=date('Y-m-d', strtotime($_POST["occ_date"]));
-                    $vac_date=date('Y-m-d', strtotime($_POST["vac_date"]));
-                    echo $occ_date." ".$vac_date;
-                    $stmt = $con->prepare("INSERT INTO quarter_occupancy(EmpNo, Qtr_ID, `Occupation Date`, `Vacation Date`) 
-                                            VALUES (?, ?, ?, ?)");
-                    $stmt->bind_param("ssss", $_POST["emp_no"], $_POST["qtr_id"], $occ_date, $vac_date);
-                    if( $stmt->execute()){
-                        if($_POST["days"]!=0)
-                            echo "The quarter id ".$_POST["qtr_id"]." has been registered against the employee no ".$_POST["emp_no"]." for a period of ".$_POST["days"]." days successfully.";
+                    if(!isset($_POST["occ_date"])){
+                        $sql="UPDATE `quarter_occupancy` SET `Vacation Date`=? WHERE `Qtr_ID`= '".$_POST["qtr_id"]. "' AND (`EmpNo`= '".$_POST["emp_no"]."' AND `Vacation Date`IS NULL)";
+                        $statement = $con->prepare($sql);
+                        //echo $_POST["occ_date"];
+                        $statement->bind_param("s",$_POST["vac_date"]);
+                        if($statement->execute())
+                            echo "Vacation date ".$_POST["vac_date"]." added for emp no ".$_POST["emp_no"]." occupying qtr id ".$_POST["qtr_id"];
                         else
-                            echo "The quarter id ".$_POST["qtr_id"]." has been registered against the employee no ".$_POST["emp_no"]." for today itself.";
+                            $con->error();
+
                     }
                     else{
-                        echo $con->error;
+                        $stmt = $con->prepare("INSERT INTO `quarter_occupancy`(`EmpNo`,`Qtr_ID`,`Occupation Date`) 
+                                                            VALUES (?, ?, ?)");
+                        $stmt->bind_param("sss", $_POST["emp_no"], $_POST["qtr_id"], $_POST["occ_date"]);
+                        if( $stmt->execute()){
+                            echo $_POST["emp_no"]." has successfully occupied the quarter ".$_POST["qtr_id"]." on ".$_POST["occ_date"];
+                        }
+                        else
+                            $con->error();
                     }
-
-                    $stmt->close();
                 }
             }
         }

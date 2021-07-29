@@ -1,18 +1,20 @@
+var counter=0;
+var count1=0;
+var count2=0;
+var count3=0;
+var count4=0;
 function get_names() {
     let $select = $("#colony_name");
     //refresh_colony_name();
     $.ajax({
       url: 'server.php',
       type: 'POST',
-      data: { "input": "names" }, // should 'code' be a variable...?
-      dataType: 'json', // add this property to avoid the need to call JSON.parse in success
+      data: { "input": "names" }, 
+      dataType: 'json', 
       success: function(response) {
         let selectedValue = $select.val();
         let html = response.filter((e, i, a) => a.indexOf(e) === i).map(item => `<option value="${item}">${item}</option>`);
         $select.html(html).val(selectedValue);
-        document.getElementById("cln_name").style.backgroundColor="rgb(188, 247, 188)";
-        document.getElementById("cln_name").style.border="groove";
-        //document.getElementById("colony_name").disabled=true;
       },
       complete: function() {}
     });
@@ -33,7 +35,7 @@ function get_types() {
           if(response[i].includes("No")){
             flag=true;
             var c= confirm(response[i]);
-                if (c==true||c==false) {
+                if (c==true) {
                   window.open("http://localhost//Electric%20billing%20system/Quarter%20master%20entry/index.html");
                 } 
           }
@@ -42,8 +44,6 @@ function get_types() {
           let selectedValue = $select.val();
           let html = response.filter((e, i, a) => a.indexOf(e) === i).map(item => `<option value="${item}">${item}</option>`);
           $select.html(html).val(selectedValue);
-          document.getElementById("cln_type").style.backgroundColor="rgb(188, 247, 188)";
-          document.getElementById("cln_type").style.border="groove";
         }
       },
       complete: function() {}
@@ -66,7 +66,7 @@ function get_numbers() {
         if(response[i].includes("No")){
           flag=true;
           var c= confirm(response[i]);
-              if (c==true||c==false) {
+              if (c==true) {
                 window.open("http://localhost//Electric%20billing%20system/Quarter%20master%20entry/index.html");
               } 
         }
@@ -75,8 +75,6 @@ function get_numbers() {
         let selectedValue = $select.val();
         let html = response.filter((e, i, a) => a.indexOf(e) === i).map(item => `<option value="${item}">${item}</option>`);
         $select.html(html).val(selectedValue);
-        document.getElementById("qrtr_no").style.backgroundColor="rgb(188, 247, 188)";
-        document.getElementById("qrtr_no").style.border="groove";
       }
     },
     complete: function() {}
@@ -98,36 +96,91 @@ function check(){
               "c_name":  colony_name,
               "c_type": colony_type,
               "q_no": quarter_no}, // should 'code' be a variable...?
-      success: function(response) { 
-        $("#qrtr_id").html("");
-        const arr=response.split(" ");       
-        if(arr.length==1){
-          document.getElementById("qid").style.display="inline";
-          document.getElementById("qrtr_id").style.display="inline";
-          document.getElementById("employee").style.display="flex";
-          document.getElementById("box").style.height="40em";
-          document.getElementById("save").style.top="40em";
-          document.getElementById("reset").style.top="40em";
-          /*if(window.innerWidth>=1300)
-            document.getElementById("qid").style.left="12em";*/
-          $("#qrtr_id").html(response);   
-          document.getElementById("emp_info").style.display="block";
-          //document.getElementById("date").style.display="block";
-          /*document.getElementById("box").style.height="45em";
-          document.getElementById("employee").style.paddingTop="32em";
-          if(document.documentElement.clientWidth>280){
-            //console.log(document.documentElement.clientWidth);
-            document.getElementById("save").style.top="44.8em";
-            document.getElementById("reset").style.top="44.8em";
-          }else{
-            document.getElementById("save").style.top="50em";
-            document.getElementById("reset").style.top="50em";
-          }*/
+      success: function(response) {
+
+        document.getElementById("colony_name").disabled=true;
+        document.getElementById("colony_type").disabled=true;
+        document.getElementById("quarter_no").disabled=true;
+        //const arr=JSON.parse(response);
+        //alert(arr.length);
+
+        var input = document.createElement("input");
+        input.type = "text";
+
+        var table = document.getElementById("quarter_details");
+
+        if(response[0]=='['){ // Vac=null
+          const arr=JSON.parse(response);
+          if(arr.length!=1){
+            input.placeholder="dd/mm/yyyy";
+            count1+=1;
+            console.log("count1");
+            input.id="vac";
+            
+            var row = table.insertRow(3);
+            var cell1 = row.insertCell(0);
+            var cell2=row.insertCell(1);
+
+            var row = table.insertRow(4);
+            var cell3 = row.insertCell(0);
+            var cell4=row.insertCell(1);
+
+            var row = table.insertRow(5);
+            var cell5 = row.insertCell(0);
+            var cell6=row.insertCell(1);
+
+            var row = table.insertRow(6);
+            var cell7 = row.insertCell(0);
+            var cell8=row.insertCell(1);
+
+            cell1.innerHTML="Occupied Quarter:"
+            cell2.innerHTML=arr[0];
+
+            cell3.innerHTML="Qccupied by:";
+            cell4.innerHTML=arr[3];
+
+            cell5.innerHTML="Occupied on:";
+            cell6.innerHTML=arr[1];
+
+            cell7.innerHTML="<b>Date of vacation:</b>";
+            cell8.appendChild(input);
+
+            document.getElementById("save").style.top="53em";
+            document.getElementById("reset").style.top="53em";
+
+            input.addEventListener("change",() => check_date());
+          }
+          else{ //all vacated
+            count2+=0;
+            console.log("count2");
+            input.id="emp_no";
+            input.placeholder="Your 11 digit emp no";
+            //document.getElementById("emp_no").disabled=false;
+            //input.onchange=find_emp(input.value);
+            //input.onkeyup=forceUpper(input.value);
+            input.size=20;
+            input.addEventListener("change",() => find_emp(input.value));
+            input.addEventListener("keyup",() => input.value=input.value.toUpperCase());
+
+            var row = table.insertRow(3);
+            var cell1 = row.insertCell(0); //Quarter ID
+            var cell2=row.insertCell(1);
+
+            cell1.innerHTML="Quarter ID:";
+            cell2.innerHTML=arr[0];
+
+            var row = table.insertRow(4);
+            var cell3 = row.insertCell(0); //Employee No
+            var cell4=row.insertCell(1);
+
+            cell3.innerHTML="<b>Employee No:</b>";
+            cell4.appendChild(input); 
+
+            document.getElementById("save").style.top="45em";
+            document.getElementById("reset").style.top="45em";
+          }
         }
         else{
-          document.getElementById("qid").style.display="none";
-          document.getElementById("qrtr_id").style.display="none";
-          document.getElementById("emp_info").style.display="none"
           alert(response);
         }
       },
@@ -136,80 +189,104 @@ function check(){
   }
 }
 
-function forceUpper(strInput) 
-{
-  strInput.value=strInput.value.toUpperCase();
-}
 
 function find_emp(str){
-  if(str.value.length===11){
-    document.getElementById("emp_info").style.backgroundColor="rgb(194, 219, 235)";
-    document.getElementById("emp_info").style.border="groove";
+  
+  if(str.length===11){
 
+    var input = document.createElement("input");
+    input.type = "text";
+    input.placeholder="dd/mm/yyyy";
+    
     $.ajax({
       url: 'server.php',
       type: 'POST',
       data: { "input": "emp",
-            "emp_no":  str.value},
+              "emp_no":  str},
       //dataType: 'json', 
       success: function(response) { 
-        document.getElementById("date").style.display="block";
-        document.getElementById("box").style.height="85em";
-        document.getElementById("employee").style.paddingTop="18em";
-        document.getElementById("quarter_tenure").style.display="flex";
-        document.getElementById("quarter_tenure").style.paddingTop="30em";
-        document.getElementById("save").style.top="75.5em";
-        document.getElementById("reset").style.top="75.5em";
-        /*if(document.documentElement.clientWidth>280){
-          //console.log(document.documentElement.clientWidth);
-          document.getElementById("save").style.top="44.8em";
-          document.getElementById("reset").style.top="44.8em";
-        }else{
-          document.getElementById("save").style.top="53em";
-          document.getElementById("reset").style.top="53em";
-        }*/
-
-        if(document.getElementById("emp_details").rows.length>0)
-          $("#emp_details").html("");
         //console.log(typeof(response));
         if(response[0]=='['){
+          document.getElementById("emp_no").disabled=true;
           const arr=JSON.parse(response);
-          var table = document.getElementById("emp_details");
-          document.getElementsByClassName("fas fa-arrow-circle-right")[0].style.display="block";
-          table.style.display="block";
+          var table = document.getElementById("quarter_details");
+          //table.style.display="block";
+          if(arr.length==4){ //employee doesn't have any occupied quarters
+            count3+=1;
+            console.log("count3");
+            var row = table.insertRow(5);
+            var cell1 = row.insertCell(0);
+            var cell2=row.insertCell(1);
 
-          var row = table.insertRow(0);
-          var cell1 = row.insertCell(0);
-          var cell2=row.insertCell(1)
+            var row1=table.insertRow(6)
+            var cell3 = row1.insertCell(0);
+            var cell4=row1.insertCell(1);
 
-          var row1=table.insertRow(1)
-          var cell3 = row1.insertCell(0);
-          var cell4=row1.insertCell(1);
+            var row2=table.insertRow(7)
+            var cell5 = row2.insertCell(0);
+            var cell6 = row2.insertCell(1);
 
-          var row2=table.insertRow(2)
-          var cell5 = row2.insertCell(0);
-          var cell6 = row2.insertCell(1);
+            var row3=table.insertRow(8)
+            var cell7 = row3.insertCell(0);
+            var cell8 = row3.insertCell(1);
 
-          var row3=table.insertRow(3)
-          var cell7 = row3.insertCell(0);
-          var cell8 = row3.insertCell(1);
+            var row4=table.insertRow(9)
+            var cell9 = row4.insertCell(0);
+            var cell10 = row4.insertCell(1);
 
-          cell1.innerHTML="<b>Name</b>";
-          cell2.innerHTML=arr[0];
+            cell1.innerHTML="Name:";
+            cell2.innerHTML=arr[0];
 
-          cell3.innerHTML="<b>Designation</b>";
-          cell4.innerHTML=arr[1];
+            cell3.innerHTML="Designation:";
+            cell4.innerHTML=arr[1];
 
-          cell5.innerHTML="<b>Billunit</b>";
-          cell6.innerHTML=arr[2];
+            cell5.innerHTML="Billunit:";
+            cell6.innerHTML=arr[2];
 
-          cell7.innerHTML="<b>Station</b>";
-          cell8.innerHTML=arr[3];
+            cell7.innerHTML="Station:";
+            cell8.innerHTML=arr[3];
+
+            cell9.innerHTML="<b>Date of occupancy:</b>";
+            cell10.appendChild(input);
+            input.id="occ";
+            input.addEventListener("change",() => check_date());
+            document.getElementById("save").style.top="53em";
+            document.getElementById("reset").style.top="53em";
+          }
+          else if(arr.length>4){ //employee has occupied quarters
+            count4+=1;
+            console.log("count4");
+            input.id="vac";
+
+            var row = table.insertRow(5);
+            var cell1 = row.insertCell(0);
+            var cell2=row.insertCell(1);
+
+            var row1=table.insertRow(6)
+            var cell3 = row1.insertCell(0);
+            var cell4=row1.insertCell(1);
+
+            var row2=table.insertRow(7)
+            var cell5 = row2.insertCell(0);
+            var cell6=row2.insertCell(1);
+
+            cell1.innerHTML="Quarter occupied:";
+            cell2.innerHTML=arr[4];
+
+            cell3.innerHTML="Occupied on:";
+            cell4.innerHTML=arr[5];
+
+            cell5.innerHTML="<b>Date of Vacation:</b>";
+            cell6.appendChild(input);
+            input.addEventListener("change",() => check_date());
+            document.getElementById("save").style.top="53em";
+            document.getElementById("reset").style.top="53em";
+
+            alert("The quarter "+table.rows[3].cells.item(1).innerHTML+" will not be  available for occupation as the employee has an unvacated quarter "+table.rows[5].cells.item(1).innerHTML)
+          }
         }
         else{
-          document.getElementById("emp_details").style.display="none";
-          document.getElementsByClassName("fas fa-arrow-circle-right")[0].style.display="none";
-          document.getElementById("date").style.display="none";
+          document.getElementById("emp_no").value="";
           alert(response);
         }
          
@@ -219,56 +296,62 @@ function find_emp(str){
     });
   }
   else{
-    document.getElementById("emp_details").style.display="none";
-    document.getElementsByClassName("fas fa-arrow-circle-right")[0].style.display="none";
-    document.getElementById("date").style.display="none";
-    alert("Incorrect emp no");
+    //alert("Incorrect emp no");
     str.value="";
   }
     
 }
 
-function mouseout(){
-  document.getElementById("save").style.backgroundColor="white";
+function check_date(){
+  if(count1>0){
+
+  var dateParts = document.getElementById("vac").value;
+  var dateparts2=document.getElementById("quarter_details").rows[5].cells.item(1).innerHTML;
+
+  if(parseDateStringToObject(dateParts)>parseDateStringToObject(dateparts2)){
+    document.getElementById("save").disabled=false;
+  }
+  }
+  else if(count2>0 || count3>0){
+      var dateParts = document.getElementById("occ").value;
+      //console.log(parseDateStringToObject(dateParts).toString().length);
+      if(parseDateStringToObject(dateParts).toString().length>10)
+        document.getElementById("save").disabled=false;
+  }
+  else if(count4>0){
+  
+  var dateParts = document.getElementById("vac").value;
+  var dateParts2 = document.getElementById("quarter_details").rows[6].cells.item(1).innerHTML;
+  if(parseDateStringToObject(dateParts)>parseDateStringToObject(dateParts2))
+    document.getElementById("save").disabled=false;
+  
+}
 }
 
-function mouseover(){
-  var code = document.getElementById("colony_name");
-  var type = document.getElementById("colony_type");
-  var q_no = document.getElementById("quarter_no");
-  var emp_no = document.getElementById("emp_no").value;
-  var table = document.getElementById("emp_details").style.display;
-  var date = document.getElementById("datepicker").value;
+function send_message(){
 
-  if(code.selectedIndex <=-1 || type.selectedIndex <=-1 || q_no.selectedIndex <=-1 || emp_no=="" || table=="none" || date.length!=23)
-      document.getElementById("save").style.backgroundColor="rgba(245, 175, 175, 0.945)";
-  else{
-      document.getElementById("save").style.backgroundColor="rgb(188, 247, 188)"; 
-      const arr=document.getElementById("datepicker").value.split("-");
-      /*var str="";
-      var occ_date="";
-      var vac_date="";
-      for(var i=0; i<2; i++){
-        const a=arr[i].split("/");
-        if(i===0)
-          occ_date=str.concat(a[2],"-",a[0],"-",a[1]);
-        else
-          vac_date=str.concat(a[2],"-",a[0],"-",a[1]);
-        str="";
+      var datum={"input": "register"};
+      if(count1>0){
+        datum["qtr_id"] = document.getElementById("quarter_details").rows[3].cells.item(1).innerHTML;
+        datum["emp_name"]=document.getElementById("quarter_details").rows[4].cells.item(1).innerHTML;
+        datum["count"]="count1";
+        datum["vac_date"] = document.getElementById("vac").value;
       }
-      console.log(occ_date+", "+vac_date);*/
-      let days=get_number0fdays($("#datepicker").val());
-      document.getElementById("save").addEventListener("click",function(){
+      else if(count3>0){
+        datum["emp_no"]=document.getElementById("emp_no").value;
+        datum["qtr_id"]=document.getElementById("quarter_details").rows[3].cells.item(1).innerHTML;
+        datum["occ_date"]=document.getElementById("occ").value;
+      }
+      else if(count4>0){
+        datum["emp_no"]=document.getElementById("emp_no").value;;
+        datum["qtr_id"]=document.getElementById("quarter_details").rows[5].cells.item(1).innerHTML;
+        datum["vac_date"] = document.getElementById("vac").value;
+      }
+      console.log(datum);
         $.ajax({
           url: 'server.php',
           type: 'POST',
-          data: { "input": "register",
-                  "emp_no": emp_no,
-                  "qtr_id": $("#qrtr_id").html(),
-                  "occ_date": arr[0],
-                  "vac_date":arr[1],
-                  "days":days
-                }, 
+          data: datum, 
           success: function(response) { 
             var c= confirm(response);
             if (c==true||c==false) {          
@@ -277,11 +360,8 @@ function mouseover(){
           },
           complete: function() {}
         });
-
-
-
-      })
-  }
+      
+  
 }
 
 function erase(){
@@ -312,100 +392,16 @@ function refresh_quarter_no(){
   }
 }
 
-$(function() {
-
-  $('input[name="datefilter"]').daterangepicker({
-      autoUpdateInput: false,
-      locale: {
-          cancelLabel: 'Clear'
-      }
-  });
-
-  $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
-      $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
-      document.getElementById("quarter_tenure").style.paddingTop="15em";
-      document.getElementById("box").style.height="70em";
-      document.getElementById("save").style.top="63.5em";
-      document.getElementById("reset").style.top="63.5em";
-      if($(this).val.length!=0){
-        document.getElementById("date").style.backgroundColor="rgb(238, 223, 241)";
-        document.getElementById("date").style.border="groove";
-      }
-      document.getElementsByClassName("fas fa-angle-right")[0].style.display="block";
-      document.getElementById("days").style.display="block";
-      document.getElementById("date_info").style.display="block";
-      //document.getElementById("date_info").innerHTML="Days :";
-      let days=get_number0fdays($("#datepicker").val());
-      document.getElementById("days").innerHTML=days;
-  });
-
-  $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
-      $(this).val('');
-      document.getElementsByClassName("fas fa-angle-right")[0].style.display="none";
-      document.getElementById("days").style.display="none";
-      document.getElementById("date_info").style.display="none";
-  });
-
-  $('input[name="datefilter"]').on('show.daterangepicker', function(ev, picker) {
-    setTimeout(function(){
-        //alert("You have opened datepicker");
-        document.getElementById("quarter_tenure").style.paddingTop="30em";
-        document.getElementById("box").style.height="85em";
-        document.getElementById("save").style.top="75.5em";
-        document.getElementById("reset").style.top="75.5em";
-    }, 0);
-  });
-
-});
-
-function increase_size(){
-
-    document.getElementById("quarter_tenure").style.paddingTop="30em";
-    document.getElementById("box").style.height="85em";
-    document.getElementById("save").style.top="75.5em";
-    document.getElementById("reset").style.top="75.5em";
-
+function show_table(){
+ 
+  counter+=1;
+  if(counter%2!=0)
+    document.getElementById("emp_details").style.display="block";
+  else
+    document.getElementById("emp_details").style.display="none";
 }
 
-function reduce_size(){
-  document.getElementById("quarter_tenure").style.paddingTop="15em";
-  document.getElementById("box").style.height="70em";
-  document.getElementById("save").style.top="63.5em";
-  document.getElementById("reset").style.top="63.5em";
-}
-
-function change_colour(str){
-  if (str.value.length===23){
-    document.getElementById("date").style.backgroundColor="rgb(238, 223, 241)";
-    document.getElementById("date").style.border="groove";
-    document.getElementsByClassName("fas fa-angle-right")[0].style.display="block";
-    document.getElementById("days").style.display="block";
-    document.getElementById("date_info").style.display="block";
-    //document.getElementById("date_info").innerHTML="Days :";
-    let days=get_number0fdays($("#datepicker").val());
-    document.getElementById("days").innerHTML=days;
-  }
-  else{
-    document.getElementById("date").style.backgroundColor="rgb(252, 219, 215)";
-    document.getElementById("date").style.border="dotted";
-    document.getElementsByClassName("fas fa-angle-right")[0].style.display="none";
-    document.getElementById("days").style.display="none";
-    document.getElementById("date_info").style.display="none";
-  }
-}
-
-function get_number0fdays(str){
-  const a=str.split("-");
-  var date1 = new Date(a[0]);
-  var date2 = new Date(a[1]);
-
-  //console.log(a[0]+" - "+a[1]);
-    
-  // To calculate the time difference of two dates
-  var Difference_In_Time = date2.getTime() - date1.getTime();
-    
-  // To calculate the no. of days between two dates
-  var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-
-  return Difference_In_Days;
+function parseDateStringToObject(dateStr) {
+  const [day, month, year] = dateStr.split('/');
+  return new Date(`${month}-${day}-${year}`);
 }

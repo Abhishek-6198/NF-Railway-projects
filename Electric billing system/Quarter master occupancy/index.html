@@ -16,42 +16,34 @@
 </head>
 <body>
 
-    <h1><b>Quarter Occupancy Entry</b></h1>
-    <div id="box">
-        <div id="quarter">
-            <p id="cln_name"><b>Colony name</b> :<br><select name="colony_name" id="colony_name" style="width:15em;" onclick="get_names()" onchange="check()">
+    <h2>Quarter Occupancy Entry</h2>
+
+    <table id="quarter_details" border="2">
+        <tr>
+            <td><b>Colony name:</b></td>
+            <td><select name="colony_name" id="colony_name"  onclick="get_names()" onchange="check()">
                 <option value="default" selected="selected_code">Select your colony name</option>
-            </select></p>
-            <p id="cln_type"><b>Type</b> :<br><select name="colony_type" id="colony_type" onclick="get_types()" onchange="check()">
+            </select></td>
+        </tr>
+
+        <tr>
+            <td><b>Quarter type:</b></td>
+            <td><select name="colony_type" id="colony_type" onclick="get_types()" onchange="check()">
                 <option value="default" selected="selected_type">Select your quarter type</option>
-            </select></p>
-            <p id="qrtr_no"><b>Quarter No</b> :<br><select name="quarter_no" id="quarter_no" onclick="get_numbers()" onchange="check()">
+            </select></td>
+        </tr>
+
+        <tr>
+            <td><b>Quarter No:</b></td>
+            <td><select name="quarter_no" id="quarter_no" onclick="get_numbers()" onchange="check()">
                 <option value="default" selected="selected_type">Select your quarter no</option>
-            </select></p>
-        </div>
+            </select></td>
+        </tr>
 
-            <span id="qid" style="display: none;"><b>Quarter-ID :</b>&nbsp;</span>
-            <span id="qrtr_id" style="display:none; color: crimson;"></span><br>
-            
-        <div id="employee">
-            <p id="emp_info" style="display: none;"><b>Employee No</b> :<br><input id="emp_no" type="text" size="20" onkeyup="forceUpper(this)"
-                onchange="find_emp(this)"></input></p>
-            <table id="emp_details" style="display: none;"></table>
-            <i class="fas fa-arrow-circle-right"></i>
-        </div>
-
-        <div id="quarter_tenure">
-            <i class="fas fa-angle-right"></i>
-            <p id="date"><b>Occupancy Duration</b> :<br><input type="text" id="datepicker" name="datefilter" value="" 
-                placeholder="mm/dd/yyyy - mm/dd/yyyy" onfocus="increase_size()" onfocusout="reduce_size()" onchange="change_colour(this)"/></p>
-            <span id="date_info" style="display: none;"><b>Number of days :</b></span>
-            <span id="days" style="display:none; color: crimson;"></span>
-        </div>
-        
-            <button id="save"  onmouseover="mouseover()" onmouseout="mouseout()">Save</button>
+    </table>
+            <button id="save"  onclick="send_message()" disabled>Save</button>
             <button id="reset" onclick="erase()">Reset</button>
-        
-    </div>
+
     
     
 </body>
