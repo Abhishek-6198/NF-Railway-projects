@@ -80,9 +80,9 @@ function get_qid(){
             $.ajax({
                 url: 'index_backend.php',
                 type: 'POST',
-                data: { "input": "id","name": colony_name, 
+                data: { "input": "id","name": document.getElementById("colony_code").value, 
                                       "number": document.getElementById("qtr_no").value,
-                                      "type": colony_type}, // should 'code' be a variable...?
+                                      "type": document.getElementById("colony_type").value}, // should 'code' be a variable...?
                 success: function(response) {
                     //console.log(response.length);
                     if(response.includes("0")){
