@@ -4,7 +4,7 @@ body{
 
 #quarter_details{
     position: absolute;
-    top:15em;
+    top:10em;
     left:25em;
     width:50em;
 }
@@ -13,6 +13,7 @@ body{
 
 #quarter_details td{
     height:40px;
+    text-align: center;
 }
 
 
@@ -20,18 +21,113 @@ body{
 #save{
     position: absolute;
     border: 5px;
-    top:36em;
-    left:40em;
+    top:25em;
+    left:35em;
+    font-size: medium;
 }
 
 #reset{
     position: absolute;
-    top:36em;
-    left:68em;
+    top:25em;
+    left:63em;
     border: 5px;
+    font-size: medium;
 }
 
 h2{
     text-align: center;
     background-color: lightblue;
 }
+
+@media (min-width:320px)  { 
+    /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */ 
+    #quarter_details{
+        left:28px;
+        width:15em;
+    }
+
+    #save{
+        left:3em;
+    }
+
+    #reset{
+        left:14em;
+    }
+
+}
+@media (min-width:480px)  { 
+    /* smartphones, Android phones, landscape iPhone */ 
+    #quarter_details{
+        left:4em;
+        width:15em;
+    }
+
+    #save{
+        left:5em;
+    }
+
+    #reset{
+        left:16em;
+    }
+}
+@media (min-width:600px)  { 
+    /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */ 
+    #quarter_details{
+        left:8em;
+        width:17em;
+    }
+
+    #save{
+        left:9em;
+    }
+
+    #reset{
+        left:23em;
+    }
+}
+@media (min-width:801px)  { 
+    /* tablet, landscape iPad, lo-res laptops ands desktops */ 
+    #quarter_details{
+        left:15em;
+        width:20em;
+    }
+
+    #save{
+        left:16em;
+    }
+
+    #reset{
+        left:32em;
+    }
+
+}
+@media (min-width:1025px) { 
+    /* big landscape tablets, laptops, and desktops */
+    #quarter_details{
+        left:15em;
+        width:32em;
+    }
+
+    #save{
+        left:16em;
+    }
+
+    #reset{
+        left:40em;
+    } 
+}
+@media (min-width:1281px) { 
+    /* hi-res laptops and desktops */
+    #quarter_details{
+        left:25em;
+        width:50em;
+    }
+
+    #save{
+        left:35em;
+    }
+
+    #reset{
+        left:63em;
+    } 
+ }

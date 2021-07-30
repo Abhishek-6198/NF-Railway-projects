@@ -133,7 +133,7 @@ function check(){
             var cell7 = row.insertCell(0);
             var cell8=row.insertCell(1);
 
-            cell1.innerHTML="Occupied Quarter:"
+            cell1.innerHTML="Occupied Quarter ID:"
             cell2.innerHTML=arr[0];
 
             cell3.innerHTML="Qccupied by:";
@@ -144,9 +144,12 @@ function check(){
 
             cell7.innerHTML="<b>Date of vacation:</b>";
             cell8.appendChild(input);
+            input.style.textAlign="center";
 
-            document.getElementById("save").style.top="53em";
-            document.getElementById("reset").style.top="53em";
+            input.autocomplete="off";
+
+            document.getElementById("save").style.top="32em";
+            document.getElementById("reset").style.top="32em";
 
             input.addEventListener("change",() => check_date());
           }
@@ -155,6 +158,7 @@ function check(){
             console.log("count2");
             input.id="emp_no";
             input.placeholder="Your 11 digit emp no";
+            input.autocomplete="off";
             //document.getElementById("emp_no").disabled=false;
             //input.onchange=find_emp(input.value);
             //input.onkeyup=forceUpper(input.value);
@@ -175,9 +179,9 @@ function check(){
 
             cell3.innerHTML="<b>Employee No:</b>";
             cell4.appendChild(input); 
-
-            document.getElementById("save").style.top="45em";
-            document.getElementById("reset").style.top="45em";
+            input.style.textAlign="center";
+            document.getElementById("save").style.top="28em";
+            document.getElementById("reset").style.top="28em";
           }
         }
         else{
@@ -248,10 +252,12 @@ function find_emp(str){
 
             cell9.innerHTML="<b>Date of occupancy:</b>";
             cell10.appendChild(input);
+            input.style.textAlign="center";
+            input.autocomplete="off";
             input.id="occ";
             input.addEventListener("change",() => check_date());
-            document.getElementById("save").style.top="53em";
-            document.getElementById("reset").style.top="53em";
+            document.getElementById("save").style.top="39em";
+            document.getElementById("reset").style.top="39em";
           }
           else if(arr.length>4){ //employee has occupied quarters
             count4+=1;
@@ -270,7 +276,11 @@ function find_emp(str){
             var cell5 = row2.insertCell(0);
             var cell6=row2.insertCell(1);
 
-            cell1.innerHTML="Quarter occupied:";
+            var text=table.rows[3].cells.item(1).innerHTML;
+            text=text.strike();
+            table.rows[3].cells.item(1).innerHTML=text;
+
+            cell1.innerHTML="Quarter ID occupied:";
             cell2.innerHTML=arr[4];
 
             cell3.innerHTML="Occupied on:";
@@ -278,11 +288,13 @@ function find_emp(str){
 
             cell5.innerHTML="<b>Date of Vacation:</b>";
             cell6.appendChild(input);
+            input.autocomplete="off";
+            input.style.textAlign="center";
             input.addEventListener("change",() => check_date());
-            document.getElementById("save").style.top="53em";
-            document.getElementById("reset").style.top="53em";
+            document.getElementById("save").style.top="33em";
+            document.getElementById("reset").style.top="33em";
 
-            alert("The quarter "+table.rows[3].cells.item(1).innerHTML+" will not be  available for occupation as the employee has an unvacated quarter "+table.rows[5].cells.item(1).innerHTML)
+            alert("The quarter "+table.rows[3].cells.item(1).innerText+" will not be  available for occupation as this employee has an unvacated quarter.");
           }
         }
         else{
@@ -308,8 +320,13 @@ function check_date(){
   var dateParts = document.getElementById("vac").value;
   var dateparts2=document.getElementById("quarter_details").rows[5].cells.item(1).innerHTML;
 
-  if(parseDateStringToObject(dateParts)>parseDateStringToObject(dateparts2)){
+  if(parseDateStringToObject(dateParts)>=parseDateStringToObject(dateparts2)){
     document.getElementById("save").disabled=false;
+  }
+  else{
+    document.getElementById("save").disabled=true;
+    alert("The date should be in dd/mm/yyyy format and greater than or equal to the occupation date");
+    document.getElementById("vac").value="";
   }
   }
   else if(count2>0 || count3>0){
@@ -317,13 +334,23 @@ function check_date(){
       //console.log(parseDateStringToObject(dateParts).toString().length);
       if(parseDateStringToObject(dateParts).toString().length>10)
         document.getElementById("save").disabled=false;
+      else{
+        document.getElementById("save").disabled=true;
+        alert("Not a proper date");
+        document.getElementById("occ").value="";
+      }
   }
   else if(count4>0){
   
   var dateParts = document.getElementById("vac").value;
   var dateParts2 = document.getElementById("quarter_details").rows[6].cells.item(1).innerHTML;
-  if(parseDateStringToObject(dateParts)>parseDateStringToObject(dateParts2))
+  if(parseDateStringToObject(dateParts)>=parseDateStringToObject(dateParts2))
     document.getElementById("save").disabled=false;
+  else{
+    document.getElementById("save").disabled=true;
+    alert("The date should be in dd/mm/yyyy format and greater than or equal to the occupation date");
+    document.getElementById("vac").value="";
+  }
   
 }
 }
