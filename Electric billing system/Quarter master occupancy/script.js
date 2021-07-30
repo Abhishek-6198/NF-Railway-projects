@@ -15,6 +15,7 @@ function get_names() {
         let selectedValue = $select.val();
         let html = response.filter((e, i, a) => a.indexOf(e) === i).map(item => `<option value="${item}">${item}</option>`);
         $select.html(html).val(selectedValue);
+        document.getElementById("colony_type").disabled=false;
       },
       complete: function() {}
     });
@@ -34,6 +35,7 @@ function get_types() {
         for(var i=0; i<response.length; i++){
           if(response[i].includes("No")){
             flag=true;
+            document.getElementById("colony_type").disabled=true;
             var c= confirm(response[i]);
                 if (c==true) {
                   window.open("http://localhost//Electric%20billing%20system/Quarter%20master%20entry/index.html");
@@ -44,6 +46,7 @@ function get_types() {
           let selectedValue = $select.val();
           let html = response.filter((e, i, a) => a.indexOf(e) === i).map(item => `<option value="${item}">${item}</option>`);
           $select.html(html).val(selectedValue);
+          document.getElementById("quarter_no").disabled=false;
         }
       },
       complete: function() {}
