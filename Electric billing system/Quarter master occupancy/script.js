@@ -320,19 +320,27 @@ function check_date(){
   var dateParts = document.getElementById("vac").value;
   var dateparts2=document.getElementById("quarter_details").rows[5].cells.item(1).innerHTML;
 
-  if(parseDateStringToObject(dateParts)>=parseDateStringToObject(dateparts2)){
-    document.getElementById("save").disabled=false;
+  if(parseDateStringToObject(dateParts).toString().length!=12){
+        //document.getElementById("save").disabled=false;
+    if(parseDateStringToObject(dateParts)>=parseDateStringToObject(dateparts2)){
+      document.getElementById("save").disabled=false;
+    }
+    else{
+      document.getElementById("save").disabled=true;
+      alert("The vacation date should be greater than or equal to the occupation date");
+      document.getElementById("vac").value="";
+    }
   }
   else{
     document.getElementById("save").disabled=true;
-    alert("The date should be in dd/mm/yyyy format and greater than or equal to the occupation date");
+    alert("Invalid date");
     document.getElementById("vac").value="";
   }
   }
   else if(count2>0 || count3>0){
       var dateParts = document.getElementById("occ").value;
       //console.log(parseDateStringToObject(dateParts).toString().length);
-      if(parseDateStringToObject(dateParts).toString().length>10)
+      if(parseDateStringToObject(dateParts).toString().length!=12)
         document.getElementById("save").disabled=false;
       else{
         document.getElementById("save").disabled=true;
@@ -344,12 +352,21 @@ function check_date(){
   
   var dateParts = document.getElementById("vac").value;
   var dateParts2 = document.getElementById("quarter_details").rows[6].cells.item(1).innerHTML;
-  if(parseDateStringToObject(dateParts)>=parseDateStringToObject(dateParts2))
-    document.getElementById("save").disabled=false;
+  if(parseDateStringToObject(dateParts).toString().length!=12){
+    //document.getElementById("save").disabled=false;
+    if(parseDateStringToObject(dateParts)>=parseDateStringToObject(dateparts2)){
+        document.getElementById("save").disabled=false;
+    }
+    else{
+        document.getElementById("save").disabled=true;
+        alert("The vacation date should be greater than or equal to the occupation date");
+        document.getElementById("vac").value="";
+    }
+  }
   else{
-    document.getElementById("save").disabled=true;
-    alert("The date should be in dd/mm/yyyy format and greater than or equal to the occupation date");
-    document.getElementById("vac").value="";
+      document.getElementById("save").disabled=true;
+      alert("Invalid date");
+      document.getElementById("vac").value="";
   }
   
 }
