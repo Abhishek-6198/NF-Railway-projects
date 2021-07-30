@@ -143,6 +143,9 @@
                                 if ($result->num_rows > 0) {
                                     while($row = $result->fetch_assoc()) {
                                         array_push($details,$row["Name"]);
+                                        array_push($details,$row["Designation"]);
+                                        array_push($details,$row["BillUnit"]);
+                                        array_push($details,$row["Station"]);
                                     }
                                     
                                 }

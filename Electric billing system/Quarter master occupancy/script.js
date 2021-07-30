@@ -133,23 +133,51 @@ function check(){
             var cell7 = row.insertCell(0);
             var cell8=row.insertCell(1);
 
+            var row = table.insertRow(7);
+            var cell9 = row.insertCell(0);
+            var cell10=row.insertCell(1);
+
+            var row = table.insertRow(8);
+            var cell11 = row.insertCell(0);
+            var cell12=row.insertCell(1);
+
+            var row = table.insertRow(9);
+            var cell13 = row.insertCell(0);
+            var cell14=row.insertCell(1);
+
+            var row = table.insertRow(10);
+            var cell15 = row.insertCell(0);
+            var cell16=row.insertCell(1);
+
             cell1.innerHTML="Occupied Quarter ID:"
             cell2.innerHTML=arr[0];
 
-            cell3.innerHTML="Qccupied by:";
-            cell4.innerHTML=arr[3];
+            cell3.innerHTML="Empno:";
+            cell4.innerHTML=arr[2];
 
-            cell5.innerHTML="Occupied on:";
-            cell6.innerHTML=arr[1];
+            cell5.innerHTML="Name:";
+            cell6.innerHTML=arr[3];
+            
+            cell7.innerHTML="Designation:";
+            cell8.innerHTML=arr[4];
 
-            cell7.innerHTML="<b>Date of vacation:</b>";
-            cell8.appendChild(input);
+            cell9.innerHTML="Billunit:"
+            cell10.innerHTML=arr[5]
+
+            cell11.innerHTML="Station:";
+            cell12.innerHTML=arr[6];
+
+            cell13.innerHTML="Occupied on:"
+            cell14.innerHTML=arr[1]
+
+            cell15.innerHTML="<b>Date of vacation:</b>";
+            cell16.appendChild(input);
             input.style.textAlign="center";
 
             input.autocomplete="off";
 
-            document.getElementById("save").style.top="32em";
-            document.getElementById("reset").style.top="32em";
+            document.getElementById("save").style.top="40em";
+            document.getElementById("reset").style.top="40em";
 
             input.addEventListener("change",() => check_date());
           }
@@ -250,7 +278,7 @@ function find_emp(str){
             cell7.innerHTML="Station:";
             cell8.innerHTML=arr[3];
 
-            cell9.innerHTML="<b>Date of occupancy:</b>";
+            cell9.innerHTML="<b>Date of occupation:</b>";
             cell10.appendChild(input);
             input.style.textAlign="center";
             input.autocomplete="off";
@@ -318,7 +346,7 @@ function check_date(){
   if(count1>0){
 
   var dateParts = document.getElementById("vac").value;
-  var dateparts2=document.getElementById("quarter_details").rows[5].cells.item(1).innerHTML;
+  var dateparts2=document.getElementById("quarter_details").rows[9].cells.item(1).innerHTML;
 
   if(parseDateStringToObject(dateParts).toString().length!=12){
         //document.getElementById("save").disabled=false;
@@ -354,7 +382,7 @@ function check_date(){
   var dateParts2 = document.getElementById("quarter_details").rows[6].cells.item(1).innerHTML;
   if(parseDateStringToObject(dateParts).toString().length!=12){
     //document.getElementById("save").disabled=false;
-    if(parseDateStringToObject(dateParts)>=parseDateStringToObject(dateparts2)){
+    if(parseDateStringToObject(dateParts)>=parseDateStringToObject(dateParts2)){
         document.getElementById("save").disabled=false;
     }
     else{
