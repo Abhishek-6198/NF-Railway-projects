@@ -114,7 +114,7 @@ function check(){
           if(arr.length!=1){
             input.placeholder="dd/mm/yyyy";
             count1+=1;
-            console.log("count1");
+            //console.log("count1");
             input.id="vac";
             
             var row = table.insertRow(3);
@@ -155,7 +155,7 @@ function check(){
           }
           else{ //all vacated
             count2+=0;
-            console.log("count2");
+            //console.log("count2");
             input.id="emp_no";
             input.placeholder="Your 11 digit emp no";
             input.autocomplete="off";
@@ -217,7 +217,7 @@ function find_emp(str){
           //table.style.display="block";
           if(arr.length==4){ //employee doesn't have any occupied quarters
             count3+=1;
-            console.log("count3");
+            //console.log("count3");
             var row = table.insertRow(5);
             var cell1 = row.insertCell(0);
             var cell2=row.insertCell(1);
@@ -261,7 +261,7 @@ function find_emp(str){
           }
           else if(arr.length>4){ //employee has occupied quarters
             count4+=1;
-            console.log("count4");
+            //console.log("count4");
             input.id="vac";
 
             var row = table.insertRow(5);
@@ -374,7 +374,7 @@ function send_message(){
         datum["qtr_id"]=document.getElementById("quarter_details").rows[5].cells.item(1).innerHTML;
         datum["vac_date"] = document.getElementById("vac").value;
       }
-      console.log(datum);
+      //console.log(datum);
         $.ajax({
           url: 'server.php',
           type: 'POST',
