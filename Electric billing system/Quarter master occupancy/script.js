@@ -176,6 +176,15 @@ function check(){
             cell15.innerHTML="<b>Date of vacation:</b>";
             cell16.appendChild(input);
             input.style.textAlign="center";
+            input.maxLength=10;
+
+            const isAlphaNumeric = (str) => /[a-zA-Z\u00C0-\u00FF\d\/]/.test(str);
+
+            input.addEventListener('keypress', (e) => {
+                if (!isAlphaNumeric(e.key) && e.cancelable) {
+                      e.preventDefault();
+                  }
+              });
 
             input.autocomplete="off";
 
@@ -210,6 +219,7 @@ function check(){
 
             cell3.innerHTML="<b>Employee No:</b>";
             cell4.appendChild(input); 
+            //input.maxLength=10;
             input.style.textAlign="center";
             document.getElementById("save").style.top="28em";
             document.getElementById("reset").style.top="28em";
@@ -284,8 +294,16 @@ function find_emp(str){
             cell9.innerHTML="<b>Date of occupation:</b>";
             cell10.appendChild(input);
             input.style.textAlign="center";
+            input.maxLength=10;
             input.autocomplete="off";
             input.id="occ";
+            const isAlphaNumeric = (str) => /[a-zA-Z\u00C0-\u00FF\d\/]/.test(str);
+
+            input.addEventListener('keypress', (e) => {
+                if (!isAlphaNumeric(e.key) && e.cancelable) {
+                    e.preventDefault();
+                  }
+              });
             input.addEventListener("change",() => check_date());
             document.getElementById("save").style.top="39em";
             document.getElementById("reset").style.top="39em";
@@ -321,6 +339,14 @@ function find_emp(str){
             cell6.appendChild(input);
             input.autocomplete="off";
             input.style.textAlign="center";
+            input.maxLength=10;
+            const isAlphaNumeric = (str) => /[a-zA-Z\u00C0-\u00FF\d\/]/.test(str);
+
+            input.addEventListener('keypress', (e) => {
+                if (!isAlphaNumeric(e.key) && e.cancelable) {
+                    e.preventDefault();
+                  }
+              });
             input.addEventListener("change",() => check_date());
             document.getElementById("save").style.top="33em";
             document.getElementById("reset").style.top="33em";
@@ -354,7 +380,13 @@ function check_date(){
   if(parseDateStringToObject(dateParts).toString().length!=12){
         //document.getElementById("save").disabled=false;
     if(parseDateStringToObject(dateParts)>=parseDateStringToObject(dateparts2)){
-      document.getElementById("save").disabled=false;
+      if(dateParts.length==10)
+        document.getElementById("save").disabled=false;
+      else{
+          alert("The vacation date should follow 'dd/mm/yyyy' format.");
+          document.getElementById("save").disabled=true;
+          document.getElementById("vac").value="";
+      }
     }
     else{
       document.getElementById("save").disabled=true;
@@ -372,7 +404,14 @@ function check_date(){
       var dateParts = document.getElementById("occ").value;
       //console.log(parseDateStringToObject(dateParts).toString().length);
       if(parseDateStringToObject(dateParts).toString().length!=12)
-        document.getElementById("save").disabled=false;
+        if(dateParts.length==10)
+          document.getElementById("save").disabled=false;
+        else{
+          alert("The occupation date should follow 'dd/mm/yyyy' format.");
+          document.getElementById("save").disabled=true;
+          document.getElementById("occ").value="";
+        }
+          
       else{
         document.getElementById("save").disabled=true;
         alert("Not a proper date");
@@ -386,7 +425,13 @@ function check_date(){
   if(parseDateStringToObject(dateParts).toString().length!=12){
     //document.getElementById("save").disabled=false;
     if(parseDateStringToObject(dateParts)>=parseDateStringToObject(dateParts2)){
+      if(dateParts.length==10)
         document.getElementById("save").disabled=false;
+      else{
+          alert("The vacation should follow 'dd/mm/yyyy' format.");
+          document.getElementById("save").disabled=true;
+          document.getElementById("vac").value="";
+      }
     }
     else{
         document.getElementById("save").disabled=true;
