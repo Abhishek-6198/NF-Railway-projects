@@ -325,6 +325,26 @@ function find_emp(str){
             var cell5 = row2.insertCell(0);
             var cell6=row2.insertCell(1);
 
+            var row3=table.insertRow(8)
+            var cell7 = row3.insertCell(0);
+            var cell8=row3.insertCell(1);
+
+            
+            var row4=table.insertRow(9)
+            var cell9 = row4.insertCell(0);
+            var cell10=row4.insertCell(1);
+
+            
+            var row5=table.insertRow(10)
+            var cell11 = row5.insertCell(0);
+            var cell12=row5.insertCell(1);
+
+            
+            var row6=table.insertRow(11)
+            var cell13 = row6.insertCell(0);
+            var cell14=row6.insertCell(1);
+
+
             var text=table.rows[3].cells.item(1).innerHTML;
             text=text.strike();
             table.rows[3].cells.item(1).innerHTML=text;
@@ -335,8 +355,20 @@ function find_emp(str){
             cell3.innerHTML="Occupied on:";
             cell4.innerHTML=arr[5];
 
-            cell5.innerHTML="<b>Date of Vacation:</b>";
-            cell6.appendChild(input);
+            cell5.innerHTML="Name:";
+            cell6.innerHTML=arr[0];
+
+            cell7.innerHTML="Designation:";
+            cell8.innerHTML=arr[1];
+
+            cell9.innerHTML="Billunit:";
+            cell10.innerHTML=arr[2];
+
+            cell11.innerHTML="Station:";
+            cell12.innerHTML=arr[3];
+
+            cell13.innerHTML="<b>Date of Vacation:</b>";
+            cell14.appendChild(input);
             input.autocomplete="off";
             input.style.textAlign="center";
             input.maxLength=10;
@@ -348,8 +380,8 @@ function find_emp(str){
                   }
               });
             input.addEventListener("change",() => check_date());
-            document.getElementById("save").style.top="33em";
-            document.getElementById("reset").style.top="33em";
+            document.getElementById("save").style.top="44em";
+            document.getElementById("reset").style.top="44em";
 
             alert("The quarter "+table.rows[3].cells.item(1).innerText+" will not be  available for occupation as this employee has an unvacated quarter.");
           }
@@ -428,7 +460,7 @@ function check_date(){
       if(dateParts.length==10)
         document.getElementById("save").disabled=false;
       else{
-          alert("The vacation should follow 'dd/mm/yyyy' format.");
+          alert("The vacation date should follow 'dd/mm/yyyy' format.");
           document.getElementById("save").disabled=true;
           document.getElementById("vac").value="";
       }
