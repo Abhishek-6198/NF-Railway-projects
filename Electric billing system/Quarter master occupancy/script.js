@@ -485,7 +485,7 @@ function send_message(){
       var datum={"input": "register"};
       if(count1>0){
         datum["qtr_id"] = document.getElementById("quarter_details").rows[3].cells.item(1).innerHTML;
-        datum["emp_name"]=document.getElementById("quarter_details").rows[4].cells.item(1).innerHTML;
+        datum["emp_name"]=document.getElementById("quarter_details").rows[5].cells.item(1).innerHTML;
         datum["count"]="count1";
         datum["vac_date"] = document.getElementById("vac").value;
       }
