@@ -1,0 +1,22 @@
+body{
+    background-color: rgb(255, 221, 205);
+}
+
+#quarter_details{
+    position: absolute;
+    top:10em;
+    left:25em;
+    width:50em;
+}
+
+
+
+#quarter_details td{
+    height:40px;
+    text-align: center;
+}
+
+h2{
+    text-align: center;
+    background-color: lightblue;
+}
