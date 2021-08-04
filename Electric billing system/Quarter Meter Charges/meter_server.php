@@ -146,5 +146,50 @@
                     //echo json_encode($final);
             }
         }
+        elseif($_POST["input"]=="calculate_charges"){
+            $charge=$_POST["current_read"];
+            $charge1=0;
+
+            if(!$connection)
+                echo "Connection to database failed! Please try again";
+            else{
+                $sql="SELECT * from `electric rate table`";
+                $result = $con->query($sql);
+                if ($result->num_rows > 0) {
+                    while($row = $result->fetch_assoc()) {
+                        if($charge>$row["to_unit"]){
+                            $charge1+=$row["Rate/unit"];
+                            $charge=$charge-$row["to_unit"];
+                        }
+                        else{
+                            $charge1+=$row["Rate/unit"];
+                            break;
+                        }
+                    }
+                    $charge1=$charge1*$_POST["days"]+50; //??
+                    echo $charge1;
+                    $sql="SELECT * from `electric transaction` WHERE `Qtr_ID`='".$_POST["qtrid"]."'";
+                    $result = $con->query($sql);
+                    if ($result->num_rows > 0) {
+                        $sql="UPDATE `electric transaction` SET `Prev read`=?, `Prev Date`=?, `Current read`=?, `Current Date`=?, `Charge`=?  WHERE `Qtr_ID`= '".$_POST["qtrid"]. "' AND `EmpNo`= '".$_POST["empno"]."'";
+                        $statement = $con->prepare($sql);
+                        $statement->bind_param("isisi",$_POST["prev_met"],$_POST["prev_date"], $_POST["curr_met"], $_POST["curr_date"], $charge1);
+                        if($statement->execute())
+                            echo "Updated meter charge successfully";
+                        else
+                            $con->error();
+                    }
+                    else{
+                        $stmt = $con->prepare("INSERT INTO `electric transaction`(`Qtr_ID`,`EmpNo`,`Prev read`, `Prev Date`, `Current read`, `Current Date`, `Charge`) 
+                                                            VALUES (?, ?, ?, ?, ?, ?, ?)");
+                        $stmt->bind_param("ssisisd", $_POST["qtrid"], $_POST["empno"], $_POST["prev_met"], $_POST["prev_date"], $_POST["curr_met"], $_POST["curr_date"], $charge1);
+                        if($stmt->execute())
+                            echo "Inserted meter charge details";
+                        else
+                            $con->error();
+                    }
+                }
+            }
+        }
     }
 ?>

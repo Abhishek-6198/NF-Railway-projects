@@ -82,7 +82,7 @@ document.getElementById("date").addEventListener("change",() => {
         alert("Invalid date");
     }
 })
-
+var table=document.getElementById("quarter_details");
 function fetch(){
     var colony_name=document.getElementById("colony_name").value;
     var colony_type=document.getElementById("colony_type").value;
@@ -98,9 +98,10 @@ function fetch(){
 
                 var k=2;
                 var count=0;
+               
                 //alert(response);
                 if(response[0] == '['){//occupied quarters found
-                    var table=document.getElementById("quarter_details");
+                    
                     var row = table.insertRow(1);  
                     var cell = row.insertCell(0);
                     var cell1 = row.insertCell(1);
@@ -120,7 +121,7 @@ function fetch(){
 
 
                     const arr=JSON.parse(response);
-                    alert(arr.length);
+                    alert(arr.length+" occupied quarters found in this area");
 
                     var x=arr.length*6;
 
@@ -134,32 +135,126 @@ function fetch(){
                         var cell5 = row.insertCell(5);
                         var cell6 = row.insertCell(6);
 
-                        //console.log(arr[i][count]);
                         cell.innerHTML=arr[i][count];
                         ++count;
-                        //console.log(arr[i][count]);
                         cell1.innerHTML=arr[i][count];
                         ++count;
-                        //console.log(arr[i][count]);
                         cell2.innerHTML=arr[i][count];
                         ++count;
-                        //console.log(arr[i][count]);
                         cell3.innerHTML=arr[i][count];
                         ++count;
-                        //console.log(arr[i][count]);
                         cell4.innerHTML=arr[i][count];
                         ++count;
-                        //console.log(arr[i][count]);
                         cell5.innerHTML=arr[i][count];
                         ++count;
-                        //console.log(arr[i][count]);
                         var input = document.createElement("input");
                         input.type = "number";
-                        input.id="current_read"+i.toString();
+                        input.className="current_read";
                         cell6.appendChild(input);
+                        input.autocomplete="off";
                         count=0;
                         ++k;
-                    }  
+                    }
+
+                    document.querySelectorAll('.current_read').forEach((item,index) => {
+                        item.addEventListener('change', event => {
+                          //handle click
+                          //console.log(index);
+                          var date=document.getElementById("date").value;
+                          var date1=table.rows[index+2].cells.item(5).innerHTML;
+                          const d=date.split("/");
+                          const d1=date1.split("/");
+
+                          var dt=d[1]+"/"+d[0]+"/"+d[2];
+                          var dt1=d1[1]+"/"+d1[0]+"/"+d1[2];
+
+                          var curr=new Date(dt);
+                          var prev=new Date(dt1);
+                          var time_difference = curr.getTime() - prev.getTime(); 
+                          var days_difference = time_difference / (1000 * 60 * 60 * 24);  
+
+                          var charge=(item.value-parseInt(table.rows[index+2].cells.item(4).innerHTML))/days_difference; 
+
+                          if(curr>prev){
+                            $.ajax({
+                                url: 'meter_server.php',
+                                type: 'POST',
+                                data:{"input": "calculate_charges",
+                                        "current_read": charge,
+                                        "days": days_difference,
+                                        "qtrid": table.rows[index+2].cells.item(0).innerHTML,
+                                        "empno": table.rows[index+2].cells.item(1).innerHTML,
+                                        "prev_met": table.rows[index+2].cells.item(4).innerHTML,
+                                        "prev_date": table.rows[index+2].cells.item(5).innerHTML,
+                                        "curr_date": document.getElementById("date").value,
+                                        "curr_met": item.value},
+                                success:function(response){
+                                    if(confirm(response)==true||confirm(response)==false){
+                                        location.reload();
+                                    }
+                                },
+                                complete:function(){
+            
+                                }
+                            });
+                          }
+                          else{
+                            alert("The current meter reading date cannot be less than the previous one.");
+                            document.getElementById("date").value="";
+                            item.value="";
+                          }
+                        })
+                    })
+                    
+
+                    /*for(var i=0; i<inputs.length; i++){ 
+                        inputs[i].addEventListener("focus",function(){
+                            //console.log(i);
+                            var date=document.getElementById("date").value;
+                            var date1=table.rows[i+2].cells.item(5).innerHTML;
+                            const d=date.split("/");
+                            const d1=date1.split("/");
+
+                            var dt=d[1]+"/"+d[0]+"/"+d[2];
+                            var dt1=d1[1]+"/"+d1[0]+"/"+d1[2];
+
+                            var curr=new Date(dt);
+                            var prev=new Date(dt1);
+                            var time_difference = curr.getTime() - prev.getTime(); 
+                            var days_difference = time_difference / (1000 * 60 * 60 * 24);  
+
+                            var charge=(inputs[i].value-parseInt(table.rows[i+2].cells.item(4).innerHTML))/days_difference; 
+                            inputs[i].addEventListener("change",function(){
+                                if(curr>prev){
+                                    if(inputs[i].value.toString().length>0){
+                                        $.ajax({
+                                            url: 'meter_server.php',
+                                            type: 'POST',
+                                            data:{"input": "calculate_charges",
+                                                    "current_read": charge,
+                                                    "days": days_difference,
+                                                    "qtrid": table.rows[i+2].cells.item(0).innerHTML,
+                                                    "empno": table.rows[i+2].cells.item(1).innerHTML,
+                                                    "prev_met": table.rows[i+2].cells.item(4).innerHTML,
+                                                    "prev_date": table.rows[i+2].cells.item(5).innerHTML,
+                                                    "curr_date": document.getElementById("date").value,
+                                                    "curr_met": inputs[i].value},
+                                            success:function(response){
+                                                alert(response);
+                                            },
+                                            complete:function(){
+                        
+                                            }
+                                        });
+                                    }
+                                }
+                                else{
+                                    alert("The current meter reading date cannot be less than the previous one.");
+                                    document.getElementById("date").value="";
+                                }
+                            })
+                        })
+                    }*/
                 }
                 else{
                     //document.getElementById("colony_type").disabled=true;
@@ -176,4 +271,4 @@ function fetch(){
 function parseDateStringToObject(dateStr) {
     const [day, month, year] = dateStr.split('/');
     return new Date(`${month}-${day}-${year}`);
-  }
+}
