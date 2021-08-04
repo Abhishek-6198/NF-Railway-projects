@@ -205,56 +205,6 @@ function fetch(){
                           }
                         })
                     })
-                    
-
-                    /*for(var i=0; i<inputs.length; i++){ 
-                        inputs[i].addEventListener("focus",function(){
-                            //console.log(i);
-                            var date=document.getElementById("date").value;
-                            var date1=table.rows[i+2].cells.item(5).innerHTML;
-                            const d=date.split("/");
-                            const d1=date1.split("/");
-
-                            var dt=d[1]+"/"+d[0]+"/"+d[2];
-                            var dt1=d1[1]+"/"+d1[0]+"/"+d1[2];
-
-                            var curr=new Date(dt);
-                            var prev=new Date(dt1);
-                            var time_difference = curr.getTime() - prev.getTime(); 
-                            var days_difference = time_difference / (1000 * 60 * 60 * 24);  
-
-                            var charge=(inputs[i].value-parseInt(table.rows[i+2].cells.item(4).innerHTML))/days_difference; 
-                            inputs[i].addEventListener("change",function(){
-                                if(curr>prev){
-                                    if(inputs[i].value.toString().length>0){
-                                        $.ajax({
-                                            url: 'meter_server.php',
-                                            type: 'POST',
-                                            data:{"input": "calculate_charges",
-                                                    "current_read": charge,
-                                                    "days": days_difference,
-                                                    "qtrid": table.rows[i+2].cells.item(0).innerHTML,
-                                                    "empno": table.rows[i+2].cells.item(1).innerHTML,
-                                                    "prev_met": table.rows[i+2].cells.item(4).innerHTML,
-                                                    "prev_date": table.rows[i+2].cells.item(5).innerHTML,
-                                                    "curr_date": document.getElementById("date").value,
-                                                    "curr_met": inputs[i].value},
-                                            success:function(response){
-                                                alert(response);
-                                            },
-                                            complete:function(){
-                        
-                                            }
-                                        });
-                                    }
-                                }
-                                else{
-                                    alert("The current meter reading date cannot be less than the previous one.");
-                                    document.getElementById("date").value="";
-                                }
-                            })
-                        })
-                    }*/
                 }
                 else{
                     //document.getElementById("colony_type").disabled=true;
