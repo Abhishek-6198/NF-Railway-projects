@@ -1,6 +1,17 @@
 body{
     background-color: rgb(255, 221, 205);
 }
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
 
 #quarter_details{
     position: absolute;
@@ -22,6 +33,33 @@ body{
     height:40px;
     text-align: center;
     width:5em;
+}
+
+#employee_details{
+  display:none;
+  position: absolute;
+  top:15em;
+  left:10em;
+  width:75em;
+}
+
+#employee_details td{
+  animation: fadeIn 2s;
+  -webkit-animation: fadeIn 2s;
+  -moz-animation: fadeIn 2s;
+  -o-animation: fadeIn 2s;
+  -ms-animation: fadeIn 2s;
+  height:60px;
+  text-align: center;
+  width:12em;
+}
+
+#save{
+  display: none;
+  position: absolute;
+  top:11.8em;
+  left:77em;
+  font-size: medium;
 }
 
 @keyframes fadeIn {
@@ -58,6 +96,14 @@ h2{
   #quarter_details{
     left:1px;
   }
+
+  #employee_details{
+    left:1px;
+  }
+
+  #save{
+    left:54em;
+  }
 }
 
 @media (min-width:480px)  { 
@@ -77,10 +123,24 @@ h2{
   #quarter_details{
     left:8em;
   }
+  #employee_details{
+    left:8em;
+  }
+
+  #save{
+    left:60em;
+  }
 }
 
 @media (min-width:1281px) {
   #quarter_details{
     left:24em;
+  }
+  #employee_details{
+    left:24em;
+  }
+
+  #save{
+    left:75em;
   }
 }

@@ -15,7 +15,7 @@
 
     <table id="quarter_details" border="2">
         <tr style="background-color: rgb(218, 167, 167);">
-            <td><b>Date:</b><br><input type="text" size=10 id="date" placeholder="dd/mm/yyyy" autocomplete="off"></td>
+            <td><b>Current Date:</b><br><input type="text" size=10 id="date" placeholder="dd/mm/yyyy" autocomplete="off"></td>
             <td><b>Colony name:</b><br><select name="colony_name" id="colony_name" disabled style="text-align-last: center;" onclick="get_names()" onchange="fetch()">
                 <option value="default" selected="selected_code">Select your colony name</option></select></td>
             <td><b>Quarter type:</b><br><select name="colony_type" disabled id="colony_type" style="text-align-last: center;" onclick="get_types()" onchange="fetch()">
@@ -23,6 +23,8 @@
             </select></td>
         </tr>
     </table>
+    <table id="employee_details" border="2"></table>
+    <button id="save">Save</button>
     <script src="meter_script.js"></script>
 
 </body>
