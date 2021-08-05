@@ -175,7 +175,7 @@
                         $statement = $con->prepare($sql);
                         $statement->bind_param("isisi",$_POST["prev_met"],$_POST["prev_date"], $_POST["curr_met"], $_POST["curr_date"], $charge1);
                         if($statement->execute())
-                            echo "Updated meter charge successfully";
+                            echo "Updated meter charge successfully"."-".$_POST["curr_met"]."-". $_POST["curr_date"]."-".$charge1;
                         else
                             $con->error();
                     }
@@ -184,7 +184,7 @@
                                                             VALUES (?, ?, ?, ?, ?, ?, ?)");
                         $stmt->bind_param("ssisisd", $_POST["qtrid"], $_POST["empno"], $_POST["prev_met"], $_POST["prev_date"], $_POST["curr_met"], $_POST["curr_date"], $charge1);
                         if($stmt->execute())
-                            echo "Inserted meter charge details";
+                            echo "Inserted meter charge details"."-".$_POST["curr_met"]."-". $_POST["curr_date"]."-".$charge1;
                         else
                             $con->error();
                     }

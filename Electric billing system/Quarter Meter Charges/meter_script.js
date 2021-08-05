@@ -152,14 +152,14 @@ function fetch(){
                         input.className="current_read";
                         cell6.appendChild(input);
                         input.autocomplete="off";
+                        input.style.textAlign="center";
                         count=0;
                         ++k;
                     }
 
                     document.querySelectorAll('.current_read').forEach((item,index) => {
                         item.addEventListener('change', event => {
-                          //handle click
-                          //console.log(index);
+                          item.style.backgroundColor="rgb(255, 246, 205)";
                           var date=document.getElementById("date").value;
                           var date1=table.rows[index+2].cells.item(5).innerHTML;
                           const d=date.split("/");
@@ -189,9 +189,12 @@ function fetch(){
                                         "curr_date": document.getElementById("date").value,
                                         "curr_met": item.value},
                                 success:function(response){
-                                    if(confirm(response)==true||confirm(response)==false){
-                                        location.reload();
-                                    }
+                                    const arr=response.split("-");
+                                    table.rows[index+2].cells.item(4).innerHTML=arr[1];
+                                    table.rows[index+2].cells.item(5).innerHTML=arr[2];
+                                    //document.getElementById("date").value="";
+                                    //item.value="";
+                                    setTimeout(function(){ alert("The final charge incurred is Rs "+arr[3]); }, 1000);
                                 },
                                 complete:function(){
             
@@ -199,7 +202,7 @@ function fetch(){
                             });
                           }
                           else{
-                            alert("The current meter reading date cannot be less than the previous one.");
+                            alert("The current meter reading date must be greater than the previous one.");
                             document.getElementById("date").value="";
                             item.value="";
                           }
