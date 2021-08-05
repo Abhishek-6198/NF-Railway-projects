@@ -404,16 +404,26 @@ function find_emp(str){
 }
 
 function check_date(){
+  const arr=["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  
   if(count1>0){
 
   var dateParts = document.getElementById("vac").value;
+  const arr1=document.getElementById("vac").value.split("/");
   var dateparts2=document.getElementById("quarter_details").rows[9].cells.item(1).innerHTML;
 
   if(parseDateStringToObject(dateParts).toString().length!=12){
         //document.getElementById("save").disabled=false;
     if(parseDateStringToObject(dateParts)>=parseDateStringToObject(dateparts2)){
-      if(dateParts.length==10)
-        document.getElementById("save").disabled=false;
+      if(dateParts.length==10){
+        if(parseDateStringToObject(dateParts).toString().includes(arr[parseInt(arr1[1])-1]))
+          document.getElementById("save").disabled=false;
+        else{
+          alert("Invalid date");
+          document.getElementById("save").disabled=true;
+          document.getElementById("vac").value="";
+        }
+      }
       else{
           alert("The vacation date should follow 'dd/mm/yyyy' format.");
           document.getElementById("save").disabled=true;
@@ -434,10 +444,18 @@ function check_date(){
   }
   else if(count2>0 || count3>0){
       var dateParts = document.getElementById("occ").value;
+      const arr1=document.getElementById("occ").value.split("/");
       //console.log(parseDateStringToObject(dateParts).toString().length);
       if(parseDateStringToObject(dateParts).toString().length!=12)
-        if(dateParts.length==10)
-          document.getElementById("save").disabled=false;
+        if(dateParts.length==10){
+          if(parseDateStringToObject(dateParts).toString().includes(arr[parseInt(arr1[1])-1]))
+            document.getElementById("save").disabled=false;
+          else{
+              alert("Invalid date");
+              document.getElementById("save").disabled=true;
+              document.getElementById("occ").value="";
+          }
+        }
         else{
           alert("The occupation date should follow 'dd/mm/yyyy' format.");
           document.getElementById("save").disabled=true;
@@ -453,12 +471,20 @@ function check_date(){
   else if(count4>0){
   
   var dateParts = document.getElementById("vac").value;
+  const arr1=document.getElementById("vac").value.split("/");
   var dateParts2 = document.getElementById("quarter_details").rows[6].cells.item(1).innerHTML;
   if(parseDateStringToObject(dateParts).toString().length!=12){
     //document.getElementById("save").disabled=false;
     if(parseDateStringToObject(dateParts)>=parseDateStringToObject(dateParts2)){
-      if(dateParts.length==10)
-        document.getElementById("save").disabled=false;
+      if(dateParts.length==10){
+        if(parseDateStringToObject(dateParts).toString().includes(arr[parseInt(arr1[1])-1]))
+          document.getElementById("save").disabled=false;
+        else{
+            alert("Invalid date");
+            document.getElementById("save").disabled=true;
+            document.getElementById("vac").value="";
+        }
+      } 
       else{
           alert("The vacation date should follow 'dd/mm/yyyy' format.");
           document.getElementById("save").disabled=true;
