@@ -1,3 +1,5 @@
+var charge1=0;
+var days_difference=0;
 function get_names() {
     let $select = $("#colony_name");
     //refresh_colony_name();
@@ -68,6 +70,54 @@ document.getElementById("date").addEventListener("change",() => {
                 //console.log(document.getElementById("employee_details").rows.length);
                 if( document.getElementById("employee_details").rows.length==0)
                     document.getElementById("colony_name").disabled=false;
+                else{
+                    document.querySelectorAll('.current_read').forEach((item,index) => {
+                        if(item.value.toString().length>0){
+                            //console.log(charge1+"-"+days_difference);
+                            var date=document.getElementById("date").value;
+                            var date1=table.rows[index+1].cells.item(5).innerHTML;
+                            const d=date.split("/");
+                            const d1=date1.split("/");
+
+                             var dt=d[1]+"/"+d[0]+"/"+d[2];
+                            var dt1=d1[1]+"/"+d1[0]+"/"+d1[2];
+
+                            var curr=new Date(dt);
+                            var prev=new Date(dt1);
+                            var time_difference = curr.getTime() - prev.getTime(); 
+                            days_difference = time_difference / (1000 * 60 * 60 * 24);
+                            charge1=(item.value-parseInt(table.rows[index+1].cells.item(4).innerHTML))/days_difference;  
+                            $.ajax({
+                                url: 'meter_server.php',
+                                type: 'POST',
+                                data:{"input": "calculate_charges",
+                                        "rate": charge1,
+                                        "days": days_difference},
+                                success:function(response){ 
+                                    document.getElementById("save").style.display="block"; 
+                                    //table.rows[index+1].cells.item(7).innerHTML=charge;
+                                    document.getElementById("save").disabled=false;
+                                    document.getElementById("date").disabled=true;
+                                    if(table.rows[0].cells.length<9){
+                                        var cell = table.rows[0].insertCell(8);     
+                                        cell.innerHTML = "<b>Total charge (Rs):</b>"   
+                                    }
+                                    if(table.rows[index+1].cells.length<9){
+                                        var cell1 = table.rows[index+1].insertCell(8);
+                                        cell1.innerHTML = response;
+                                    }
+                                    else{
+                                        table.rows[index+1].cells.item(8).innerHTML=response;
+                                    }
+                                },
+                                complete:function(){
+        
+                                }
+
+                             });
+                        }
+                    })
+                }
             }       
             else{
                 document.getElementById("colony_name").disabled=true;
@@ -182,12 +232,15 @@ function fetch(){
                           var dt1=d1[1]+"/"+d1[0]+"/"+d1[2];
 
                           var curr=new Date(dt);
-                          var prev=new Date(dt1); 
+                          var prev=new Date(dt1);
+                          var time_difference = curr.getTime() - prev.getTime(); 
+                          days_difference = time_difference / (1000 * 60 * 60 * 24);  
 
+                          charge1=(item.value-parseInt(table.rows[index+1].cells.item(4).innerHTML))/days_difference; 
                           var charge=item.value-parseInt(table.rows[index+1].cells.item(4).innerHTML); 
 
                           if(curr<=prev || item.value<=parseInt(table.rows[index+1].cells.item(4).innerHTML) || date.length===0){
-                            if(curr<prev){
+                            if(curr<=prev){
                                 alert("The current meter read date must be greater than the previous meter read date.");
                             }
                             else if(item.value<=parseInt(table.rows[index+1].cells.item(4).innerHTML)){
@@ -206,11 +259,36 @@ function fetch(){
                             if(table.rows[0].cells.length===9)
                                 table.rows[index+1].cells.item(8).innerHTML=0;
                           }
-                          else{   
-                              document.getElementById("save").style.display="block"; 
-                              table.rows[index+1].cells.item(7).innerHTML=charge;
-                              document.getElementById("save").disabled=false;
-                              document.getElementById("date").disabled=true;
+                          else{  
+                             $.ajax({
+                                url: 'meter_server.php',
+                                type: 'POST',
+                                data:{"input": "calculate_charges",
+                                        "rate": charge1,
+                                        "days": days_difference},
+                                success:function(response){ 
+                                    document.getElementById("save").style.display="block"; 
+                                    table.rows[index+1].cells.item(7).innerHTML=charge;
+                                    document.getElementById("save").disabled=false;
+                                    document.getElementById("date").disabled=true;
+                                    if(table.rows[0].cells.length<9){
+                                        var cell = table.rows[0].insertCell(8);     
+                                        cell.innerHTML = "<b>Total charge (Rs):</b>"   
+                                    }
+                                    if(table.rows[index+1].cells.length<9){
+                                        var cell1 = table.rows[index+1].insertCell(8);
+                                        cell1.innerHTML = response;
+                                    }
+                                    else{
+                                        table.rows[index+1].cells.item(8).innerHTML=response;
+                                    }
+                                },
+                                complete:function(){
+        
+                                }
+
+                             });
+                              
                           }
                         })
                     })
@@ -218,27 +296,11 @@ function fetch(){
                     document.getElementById("save").addEventListener("click",function(){
                         document.querySelectorAll('.current_read').forEach((item,index) => {
                             if(item.value.toString().length>0){
-                                var date=document.getElementById("date").value;
-                                var date1=table.rows[index+1].cells.item(5).innerHTML;
-                                const d=date.split("/");
-                                const d1=date1.split("/");
-
-                                var dt=d[1]+"/"+d[0]+"/"+d[2];
-                                var dt1=d1[1]+"/"+d1[0]+"/"+d1[2];
-
-                                var curr=new Date(dt);
-                                var prev=new Date(dt1);
-                                var time_difference = curr.getTime() - prev.getTime(); 
-                                var days_difference = time_difference / (1000 * 60 * 60 * 24);  
-
-                                var charge=(item.value-parseInt(table.rows[index+1].cells.item(4).innerHTML))/days_difference; 
-
                                 $.ajax({
                                     url: 'meter_server.php',
                                     type: 'POST',
-                                    data:{"input": "calculate_charges",
-                                            "rate": charge,
-                                            "days": days_difference,
+                                    data:{"input": "insert_records",
+                                            "rate": table.rows[index+1].cells.item(8).innerHTML,
                                             "qtrid": table.rows[index+1].cells.item(0).innerHTML,
                                             "empno": table.rows[index+1].cells.item(1).innerHTML,
                                             "prev_met": table.rows[index+1].cells.item(4).innerHTML,
@@ -246,31 +308,20 @@ function fetch(){
                                             "curr_date": document.getElementById("date").value,
                                             "curr_met": item.value},
                                     success:function(response){
-                                        if(response.includes("charge")){
+                                        if(response.includes("-")){
                                             const arr=response.split("-");
-                                            if(table.rows[0].cells.length<9){
-                                                var cell = table.rows[0].insertCell(8);     
-                                                cell.innerHTML = "<b>Total charge (Rs):</b>"   
-                                            }
-                                            if(table.rows[index+1].cells.length<9){
-                                                var cell1 = table.rows[index+1].insertCell(8);
-                                                cell1.innerHTML = arr[1];
-                                            }
-                                            else{
-                                                table.rows[index+1].cells.item(8).innerHTML=arr[1];
-                                            }
-                                            
-                                            
-
-                                            table.rows[index+1].cells.item(4).innerHTML=arr[2];
-                                            table.rows[index+1].cells.item(5).innerHTML=arr[3];
+                                            table.rows[index+1].cells.item(4).innerHTML=arr[0];
+                                            table.rows[index+1].cells.item(5).innerHTML=arr[1];
+                                            table.rows[index+1].cells.item(7).innerHTML=0;
+                                            table.rows[index+1].cells.item(8).innerHTML=0;
                                             document.getElementById("save").disabled=true;
                                             document.getElementById("date").disabled=false;
                                             document.getElementById("date").value="";
                                             item.value="";
-                                        }
-                                        else
-                                            alert(response);     
+                                        } 
+                                        else{
+                                            alert(response);
+                                        } 
                                     },
                                     complete:function(){
             

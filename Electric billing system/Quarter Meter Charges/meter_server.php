@@ -167,15 +167,21 @@
                         }
                     }
                     $charge1=$charge1*$_POST["days"]; //fixed charge not added yet
-                    $stmt = $con->prepare("INSERT INTO `electric transaction`(`Qtr_ID`,`EmpNo`,`Prev read`, `Prev Date`, `Current read`, `Current Date`, `Charge`) 
-                                                            VALUES (?, ?, ?, ?, ?, ?, ?)");
-                    $stmt->bind_param("ssisisd", $_POST["qtrid"], $_POST["empno"], $_POST["prev_met"], $_POST["prev_date"], $_POST["curr_met"], $_POST["curr_date"], $charge1);
-                    if($stmt->execute())
-                        echo "The total charge is-".$charge1."-".$_POST["curr_met"]."-".$_POST["curr_date"];
-                    else
-                        $con->error();
-                    
+                    echo $charge1;
                 }
+            }
+        }
+        elseif($_POST["input"]=="insert_records"){
+            if(!$connection)
+                echo "Connection to database failed! Please try again";
+            else{
+                $stmt = $con->prepare("INSERT INTO `electric transaction`(`Qtr_ID`,`EmpNo`,`Prev read`, `Prev Date`, `Current read`, `Current Date`, `Charge`) 
+                                                            VALUES (?, ?, ?, ?, ?, ?, ?)");
+                $stmt->bind_param("ssisisd", $_POST["qtrid"], $_POST["empno"], $_POST["prev_met"], $_POST["prev_date"], $_POST["curr_met"], $_POST["curr_date"], $_POST["rate"]);
+                if($stmt->execute())
+                    echo $_POST["curr_met"]."-".$_POST["curr_date"];
+                else
+                    $con->error();
             }
         }
     }
