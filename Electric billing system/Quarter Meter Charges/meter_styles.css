@@ -39,7 +39,7 @@ input[type=number] {
   display:none;
   position: absolute;
   top:15em;
-  left:10em;
+  left:14em;
   width:75em;
 }
 
@@ -134,9 +134,6 @@ h2{
 
 @media (min-width:1281px) {
   #quarter_details{
-    left:24em;
-  }
-  #employee_details{
     left:24em;
   }
 

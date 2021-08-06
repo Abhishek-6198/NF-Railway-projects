@@ -187,7 +187,16 @@ function fetch(){
                           var charge=item.value-parseInt(table.rows[index+1].cells.item(4).innerHTML); 
 
                           if(curr<=prev || item.value<=parseInt(table.rows[index+1].cells.item(4).innerHTML) || date.length===0){
-                            alert("The current meter reading and date must be greater than the previous one.");
+                            if(curr<prev){
+                                alert("The current meter read date must be greater than the previous meter read date.");
+                            }
+                            else if(item.value<=parseInt(table.rows[index+1].cells.item(4).innerHTML)){
+                                alert("The current meter value must be greater than the previous meter value.");
+                            }
+                            else if(date.length===0){
+                                alert("The current meter read date cannot be empty.");
+                            }
+                            //alert("The current meter reading and date must be greater than the previous one.");
                             document.getElementById("date").disabled=false;
                             document.getElementById("date").value="";
                             item.value="";
@@ -240,12 +249,18 @@ function fetch(){
                                         if(response.includes("charge")){
                                             const arr=response.split("-");
                                             if(table.rows[0].cells.length<9){
-                                                var cell = table.rows[0].insertCell(8);
-                                                cell.innerHTML = "<b>Total charge (Rs):</b>"
+                                                var cell = table.rows[0].insertCell(8);     
+                                                cell.innerHTML = "<b>Total charge (Rs):</b>"   
                                             }
-
-                                            var cell1 = table.rows[index+1].insertCell(8);
-                                            cell1.innerHTML = arr[1];
+                                            if(table.rows[index+1].cells.length<9){
+                                                var cell1 = table.rows[index+1].insertCell(8);
+                                                cell1.innerHTML = arr[1];
+                                            }
+                                            else{
+                                                table.rows[index+1].cells.item(8).innerHTML=arr[1];
+                                            }
+                                            
+                                            
 
                                             table.rows[index+1].cells.item(4).innerHTML=arr[2];
                                             table.rows[index+1].cells.item(5).innerHTML=arr[3];
@@ -268,7 +283,14 @@ function fetch(){
                 }
                 else{
                     //document.getElementById("colony_type").disabled=true;
-                    alert(response);
+                    if(response.includes("No quarters are occupied in this colony")){
+                        if(confirm("No quarters are currently occupied in this colony. Please ensure that they are occupied from the redirected site")==true){
+                            window.open("http://localhost//Electric%20billing%20system/Quarter%20Occupancy%20entry/index.html");
+                            location.reload();
+                        }
+                    }
+                    else
+                        alert(response);
                 }
 
             },
