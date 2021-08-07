@@ -95,6 +95,7 @@ document.getElementById("date").addEventListener("change",() => {
                                         "days": days_difference},
                                 success:function(response){ 
                                     document.getElementById("save").style.display="block"; 
+                                    document.getElementById('reset').style.top="37em";
                                     //table.rows[index+1].cells.item(7).innerHTML=charge;
                                     document.getElementById("save").disabled=false;
                                     document.getElementById("date").disabled=true;
@@ -179,6 +180,10 @@ function fetch(){
                     cell5.innerHTML = "<b>Prev date:</b>";
                     cell6.innerHTML = "<b>Current met read:</b>";
                     cell7.innerHTML = "<b>Total unit consumed</b>"
+
+                    table.rows[0].style.position="sticky";
+                    table.rows[0].style.top="0";
+                    table.rows[0].style.backgroundColor="rgb(233, 124, 74)";
 
                     const arr=JSON.parse(response);
                     alert(arr.length+" occupied quarters found in this area");
@@ -268,6 +273,7 @@ function fetch(){
                                         "days": days_difference},
                                 success:function(response){ 
                                     document.getElementById("save").style.display="block"; 
+                                    document.getElementById('reset').style.top="37em";
                                     table.rows[index+1].cells.item(7).innerHTML=charge;
                                     document.getElementById("save").disabled=false;
                                     document.getElementById("date").disabled=true;
@@ -355,3 +361,7 @@ function parseDateStringToObject(dateStr) {
     const [day, month, year] = dateStr.split('/');
     return new Date(`${month}-${day}-${year}`);
 }
+
+document.getElementById("reset").addEventListener("click",function(){
+    location.reload();
+})

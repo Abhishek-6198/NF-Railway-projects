@@ -40,7 +40,9 @@ input[type=number] {
   position: absolute;
   top:15em;
   left:20em;
-  width:75em;
+  width:85em;
+  height: 20em;
+  overflow: auto;
 }
 
 #employee_details td{
@@ -57,9 +59,23 @@ input[type=number] {
 #save{
   display: none;
   position: absolute;
-  top:11.8em;
-  left:77em;
+  top:37em;
+  left:25em;
   font-size: medium;
+}
+
+#reset{
+  display: block;
+  position: absolute;
+  top:11em;
+  left:78em;
+  font-size: medium;
+}
+
+#emp{
+  height: 20em;
+  overflow: auto;
+  width: 40em;
 }
 
 @keyframes fadeIn {
@@ -100,10 +116,6 @@ h2{
   #employee_details{
     left:1px;
   }
-
-  #save{
-    left:54em;
-  }
 }
 
 @media (min-width:480px)  { 
@@ -126,18 +138,10 @@ h2{
   #employee_details{
     left:8em;
   }
-
-  #save{
-    left:60em;
-  }
 }
 
 @media (min-width:1281px) {
   #quarter_details{
     left:24em;
-  }
-
-  #save{
-    left:75em;
   }
 }
