@@ -116,6 +116,14 @@ h2{
   #employee_details{
     left:1px;
   }
+
+  #save{
+    left:20em;
+  }
+
+  #reset{
+    left:60em;
+  }
 }
 
 @media (min-width:480px)  { 

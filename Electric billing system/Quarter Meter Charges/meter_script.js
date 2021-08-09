@@ -261,7 +261,7 @@ function fetch(){
                             document.getElementById("save").style.display="none";
                             table.rows[index+1].cells.item(7).innerHTML=0;
                             document.getElementById("save").disabled=true;
-                            if(table.rows[0].cells.length===9)
+                            if(table.rows[index+1].cells.length===9)
                                 table.rows[index+1].cells.item(8).innerHTML=0;
                           }
                           else{  
@@ -320,9 +320,19 @@ function fetch(){
                                             table.rows[index+1].cells.item(5).innerHTML=arr[1];
                                             table.rows[index+1].cells.item(7).innerHTML=0;
                                             table.rows[index+1].cells.item(8).innerHTML=0;
+                                            
+                                            /*setTimeout(function(){
+                                                console.log(table.rows[index+1]);
+                                                window.scrollTo(0, table.rows[index+1].scrollTop);
+                                            }, 1500);*/ 
+                                            
+                                            //focus row not working
+                                            
+                                            
                                             document.getElementById("save").disabled=true;
                                             document.getElementById("date").disabled=false;
                                             document.getElementById("date").value="";
+                                            //window.scrollTo(table.rows[index+1]);
                                             item.value="";
                                         } 
                                         else{
