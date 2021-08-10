@@ -152,4 +152,11 @@ h2{
   #quarter_details{
     left:24em;
   }
+  #save{
+    left:25em;
+  }
+
+  #reset{
+    left:78em;
+  }
 }
