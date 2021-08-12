@@ -1,5 +1,38 @@
 var charge1=0;
 var days_difference=0;
+var r=1;
+let fixed_charge=[];
+let c=[];
+var counter=0;
+
+var table=document.getElementById("employee_details");
+var a = document.getElementById("new_table");
+if(a.rows.length!=1){
+    var row = a.insertRow(0);
+    var cell = row.insertCell(0);
+    var cell1 = row.insertCell(1);
+    var cell2 = row.insertCell(2);
+    var cell3 = row.insertCell(3);
+    var cell4 = row.insertCell(4);
+    var cell5 = row.insertCell(5);
+    var cell6 = row.insertCell(6);
+    var cell7 = row.insertCell(7);
+    var cell8 = row.insertCell(8);
+    var cell9 = row.insertCell(9);
+    
+    cell.innerHTML="<b>Qtr_ID</b>:";
+    cell1.innerHTML="<b>EmpNo</b>:";
+    cell2.innerHTML="<b>Name</b>:";
+    cell3.innerHTML="<b>QtrNo</b>:";
+    cell4.innerHTML="<b>Prev meter read</b>:";
+    cell5.innerHTML="<b>Curr meter read</b>:";
+    cell6.innerHTML="<b>Total unit consumed</b>:";
+    cell7.innerHTML="<b>Electric charge</b>:";
+    cell8.innerHTML="<b>Fixed charge</b>:";
+    cell9.innerHTML="<b>Total charge</b>:";
+}
+
+
 function get_names() {
     let $select = $("#colony_name");
     //refresh_colony_name();
@@ -92,24 +125,35 @@ document.getElementById("date").addEventListener("change",() => {
                                 type: 'POST',
                                 data:{"input": "calculate_charges",
                                         "rate": charge1,
-                                        "days": days_difference},
+                                        "days": days_difference,
+                                        "id": table.rows[index+1].cells.item(0).innerHTML},
                                 success:function(response){ 
-                                    document.getElementById("save").style.display="block"; 
-                                    document.getElementById('reset').style.top="37em";
-                                    //table.rows[index+1].cells.item(7).innerHTML=charge;
-                                    document.getElementById("save").disabled=false;
-                                    document.getElementById("date").disabled=true;
-                                    if(table.rows[0].cells.length<9){
-                                        var cell = table.rows[0].insertCell(8);     
-                                        cell.innerHTML = "<b>Total charge (Rs):</b>"   
+                                    if(response.includes("-")){
+                                        const arr=response.split("-");
+                                        document.getElementById("save").style.display="block"; 
+                                        document.getElementById('reset').style.top="37em";
+                                        //table.rows[index+1].cells.item(7).innerHTML=charge;
+                                        document.getElementById("save").disabled=false;
+                                        document.getElementById("date").disabled=true;
+                                        if(table.rows[0].cells.length<9){
+                                            var cell = table.rows[0].insertCell(8);     
+                                            cell.innerHTML = "<b>Total charge (Rs):</b>"   
+                                        }
+                                        if(table.rows[index+1].cells.length<9){
+                                            var cell1 = table.rows[index+1].insertCell(8);
+                                            cell1.innerHTML = arr[0];
+                                        }
+                                        else{
+                                            table.rows[index+1].cells.item(8).innerHTML=arr[0];
+                                        }
+                                        
+                                        c[counter]=arr[2];
+                                        fixed_charge[counter]=arr[1];
+                                        counter+=1;
+
                                     }
-                                    if(table.rows[index+1].cells.length<9){
-                                        var cell1 = table.rows[index+1].insertCell(8);
-                                        cell1.innerHTML = response;
-                                    }
-                                    else{
-                                        table.rows[index+1].cells.item(8).innerHTML=response;
-                                    }
+                                    
+
                                 },
                                 complete:function(){
         
@@ -139,12 +183,14 @@ document.getElementById("date").addEventListener("change",() => {
         document.getElementById("date").value="";
     }
 })
-var table=document.getElementById("employee_details");
+
+
 function fetch(){
     var colony_name=document.getElementById("colony_name").value;
     var colony_type=document.getElementById("colony_type").value;
-
+    //console.log(true);
     if(colony_name!="default" && colony_type!="default"){
+        
         $.ajax({
             url: 'meter_server.php',
             type: 'POST',
@@ -186,6 +232,7 @@ function fetch(){
                     table.rows[0].style.backgroundColor="rgb(233, 124, 74)";
 
                     const arr=JSON.parse(response);
+                    //console.log(arr.length+" occupied quarters found in this area");
                     alert(arr.length+" occupied quarters found in this area");
 
                     var x=arr.length*6;
@@ -270,23 +317,33 @@ function fetch(){
                                 type: 'POST',
                                 data:{"input": "calculate_charges",
                                         "rate": charge1,
-                                        "days": days_difference},
+                                        "days": days_difference,
+                                        "id": table.rows[index+1].cells.item(0).innerHTML},
                                 success:function(response){ 
-                                    document.getElementById("save").style.display="block"; 
-                                    document.getElementById('reset').style.top="37em";
-                                    table.rows[index+1].cells.item(7).innerHTML=charge;
-                                    document.getElementById("save").disabled=false;
-                                    document.getElementById("date").disabled=true;
-                                    if(table.rows[0].cells.length<9){
-                                        var cell = table.rows[0].insertCell(8);     
-                                        cell.innerHTML = "<b>Total charge (Rs):</b>"   
-                                    }
-                                    if(table.rows[index+1].cells.length<9){
-                                        var cell1 = table.rows[index+1].insertCell(8);
-                                        cell1.innerHTML = response;
-                                    }
-                                    else{
-                                        table.rows[index+1].cells.item(8).innerHTML=response;
+                                    if(response.includes("-")){
+                                        const arr=response.split("-");
+                                        document.getElementById("save").style.display="block"; 
+                                        document.getElementById('reset').style.top="37em";
+                                        table.rows[index+1].cells.item(7).innerHTML=charge;
+                                        document.getElementById("save").disabled=false;
+                                        document.getElementById("date").disabled=true;
+                                        if(table.rows[0].cells.length<9){
+                                            var cell = table.rows[0].insertCell(8);     
+                                            cell.innerHTML = "<b>Total charge (Rs):</b>"   
+                                        }
+                                        if(table.rows[index+1].cells.length<9){
+                                            var cell1 = table.rows[index+1].insertCell(8);
+                                            cell1.innerHTML = arr[0];
+                                        }
+                                        else{
+                                            table.rows[index+1].cells.item(8).innerHTML=arr[0];
+                                        }
+                                        
+                                        c[counter]=arr[2];
+                                        fixed_charge[counter]=arr[1];
+                                        counter+=1;
+
+
                                     }
                                 },
                                 complete:function(){
@@ -300,6 +357,7 @@ function fetch(){
                     })
 
                     document.getElementById("save").addEventListener("click",function(){
+                        counter=0;
                         document.querySelectorAll('.current_read').forEach((item,index) => {
                             if(item.value.toString().length>0){
                                 $.ajax({
@@ -307,6 +365,11 @@ function fetch(){
                                     type: 'POST',
                                     data:{"input": "insert_records",
                                             "rate": table.rows[index+1].cells.item(8).innerHTML,
+                                            "charge":c[counter],
+                                            "unit_consumed":table.rows[index+1].cells.item(7).innerHTML,
+                                            "fixed_charge":fixed_charge[counter],
+                                            "qtr_no":table.rows[index+1].cells.item(2).innerHTML,
+                                            "name":table.rows[index+1].cells.item(3).innerHTML,
                                             "qtrid": table.rows[index+1].cells.item(0).innerHTML,
                                             "empno": table.rows[index+1].cells.item(1).innerHTML,
                                             "prev_met": table.rows[index+1].cells.item(4).innerHTML,
@@ -320,14 +383,6 @@ function fetch(){
                                             table.rows[index+1].cells.item(5).innerHTML=arr[1];
                                             table.rows[index+1].cells.item(7).innerHTML=0;
                                             table.rows[index+1].cells.item(8).innerHTML=0;
-                                            
-                                            /*setTimeout(function(){
-                                                console.log(table.rows[index+1]);
-                                                window.scrollTo(0, table.rows[index+1].scrollTop);
-                                            }, 1500);*/ 
-                                            
-                                            //focus row not working
-                                            
                                             
                                             document.getElementById("save").disabled=true;
                                             document.getElementById("date").disabled=false;
@@ -343,29 +398,169 @@ function fetch(){
             
                                     }
                                 });
+                                counter+=1;
                             }
 
                         })
-                    })
-                }
-                else{
-                    //document.getElementById("colony_type").disabled=true;
-                    if(response.includes("No quarters are occupied in this colony")){
-                        if(confirm("No quarters are currently occupied in this colony. Please ensure that they are occupied from the redirected site")==true){
-                            window.open("http://localhost//Electric%20billing%20system/Quarter%20Occupancy%20entry/index.html");
-                            location.reload();
-                        }
-                    }
-                    else
-                        alert(response);
-                }
+                        setTimeout(function(){
+                            $.ajax({
+                                url: 'meter_server.php',
+                                type: 'POST',
+                                data:{
+                                    "input":"edit_records"
+                                },
+                                success:function(response){
+                                    var count=0;
+                                    //alert(response);
+                                    const arr=JSON.parse(response);
+                                    var x=arr.length*10;
+                                    if(response[0] == '['){
+                                        for(var i=0; i<x/10; i++){
+                                            var row = a.insertRow(r);
+                                            var cell = row.insertCell(0);
+                                            var cell1 = row.insertCell(1);
+                                            var cell2 = row.insertCell(2);
+                                            var cell3 = row.insertCell(3);
+                                            var cell4 = row.insertCell(4);
+                                            var cell5 = row.insertCell(5);
+                                            var cell6 = row.insertCell(6);
+                                            var cell7 = row.insertCell(7);
+                                            var cell8 = row.insertCell(8);
+                                            var cell9 = row.insertCell(9);
+    
+                                            cell.innerHTML=arr[i][count];
+                                            ++count;
+                                            cell1.innerHTML=arr[i][count];
+                                            ++count;
+                                            cell2.innerHTML=arr[i][count];
+                                            ++count;
+                                            cell3.innerHTML=arr[i][count];
+                                            ++count;
+                                            cell4.innerHTML=arr[i][count];
+                                            ++count;
+                                            cell5.innerHTML=arr[i][count];
+                                            ++count;
+                                            cell6.innerHTML=arr[i][count];
+                                            ++count;
+                                            cell7.innerHTML=arr[i][count];
+                                            ++count;
+                                            cell8.innerHTML=arr[i][count];
+                                            ++count;
+                                            cell9.innerHTML=arr[i][count];
+                                            ++count;
+    
+                                            count=0;
+                                            r+=1;
+                                        }
+                                    var doc = new jsPDF('1', 'pt', 'a0');  
+                                    var htmlstring = '';  
+                                    var tempVarToCheckPageHeight = 0;  
+                                    var pageHeight = 0;  
+                                    pageHeight = doc.internal.pageSize.height;  
+                                    specialElementHandlers = {  
+                                        // element with id of "bypass" - jQuery style selector  
+                                        '#bypassme': function(element, renderer) {  
+                                         // true = "handled elsewhere, bypass text extraction"  
+                                        return true  
+                                        }  
+                                    };  
+                                    margins = {  
+                                        top: 150,  
+                                        bottom: 60,  
+                                        left: 40,  
+                                        right: 40,  
+                                        width: 600  
+                                    };  
+                                    var y = 20;
+                                    //var res = doc.autoTableHtmlToJson(a);  
+                                    doc.setLineWidth(2);  
+                                    doc.text(200, y = y + 30, document.getElementById("colony_name").value+" "+"TYPE - "+document.getElementById("colony_type").value);  
+                                    //doc.autoTable(res.columns, res.data);
+                                    doc.autoTable({  
+                                        html: '#new_table',  
+                                        startY: 70,  
+                                        theme: 'striped',  
+                                        columnStyles: {  
+                                                0: {  
+                                                    cellWidth: 'auto',  
+                                                },  
+                                                1: {  
+                                                    cellWidth: 'auto',  
+                                                },  
+                                                2: {  
+                                                    cellWidth: 'auto', 
+                                                },
+                                                3:{
+                                                    cellWidth: 'auto',
+                                                },
+                                                4:{
+                                                    cellWidth: 'auto',
+                                                },  
+                                                5:{
+                                                    cellWidth: 'auto',
+                                                },
+                                                6:{
+                                                    cellWidth: 'auto',
+                                                },
+                                                7:{
+                                                    cellWidth: 'auto',
+                                                },
+                                                8:{
+                                                    cellWidth: 'auto',
+                                                },
+                                                9:{
+                                                    cellWidth: 'auto',
+                                                }
+                                        },  
+                                        styles: {  
+                                            fontSize: 30,
+                                            cellWidth: 'wrap' 
+                                        }  
+                                    }) 
+                                    doc.save(document.getElementById("colony_name").value+" "+"TYPE -"+document.getElementById("colony_type").value+".pdf");
+                                    charge1=0;
+                                    days_difference=0;
+                                    r=1;
+                                    fixed_charge=[];
+                                    c=[];
+                                    counter=0; 
+                                    while (a.rows.length > 1) {
+                                        a.deleteRow(1);
+                                    }
+                                }
+                                else{
+                                     alert(response);
+                                }
+                            },
+                            complete:function(){
+                
+                            }
+    
+                        });
+                    },2000);
+                        
 
-            },
-            complete:function(){
-
+                        
+                })
             }
-        });
-    }
+            else{
+                //document.getElementById("colony_type").disabled=true;
+                if(response.includes("No quarters are occupied in this colony")){
+                    if(confirm("No quarters are currently occupied in this colony. Please ensure that they are occupied from the redirected site")==true){
+                        window.open("http://localhost//Electric%20billing%20system/Quarter%20Occupancy%20entry/index.html");
+                        location.reload();
+                    }
+                }
+                else
+                    alert(response);
+            }
+
+        },
+        complete:function(){
+
+        }
+    });
+}
 }
 function parseDateStringToObject(dateStr) {
     const [day, month, year] = dateStr.split('/');

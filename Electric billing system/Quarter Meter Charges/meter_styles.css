@@ -45,6 +45,18 @@ input[type=number] {
   overflow: auto;
 }
 
+#new_table{
+  display: none;
+  width:85em;
+  height: 20em;
+}
+
+#new_table td{
+  height:60px;
+  text-align: center;
+  width:12em;
+}
+
 #employee_details td{
   animation: fadeIn 2s;
   -webkit-animation: fadeIn 2s;
