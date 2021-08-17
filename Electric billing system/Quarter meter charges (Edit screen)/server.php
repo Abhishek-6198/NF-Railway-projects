@@ -161,7 +161,7 @@
                     $sql= "DELETE from `electric transaction` WHERE `Qtr_ID`='".$_POST["qtrid"]."' AND `Flag`=0";
                     $result = $con->query($sql);
                     if($result === TRUE){
-                        echo "Updated successfully";
+                        echo "The records have been finalized successfully";
                     }
                     else{
                         echo $con->error;
@@ -171,5 +171,19 @@
                     echo $con->error;
             }
         }
+        elseif($_POST["input"]=="update_records"){
+            if(!$connection)
+                echo "Connection to database failed! Please try again";
+            else{
+                $stmt = $con->prepare("UPDATE `electric transaction` SET `Current read`=?,`Current Date`=?,`Unit consumed`=?,`Elec_charge`=?,`Fixed_charge`=?,`Total charge`=? WHERE `Qtr_ID`='".$_POST["qtrid"]."'");
+                $stmt->bind_param("isiddd", $_POST["curr_met"], $_POST["curr_date"], $_POST["unit_consumed"], $_POST["charge"], $_POST["fixed_charge"], $_POST["rate"]);
+                if($stmt->execute()){
+                    echo "Updated successfully";
+                }
+                else
+                    echo $con->error;
+            }
+        }
     }
+    $con->close();
 ?>

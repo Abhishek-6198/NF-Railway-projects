@@ -352,13 +352,15 @@ function fetch(){
                     })
 
                     document.getElementById("save").addEventListener("click",function(){
-                        var count=0;
-                        document.querySelectorAll('.current_read').forEach((item,index) => {
-                            if(item.value.toString().length>0 && document.getElementsByClassName("current_date")[index].value.length>0){
-                                $.ajax({
-                                    url: 'server.php',
-                                    type: 'POST',
-                                    data:{"input": "insert_records",
+                        
+                        if(confirm("Do you want to finalize these records?")==true){
+                            var count=0;
+                            document.querySelectorAll('.current_read').forEach((item,index) => {
+                                if(item.value.toString().length>0 && document.getElementsByClassName("current_date")[index].value.length>0){
+                                    $.ajax({
+                                        url: 'server.php',
+                                        type: 'POST',
+                                        data:{"input": "insert_records",
                                             "rate": table.rows[index+1].cells.item(11).innerHTML,
                                             "charge":table.rows[index+1].cells.item(9).innerHTML,
                                             "unit_consumed":table.rows[index+1].cells.item(8).innerHTML,
@@ -386,7 +388,38 @@ function fetch(){
                             }
 
                         })
-                          
+                    }else{
+                        var count=0;
+                        document.querySelectorAll('.current_read').forEach((item,index) => {
+                            if(item.value.toString().length>0 && document.getElementsByClassName("current_date")[index].value.length>0){
+                                $.ajax({
+                                    url: 'server.php',
+                                    type: 'POST',
+                                    data:{"input": "update_records",
+                                        "qtrid": table.rows[index+1].cells.item(0).innerHTML,
+                                        "unit_consumed":table.rows[index+1].cells.item(8).innerHTML,
+                                        "charge":table.rows[index+1].cells.item(9).innerHTML,
+                                        "fixed_charge":table.rows[index+1].cells.item(10).innerHTML,
+                                        "rate": table.rows[index+1].cells.item(11).innerHTML,
+                                        "curr_date": document.getElementsByClassName("current_date")[index].value,
+                                        "curr_met": item.value},
+                                success:function(response){
+                                    count+=1;
+                                    if(count==table.rows.length){
+                                        alert(response);
+                                        document.getElementById("save").disabled=true;
+                                    }
+                                        
+                                },
+                                complete:function(){
+        
+                                }
+                            });
+                        }
+
+                    })
+                    }
+                          setTimeout(function(){location.reload()},1000);
                     })
                 }
                 else{
