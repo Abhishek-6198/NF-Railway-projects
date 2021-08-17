@@ -21,7 +21,7 @@ if(isset($_POST["input"])){
               echo "Connection to database failed! Please try again";
         else{
             $codes=array();
-            $sql = "SELECT * from colony_master";
+            $sql = "SELECT * from `colony_master`";
             $result = $con->query($sql);
             if ($result->num_rows > 0) {
                   while($row = $result->fetch_assoc()) {
@@ -40,7 +40,7 @@ if(isset($_POST["input"])){
                 echo "Connection to database failed! Please try again";
         else{
                 $codes=array();
-                $sql = "SELECT * from quarter_master";
+                $sql = "SELECT * from `quarter_master`";
                 $result = $con->query($sql);
                 if ($result->num_rows > 0) {
                         while($row = $result->fetch_assoc()) {
@@ -77,11 +77,11 @@ if(isset($_POST["input"])){
                                 
                         }
                         //echo $code;
-                        $sql = "SELECT Qtr_No from quarter_master_entry WHERE Qtr_No='".$number."'";
+                        $sql = "SELECT `Qtr_No` from `quarter_master_entry` WHERE `Qtr_No`='".$number."'";
                         $result = $con->query($sql);
                         //echo $result->num_rows;
                         if($result->num_rows > 0){
-                            $sql = "SELECT Qtr_ID from quarter_master_entry WHERE Qtr_No='".$number."'";
+                            $sql = "SELECT `Qtr_ID` from `quarter_master_entry` WHERE `Qtr_No`='".$number."'";
                             $result = $con->query($sql);
                             if($result->num_rows > 0){
                                 while($row = $result->fetch_assoc()) {
@@ -92,14 +92,14 @@ if(isset($_POST["input"])){
                         }
                         else{
                             //Inserting record
-                            $stmt = $con->prepare("INSERT INTO quarter_master_entry(Qtr_No, Qtr_type, Colony_code) 
+                            $stmt = $con->prepare("INSERT INTO `quarter_master_entry`(`Qtr_No`, `Qtr_type`, `Colony_code`) 
                                                             VALUES (?, ?, ?)");
                             $stmt->bind_param("sss", $number, $type, $code);
                             if( $stmt->execute()){
                                 //echo "Colony details have been inserted. Your colony code is ".$code."<br>";
 
                                 //give Qtr_ID as output
-                                $sql = "SELECT Sl_No from quarter_master_entry WHERE Colony_code= '".$code. "'";
+                                $sql = "SELECT `Sl_No` from `quarter_master_entry` WHERE `Colony_code`= '".$code. "'";
                                 $result = $con->query($sql);
                                 if($result->num_rows > 0){
                                     while($row = $result->fetch_assoc()) {
@@ -112,14 +112,15 @@ if(isset($_POST["input"])){
 
                                         $qid=$qid.(string)$row["Sl_No"];
                                     }
-                                    $statement = $con->prepare("UPDATE quarter_master_entry SET Qtr_ID=? WHERE Qtr_No= '".$number. "'");
+                                    $statement = $con->prepare("UPDATE `quarter_master_entry` SET `Qtr_ID`=?, `Meter capacity`=? WHERE `Qtr_No`= '".$number. "'");
                                     $code=$code.$qid;
+                                    $cap=rand(1,5);
                                     //$inp_code=(int)$code;
-                                    $statement->bind_param("s",$code);
+                                    $statement->bind_param("si",$code,$cap);
                                     if($statement->execute())
                                         echo $code;      
                                     else
-                                        echo $con->error();
+                                        echo $con->error()." ".$cap;
 
                                     $statement->close();    
                                 }
