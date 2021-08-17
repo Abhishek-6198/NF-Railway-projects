@@ -19,17 +19,21 @@ if(a.rows.length!=1){
     var cell7 = row.insertCell(7);
     var cell8 = row.insertCell(8);
     var cell9 = row.insertCell(9);
+    var cell10 = row.insertCell(10);
+
     
-    cell.innerHTML="<b>Qtr_ID</b>:";
-    cell1.innerHTML="<b>EmpNo</b>:";
-    cell2.innerHTML="<b>Name</b>:";
-    cell3.innerHTML="<b>QtrNo</b>:";
-    cell4.innerHTML="<b>Prev meter read</b>:";
-    cell5.innerHTML="<b>Curr meter read</b>:";
-    cell6.innerHTML="<b>Total unit consumed</b>:";
-    cell7.innerHTML="<b>Electric charge</b>:";
-    cell8.innerHTML="<b>Fixed charge</b>:";
-    cell9.innerHTML="<b>Total charge</b>:";
+    cell.innerHTML="<b>EmpNo</b>:";
+    cell1.innerHTML="<b>Name</b>:";
+    cell2.innerHTML="<b>QtrNo</b>:";
+    cell3.innerHTML="<b>Prev meter read</b>:";
+    cell4.innerHTML="<b>Curr meter read</b>:";
+    cell5.innerHTML="<b>Prev date</b>:";
+    cell6.innerHTML="<b>Curr date</b>:";
+
+    cell7.innerHTML="<b>Total unit consumed</b>:";
+    cell8.innerHTML="<b>Electric charge</b>:";
+    cell9.innerHTML="<b>Fixed charge</b>:";
+    cell10.innerHTML="<b>Total charge</b>:";
 }
 
 
@@ -411,11 +415,13 @@ function fetch(){
                                 },
                                 success:function(response){
                                     var count=0;
+                                    const prev=[];
+                                    const curr=[];
                                     //alert(response);
                                     const arr=JSON.parse(response);
-                                    var x=arr.length*10;
+                                    var x=arr.length*9;
                                     if(response[0] == '['){
-                                        for(var i=0; i<x/10; i++){
+                                        for(var i=0; i<x/9; i++){
                                             var row = a.insertRow(r);
                                             var cell = row.insertCell(0);
                                             var cell1 = row.insertCell(1);
@@ -427,6 +433,7 @@ function fetch(){
                                             var cell7 = row.insertCell(7);
                                             var cell8 = row.insertCell(8);
                                             var cell9 = row.insertCell(9);
+                                            var cell10 = row.insertCell(10);
     
                                             cell.innerHTML=arr[i][count];
                                             ++count;
@@ -448,11 +455,14 @@ function fetch(){
                                             ++count;
                                             cell9.innerHTML=arr[i][count];
                                             ++count;
+                                            cell10.innerHTML=arr[i][count];
     
                                             count=0;
                                             r+=1;
                                         }
                                     var doc = new jsPDF('1', 'pt', 'a0');  
+                                    doc.setFontSize(50); 
+                                    doc.setFontStyle('arial');
                                     var htmlstring = '';  
                                     var tempVarToCheckPageHeight = 0;  
                                     var pageHeight = 0;  
@@ -474,11 +484,17 @@ function fetch(){
                                     var y = 20;
                                     //var res = doc.autoTableHtmlToJson(a);  
                                     doc.setLineWidth(2);  
-                                    doc.text(200, y = y + 30, document.getElementById("colony_name").value+" "+"TYPE - "+document.getElementById("colony_type").value);  
+                                    doc.text(document.getElementById("colony_name").value+" "+"TYPE - "+document.getElementById("colony_type").value,980, y = y + 200, );
+                                    doc.page=1; // use this as a counter.
+
+                                    function footer(){ 
+                                        doc.text(2900,1000, 'page ' + doc.page); //print number bottom right
+                                        doc.page ++;
+                                    };  
                                     //doc.autoTable(res.columns, res.data);
                                     doc.autoTable({  
                                         html: '#new_table',  
-                                        startY: 70,  
+                                        startY: 300,  
                                         theme: 'striped',  
                                         columnStyles: {  
                                                 0: {  
@@ -516,7 +532,9 @@ function fetch(){
                                             fontSize: 30,
                                             cellWidth: 'wrap' 
                                         }  
-                                    }) 
+                                    })
+                                    doc.setFontSize(20);
+                                    //footer();
                                     doc.save(document.getElementById("colony_name").value+" "+"TYPE -"+document.getElementById("colony_type").value+".pdf");
                                     charge1=0;
                                     days_difference=0;
