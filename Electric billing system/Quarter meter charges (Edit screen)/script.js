@@ -38,7 +38,7 @@ function get_types() {
             document.getElementById("colony_type").disabled=true;
             var c= confirm(response[i]);
                 if (c==true) {
-                  window.open("http://localhost//Electric%20billing%20system/Quarter%20master%20entry/index.html");
+                  window.open("http://localhost//Electric%20billing%20system/Quarter_master_entry/index.html");
                 } 
           }
         }
@@ -69,10 +69,12 @@ function fetch(){
                 var count=0;
                 if(response[0]=="["){
                     document.getElementById("save").style.display="block";
-                    document.getElementById("reset").style.top="37em";
+                    document.getElementById("confirm").style.display="block";
+                    //document.getElementById("reset").style.top="37em";
                     document.getElementById("colony_name").disabled=true;
                     document.getElementById("colony_type").disabled=true;
                     document.getElementById("save").disabled=false;
+                    document.getElementById("confirm").disabled=false;
                     table.style.display="block";
                     var row = table.insertRow(0);  
                     var cell = row.insertCell(0);
@@ -217,9 +219,10 @@ function fetch(){
                                                     if(response.includes("-")){
                                                         const arr=response.split("-");
                                                         //document.getElementById("save").style.display="block"; 
-                                                        document.getElementById('reset').style.top="37em";
+                                                        //document.getElementById('reset').style.top="37em";
                                                         table.rows[index+1].cells.item(8).innerHTML=document.getElementsByClassName("current_read")[index].value-parseInt(table.rows[index+1].cells.item(4).innerHTML);
                                                         document.getElementById("save").disabled=false;
+                                                        document.getElementById("confirm").disabled=false;
                                                         //document.getElementById("date").disabled=true;
                                                         table.rows[index+1].cells.item(9).innerHTML=arr[2];
                                                         table.rows[index+1].cells.item(10).innerHTML=arr[1];
@@ -238,6 +241,7 @@ function fetch(){
                                             table.rows[index+1].cells.item(10).innerHTML=0;
                                             table.rows[index+1].cells.item(11).innerHTML=0;
                                             document.getElementById("save").disabled=true;
+                                            document.getElementById("confirm").disabled=true;
                                         }
                                             
                                     }       
@@ -245,6 +249,7 @@ function fetch(){
                                         console.log(date+"--------->"+arr[parseInt(arr1[1])-1]);
                                         document.getElementById("colony_name").disabled=true;
                                         document.getElementById("save").disabled=true;
+                                        document.getElementById("confirm").disabled=true;
                                         alert("Invalid date");
                                         item.value="";
                                         table.rows[index+1].cells.item(9).innerHTML=0;
@@ -257,6 +262,7 @@ function fetch(){
                                     alert("Date should be in 'dd/mm/yyyy' format");
                                     document.getElementById("colony_name").disabled=true;
                                     document.getElementById("save").disabled=true;
+                                    document.getElementById("confirm").disabled=true;
                                     item.value="";
                                     table.rows[index+1].cells.item(9).innerHTML=0;
                                     table.rows[index+1].cells.item(10).innerHTML=0;
@@ -267,6 +273,7 @@ function fetch(){
                                 console.log(date);
                                 document.getElementById("colony_name").disabled=true;
                                 document.getElementById("save").disabled=true;
+                                document.getElementById("confirm").disabled=true;
                                 alert("Invalid date");
                                 item.value="";
                                 table.rows[index+1].cells.item(9).innerHTML=0;
@@ -315,6 +322,7 @@ function fetch(){
                                     //document.getElementById("save").style.display="none";
                                     table.rows[index+1].cells.item(8).innerHTML=0;
                                     document.getElementById("save").disabled=true;
+                                    document.getElementById("confirm").disabled=true;
                                     table.rows[index+1].cells.item(9).innerHTML=0;
                                     table.rows[index+1].cells.item(10).innerHTML=0;
                                     table.rows[index+1].cells.item(11).innerHTML=0;
@@ -331,9 +339,10 @@ function fetch(){
                                             if(response.includes("-")){
                                                 const arr=response.split("-");
                                                 //document.getElementById("save").style.display="block"; 
-                                                document.getElementById('reset').style.top="37em";
+                                                //document.getElementById('reset').style.top="37em";
                                                 table.rows[index+1].cells.item(8).innerHTML=charge;
                                                 document.getElementById("save").disabled=false;
+                                                document.getElementById("confirm").disabled=false;
                                                 //document.getElementById("date").disabled=true;
                                                 table.rows[index+1].cells.item(9).innerHTML=arr[2];
                                                 table.rows[index+1].cells.item(10).innerHTML=arr[1];
@@ -352,15 +361,46 @@ function fetch(){
                     })
 
                     document.getElementById("save").addEventListener("click",function(){
-                        
-                        if(confirm("Do you want to finalize these records?")==true){
-                            var count=0;
-                            document.querySelectorAll('.current_read').forEach((item,index) => {
-                                if(item.value.toString().length>0 && document.getElementsByClassName("current_date")[index].value.length>0){
-                                    $.ajax({
-                                        url: 'server.php',
-                                        type: 'POST',
-                                        data:{"input": "insert_records",
+                        var count=0;
+                        document.querySelectorAll('.current_read').forEach((item,index) => {
+                            if(item.value.toString().length>0 && document.getElementsByClassName("current_date")[index].value.length>0){
+                                $.ajax({
+                                    url: 'server.php',
+                                    type: 'POST',
+                                    data:   {"input": "update_records",
+                                            "qtrid": table.rows[index+1].cells.item(0).innerHTML,
+                                            "unit_consumed":table.rows[index+1].cells.item(8).innerHTML,
+                                            "charge":table.rows[index+1].cells.item(9).innerHTML,
+                                            "fixed_charge":table.rows[index+1].cells.item(10).innerHTML,
+                                            "rate": table.rows[index+1].cells.item(11).innerHTML,
+                                            "curr_date": document.getElementsByClassName("current_date")[index].value,
+                                            "curr_met": item.value},
+                                    success:function(response){
+                                        count+=1;
+                                        if(count==table.rows.length-1){
+                                            alert(response);
+                                            //document.getElementById("save").disabled=true;
+                                            //document.getElementById("confirm").disabled=true;
+                                        }
+                                        
+                                    },
+                                    complete:function(){
+        
+                                    }
+                                });
+                            }
+
+                        })
+                    })
+
+                    document.getElementById("confirm").addEventListener("click",function(){
+                        var count=0;
+                        document.querySelectorAll('.current_read').forEach((item,index) => {
+                            if(item.value.toString().length>0 && document.getElementsByClassName("current_date")[index].value.length>0){
+                                $.ajax({
+                                    url: 'server.php',
+                                    type: 'POST',
+                                    data:   {"input": "insert_records",
                                             "rate": table.rows[index+1].cells.item(11).innerHTML,
                                             "charge":table.rows[index+1].cells.item(9).innerHTML,
                                             "unit_consumed":table.rows[index+1].cells.item(8).innerHTML,
@@ -375,11 +415,12 @@ function fetch(){
                                             "curr_met": item.value},
                                     success:function(response){
                                         count+=1;
-                                        if(count==table.rows.length){
+                                        if(count==table.rows.length-1){
                                             alert(response);
-                                            document.getElementById("save").disabled=true;
-                                        }
-                                            
+                                            //document.getElementById("save").disabled=true;
+                                            //document.getElementById("confirm").disabled=true;
+                                            location.reload();
+                                        }  
                                     },
                                     complete:function(){
             
@@ -388,38 +429,6 @@ function fetch(){
                             }
 
                         })
-                    }else{
-                        var count=0;
-                        document.querySelectorAll('.current_read').forEach((item,index) => {
-                            if(item.value.toString().length>0 && document.getElementsByClassName("current_date")[index].value.length>0){
-                                $.ajax({
-                                    url: 'server.php',
-                                    type: 'POST',
-                                    data:{"input": "update_records",
-                                        "qtrid": table.rows[index+1].cells.item(0).innerHTML,
-                                        "unit_consumed":table.rows[index+1].cells.item(8).innerHTML,
-                                        "charge":table.rows[index+1].cells.item(9).innerHTML,
-                                        "fixed_charge":table.rows[index+1].cells.item(10).innerHTML,
-                                        "rate": table.rows[index+1].cells.item(11).innerHTML,
-                                        "curr_date": document.getElementsByClassName("current_date")[index].value,
-                                        "curr_met": item.value},
-                                success:function(response){
-                                    count+=1;
-                                    if(count==table.rows.length){
-                                        alert(response);
-                                        document.getElementById("save").disabled=true;
-                                    }
-                                        
-                                },
-                                complete:function(){
-        
-                                }
-                            });
-                        }
-
-                    })
-                    }
-                          setTimeout(function(){location.reload()},1000);
                     })
                 }
                 else{

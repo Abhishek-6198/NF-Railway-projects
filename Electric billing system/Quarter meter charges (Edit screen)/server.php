@@ -104,6 +104,7 @@
             $charge=$_POST["rate"];
             $charge1=0;
             $months=0;
+            $flag=FALSE;
             $temp=array();
             $c=0;
             if(!$connection)
@@ -113,14 +114,72 @@
                 $result = $con->query($sql);
                 if ($result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) {
-                        if($charge>$row["to_unit"]){
-                            $charge1+=$row["Rate/unit"];
-                            $charge=$charge-$row["to_unit"];
+                        if($row["To Date"]!=""){
+                            $row_prev=explode("/",$row["From Date"]);
+                            $row_curr=explode("/",$row["To Date"]);
+                            $rp=$row_prev[2]."-".$row_prev[1]."-".$row_prev[0];
+                            $rc=$row_curr[2]."-".$row_curr[1]."-".$row_curr[0];
+                            while (strtotime($rp) <= strtotime($rc)) {
+                                $d = DateTime::createFromFormat("Y-m-d", $rp);
+                                if(($d->format("d/m/Y")==$_POST["prev_date"]) || ($d->format("d/m/Y")==$_POST["curr_date"])){
+                                    if($charge>$row["to_unit"]){
+                                        $charge1=$charge1+$row["Rate/unit"];
+                                        $charge=$charge-$row["to_unit"];
+                                    }
+                                    else{
+                                        $charge1=$charge1+$row["Rate/unit"];
+                                        $flag=TRUE;
+                                        break;
+                                    }
+                                    break;
+                                }
+                                $rp = date('Y-m-d', strtotime($rp. ' + 1 day'));
+
+                                if($rp==date('Y-m-d',strtotime($rc))){
+                                    $prev=explode("/",$_POST["prev_date"]);
+                                    $curr=explode("/",$_POST["curr_date"]);
+                                    $p=$prev[2]."-".$prev[1]."-".$prev[0];
+                                    $c=$curr[2]."-".$curr[1]."-".$curr[0];
+                                    if(date('Y-m-d',strtotime($rc))<date('Y-m-d',strtotime($c))){
+                                        if($charge>$row["to_unit"]){
+                                            $charge1=$charge1+$row["Rate/unit"];
+                                            $charge=$charge-$row["to_unit"];
+                                        }
+                                        else{
+                                            $charge1=$charge1+$row["Rate/unit"];
+                                            $flag=TRUE;
+                                            break;
+                                        }
+                                    }
+                                    
+                                }
+                            }
+                            if($flag==TRUE)
+                                break;
                         }
                         else{
-                            $charge1+=$row["Rate/unit"];
-                            break;
+                            $row_prev=explode("/",$row["From Date"]);
+                            $rp=$row_prev[2]."-".$row_prev[1]."-".$row_prev[0];
+                            while(TRUE){
+                                $d = DateTime::createFromFormat("Y-m-d", $rp);
+                                if(($d->format("d/m/Y")==$_POST["prev_date"]) || ($d->format("d/m/Y")==$_POST["curr_date"])){
+                                    if($charge>$row["to_unit"]){
+                                        $charge1+=$row["Rate/unit"];
+                                        $charge=$charge-$row["to_unit"];
+                                    }
+                                    else{
+                                        $charge1+=$row["Rate/unit"];
+                                        $flag=TRUE;
+                                        break;
+                                    }
+                                    break;
+                                }
+                                $rp = date('Y-m-d', strtotime($rp. ' + 1 day'));
+                            }
+                            if($flag==TRUE)
+                                break;
                         }
+                        
                     }
                     array_push($temp,$charge1);
 

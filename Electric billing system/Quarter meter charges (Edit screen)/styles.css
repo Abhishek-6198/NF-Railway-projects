@@ -62,6 +62,14 @@ input[type=number] {
   font-size: medium;
 }
 
+#confirm{
+  display:none;
+  position: absolute;
+  top:37em;
+  left:83em;
+  font-size: medium;
+}
+
 #reset{
   display: block;
   position: absolute;
@@ -116,11 +124,15 @@ h2{
   }
 
   #save{
-    left:20em;
+    left:15em;
   }
 
   #reset{
-    left:60em;
+    left:53em;
+  }
+
+  #confirm{
+    left:40em;
   }
 }
 
@@ -144,17 +156,48 @@ h2{
   #employee_details{
     left:8em;
   }
+  #save{
+    left:35em;
+  }
+
+  #reset{
+    left:61em;
+  }
+
+  #confirm{
+    left:66em;
+  }
 }
 
 @media (min-width:1281px) {
   #quarter_details{
+    left:15em;
+  }
+  #save{
+    left:37em;
+  }
+
+  #reset{
+    left:68em;
+  }
+
+  #confirm{
+    left:70em;
+  }
+}
+@media (min-width:1536px) {
+  #quarter_details{
     left:24em;
   }
   #save{
-    left:25em;
+    left:30em;
   }
 
   #reset{
     left:78em;
+  }
+
+  #confirm{
+    left:70em;
   }
 }
