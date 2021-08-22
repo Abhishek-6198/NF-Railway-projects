@@ -107,8 +107,12 @@ if(isset($_POST["input"])){
                                             $qid="01000000";
                                         elseif($type=="II")
                                             $qid="02000000";
-                                        else
+                                        elseif($type=="III")
                                             $qid="03000000";
+                                        elseif($type=="IV")
+                                            $qid="04000000";
+                                        else
+                                            $qid="05000000";
 
                                         $qid=$qid.(string)$row["Sl_No"];
                                     }
