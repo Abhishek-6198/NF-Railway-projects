@@ -1,0 +1,39 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meter slab rate entry</title>
+    <link rel="stylesheet" href="styles.css">
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body>
+
+    <h1>Meter slab rate entry</h1>
+    <h2 id="new">New slab entry</h2>
+    <h2 id="old">Old slab entries</h2>
+    <div id="box">
+        
+        <div id="slab">
+            
+            <p id="from_date"><b>From (date)</b> :&nbsp;<input type="text" size=10 id="fdate" placeholder="dd/mm/yyyy" autocomplete="off" required></p><br>
+            <p id="to_date"><b>To (date)</b> :&nbsp;<input type="text" size=10 id="tdate" placeholder="dd/mm/yyyy" autocomplete="off" required></p><br>
+            <p id="from_unit"><b>From (KV)</b> :&nbsp;<input type="number" size=5 style="width:80px;" id="funit" autocomplete="off" required></p><br>
+            <p id="to_unit"><b>To (KV)</b> :&nbsp;<input type="number" size=5 style="width:80px;" id="tunit" autocomplete="off" required></p><br>
+            <p id="rate"><b>Rate</b> :&nbsp;<input type="number" step="0.01" size=5 style="width:80px;" id="r" autocomplete="off" required></p><br>
+            <p id="unit_type"><b>Unit type</b> :&nbsp;<select name="type" id="type" style="max-width:90%;" onclick="">
+                <option value="household">Household</option>
+                <option value="commercial">Commercial</option>
+            </select></p><br>
+        </div>
+    </div>
+    <div id="rate_table"><table id="meter_rates" border="2"></table></div>
+    <button id="save">Save</button>
+
+    <script src="frontend.js"></script>
+    
+</body>
+</html>

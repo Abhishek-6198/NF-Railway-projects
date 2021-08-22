@@ -1,0 +1,153 @@
+body{
+    background-color: rgb(205, 255, 232);
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+-moz-appearance: textfield;
+}
+
+#box{
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.068);
+    transition: 0.5s;
+    height:22em;
+    position: absolute;
+    left:30em;
+    top:10em;
+    padding-right: 40em;
+    border-radius: 8px;
+    background-color: #f7ddf8;
+  }
+  
+#box:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.103);
+}
+
+#save{
+    position: absolute;
+    top:31em;
+    left:49em;
+    font-size: medium;
+}
+
+#from_date{
+    position: absolute;
+    left:2em;
+    top:1em;
+}
+
+#to_date{
+    position: absolute;
+    left:2em;
+    top:4em;
+}
+
+#from_unit{
+    position: absolute;
+    left:2em;
+    top:7em;
+}
+
+#to_unit{
+    position: absolute;
+    left:2em;
+    top:10em;
+}
+
+#rate{
+    position: absolute;
+    left:2em;
+    top:13em;
+}
+
+#unit_type{
+    position: absolute;
+    left:2em;
+    top:16em;
+}
+#new{
+    background-color: rgb(224, 224, 215);
+    position: absolute;
+    left:20em;
+    top:4em;
+    border: 2px solid black;
+    padding-left: 5px;
+    padding-right: 7px;
+    padding-bottom: 12px;
+}
+
+#old{
+    background-color: rgb(215, 223, 224);
+    position: absolute;
+    left:20em;
+    top:23em;
+    border: 2px solid black;
+    padding-left: 5px;
+    padding-right: 7px;
+    padding-bottom: 12px;
+}
+
+h1{
+    text-align: center;
+    background-color: burlywood;
+}
+
+#rate_table{
+    display:none;
+    position: absolute;
+    top:38em;
+    left:30em;
+    width:85em;
+    height: 15em;
+    overflow: auto;
+}
+
+#meter_rates{
+    display: none;
+    height: 15em;
+    overflow: auto;
+    width: 40em;
+}
+
+#meter_rates td{
+    animation: fadeIn 2s;
+    -webkit-animation: fadeIn 2s;
+    -moz-animation: fadeIn 2s;
+    -o-animation: fadeIn 2s;
+    -ms-animation: fadeIn 2s;
+    height:50px;
+    text-align: center;
+    width:100px;
+}
+
+@keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+  
+  @-moz-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+  
+  @-webkit-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+  
+  @-o-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+  
+  @-ms-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+  
