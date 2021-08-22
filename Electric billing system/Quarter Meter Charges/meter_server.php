@@ -146,10 +146,11 @@
                     //echo json_encode($final);
             }
         }
-        elseif($_POST["input"]=="calculate_charges"){
+        elseif($_POST["input"]=="calculate_charges"){ //WIP
             $charge=$_POST["rate"];
             $charge1=0;
             $months=0;
+            $flag=FALSE;
             $temp=array();
             $c=0;
             if(!$connection)
@@ -159,15 +160,74 @@
                 $result = $con->query($sql);
                 if ($result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) {
-                        if($charge>$row["to_unit"]){
-                            $charge1+=$row["Rate/unit"];
-                            $charge=$charge-$row["to_unit"];
+                        if($row["To Date"]!=""){
+                            $row_prev=explode("/",$row["From Date"]);
+                            $row_curr=explode("/",$row["To Date"]);
+                            $rp=$row_prev[2]."-".$row_prev[1]."-".$row_prev[0];
+                            $rc=$row_curr[2]."-".$row_curr[1]."-".$row_curr[0];
+                            while (strtotime($rp) <= strtotime($rc)) {
+                                $d = DateTime::createFromFormat("Y-m-d", $rp);
+                                if(($d->format("d/m/Y")==$_POST["prev_date"]) || ($d->format("d/m/Y")==$_POST["curr_date"])){
+                                    if($charge>$row["to_unit"]){
+                                        $charge1=$charge1+$row["Rate/unit"];
+                                        $charge=$charge-$row["to_unit"];
+                                    }
+                                    else{
+                                        $charge1=$charge1+$row["Rate/unit"];
+                                        $flag=TRUE;
+                                        break;
+                                    }
+                                    break;
+                                }
+                                $rp = date('Y-m-d', strtotime($rp. ' + 1 day'));
+
+                                if($rp==date('Y-m-d',strtotime($rc))){
+                                    $prev=explode("/",$_POST["prev_date"]);
+                                    $curr=explode("/",$_POST["curr_date"]);
+                                    $p=$prev[2]."-".$prev[1]."-".$prev[0];
+                                    $c=$curr[2]."-".$curr[1]."-".$curr[0];
+                                    if(date('Y-m-d',strtotime($rc))<date('Y-m-d',strtotime($c))){
+                                        if($charge>$row["to_unit"]){
+                                            $charge1=$charge1+$row["Rate/unit"];
+                                            $charge=$charge-$row["to_unit"];
+                                        }
+                                        else{
+                                            $charge1=$charge1+$row["Rate/unit"];
+                                            $flag=TRUE;
+                                            break;
+                                        }
+                                    }
+                                    
+                                }
+                            }
+                            if($flag==TRUE)
+                                break;
                         }
                         else{
-                            $charge1+=$row["Rate/unit"];
-                            break;
+                            $row_prev=explode("/",$row["From Date"]);
+                            $rp=$row_prev[2]."-".$row_prev[1]."-".$row_prev[0];
+                            while(TRUE){
+                                $d = DateTime::createFromFormat("Y-m-d", $rp);
+                                if(($d->format("d/m/Y")==$_POST["prev_date"]) || ($d->format("d/m/Y")==$_POST["curr_date"])){
+                                    if($charge>$row["to_unit"]){
+                                        $charge1+=$row["Rate/unit"];
+                                        $charge=$charge-$row["to_unit"];
+                                    }
+                                    else{
+                                        $charge1+=$row["Rate/unit"];
+                                        $flag=TRUE;
+                                        break;
+                                    }
+                                    break;
+                                }
+                                $rp = date('Y-m-d', strtotime($rp. ' + 1 day'));
+                            }
+                            if($flag==TRUE)
+                                break;
                         }
+                        
                     }
+
                     array_push($temp,$charge1);
 
                     if($_POST["days"]%30==0){
@@ -209,30 +269,44 @@
             }
         }
         elseif($_POST["input"]=="edit_records"){
-             
+            $qtrid=array();
             $final=array();
             if(!$connection)
                 echo "Connection to database failed! Please try again";
             else{
-                $sql="SELECT * from `electric transaction` WHERE `Flag`=0";
+                $sql="SELECT * from `colony_master` WHERE `Colony_name`='".$_POST["name"]."'";
                 $result = $con->query($sql);
                 if ($result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) {
-                        $temp=array();
-                        array_push($temp,$row["EmpNo"],$row["EmpName"],$row["Qtr_No"],$row["Prev read"],$row["Current read"],$row["Prev Date"],$row["Current Date"],$row["Unit consumed"],$row["Elec_charge"],$row["Fixed_charge"],$row["Total charge"]);
-                        array_push($final,$temp);
-                    }
-
-                    echo json_encode($final);
-                    //echo $result->num_rows;
-                    
+                        $code=$row["Colony_code"];
+                    } 
                 }
-                else{
-                    echo $con->error;
+                $sql = "SELECT * from `quarter_master_entry` WHERE `Colony_code`='".$code."' AND `Qtr_type`='".$_POST["type"]."'";
+                $result = $con->query($sql);
+                if ($result->num_rows > 0) {
+                    while($row = $result->fetch_assoc()) {
+                        array_push($qtrid,$row["Qtr_ID"]);
+                    }
+                }
+                for($i=0;$i<count($qtrid);$i++){
+                    $sql="SELECT * from `electric transaction` WHERE `Qtr_ID`='".$qtrid[$i]."' AND `Flag`=0";
+                    $result = $con->query($sql);
+                    if ($result->num_rows > 0) {
+                        while($row = $result->fetch_assoc()) {
+                            $temp=array();
+                            array_push($temp,$row["EmpNo"],$row["EmpName"],$row["Qtr_No"],$row["Prev read"],$row["Current read"],$row["Prev Date"],$row["Current Date"],$row["Unit consumed"],$row["Elec_charge"],$row["Fixed_charge"],$row["Total charge"]);
+                            array_push($final,$temp);
+                        }
+                        //echo $result->num_rows;
+                    }
                 }
                 
             }
-            
+            if(count($final)!=0)
+                echo json_encode($final);
+            else
+                echo "Report cannot be generated as no data exists";
         }
     }
+    $con->close();
 ?>

@@ -72,7 +72,7 @@ function get_types() {
             document.getElementById("colony_type").disabled=true;
             var c= confirm(response[i]);
                 if (c==true) {
-                  window.open("http://localhost//Electric%20billing%20system/Quarter%20master%20entry/index.html");
+                  window.open("http://localhost//Electric%20billing%20system/Quarter_master_entry/index.html");
                 } 
           }
         }
@@ -130,12 +130,15 @@ document.getElementById("date").addEventListener("change",() => {
                                 data:{"input": "calculate_charges",
                                         "rate": charge1,
                                         "days": days_difference,
-                                        "id": table.rows[index+1].cells.item(0).innerHTML},
+                                        "id": table.rows[index+1].cells.item(0).innerHTML,
+                                        "prev_date": table.rows[index+1].cells.item(5).innerHTML,
+                                        "curr_date": document.getElementById("date").value},
                                 success:function(response){ 
                                     if(response.includes("-")){
                                         const arr=response.split("-");
                                         document.getElementById("save").style.display="block"; 
-                                        document.getElementById('reset').style.top="37em";
+                                        //document.getElementById('reset').style.top="37em";
+                                        //document.getElementById('generate').style.top="37em";
                                         //table.rows[index+1].cells.item(7).innerHTML=charge;
                                         document.getElementById("save").disabled=false;
                                         document.getElementById("date").disabled=true;
@@ -211,6 +214,7 @@ function fetch(){
                     document.getElementById("colony_name").disabled=true;
                     document.getElementById("colony_type").disabled=true;
                     document.getElementById("date").disabled=true;
+                    document.getElementById("generate").disabled=false;
                     table.style.display="block";
                     var row = table.insertRow(0);  
                     var cell = row.insertCell(0);
@@ -322,12 +326,16 @@ function fetch(){
                                 data:{"input": "calculate_charges",
                                         "rate": charge1,
                                         "days": days_difference,
-                                        "id": table.rows[index+1].cells.item(0).innerHTML},
+                                        "id": table.rows[index+1].cells.item(0).innerHTML,
+                                        "prev_date": table.rows[index+1].cells.item(5).innerHTML,
+                                        "curr_date": document.getElementById("date").value},
                                 success:function(response){ 
                                     if(response.includes("-")){
                                         const arr=response.split("-");
                                         document.getElementById("save").style.display="block"; 
-                                        document.getElementById('reset').style.top="37em";
+                                        //document.getElementById('reset').style.top="37em";
+                                        //document.getElementById('generate').style.top="37em";
+                                        //document.getElementById('generate').style.left="45em";
                                         table.rows[index+1].cells.item(7).innerHTML=charge;
                                         document.getElementById("save").disabled=false;
                                         document.getElementById("date").disabled=true;
@@ -406,166 +414,170 @@ function fetch(){
                             }
 
                         })
-                        setTimeout(function(){
-                            $.ajax({
-                                url: 'meter_server.php',
-                                type: 'POST',
-                                data:{
-                                    "input":"edit_records"
-                                },
-                                success:function(response){
-                                    var count=0;
-                                    const prev=[];
-                                    const curr=[];
-                                    //alert(response);
-                                    const arr=JSON.parse(response);
-                                    var x=arr.length*9;
-                                    if(response[0] == '['){
-                                        for(var i=0; i<x/9; i++){
-                                            var row = a.insertRow(r);
-                                            var cell = row.insertCell(0);
-                                            var cell1 = row.insertCell(1);
-                                            var cell2 = row.insertCell(2);
-                                            var cell3 = row.insertCell(3);
-                                            var cell4 = row.insertCell(4);
-                                            var cell5 = row.insertCell(5);
-                                            var cell6 = row.insertCell(6);
-                                            var cell7 = row.insertCell(7);
-                                            var cell8 = row.insertCell(8);
-                                            var cell9 = row.insertCell(9);
-                                            var cell10 = row.insertCell(10);
-    
-                                            cell.innerHTML=arr[i][count];
-                                            ++count;
-                                            cell1.innerHTML=arr[i][count];
-                                            ++count;
-                                            cell2.innerHTML=arr[i][count];
-                                            ++count;
-                                            cell3.innerHTML=arr[i][count];
-                                            ++count;
-                                            cell4.innerHTML=arr[i][count];
-                                            ++count;
-                                            cell5.innerHTML=arr[i][count];
-                                            ++count;
-                                            cell6.innerHTML=arr[i][count];
-                                            ++count;
-                                            cell7.innerHTML=arr[i][count];
-                                            ++count;
-                                            cell8.innerHTML=arr[i][count];
-                                            ++count;
-                                            cell9.innerHTML=arr[i][count];
-                                            ++count;
-                                            cell10.innerHTML=arr[i][count];
-    
-                                            count=0;
-                                            r+=1;
-                                        }
-                                    var doc = new jsPDF('1', 'pt', 'a0');  
-                                    doc.setFontSize(50); 
-                                    doc.setFontStyle('arial');
-                                    var htmlstring = '';  
-                                    var tempVarToCheckPageHeight = 0;  
-                                    var pageHeight = 0;  
-                                    pageHeight = doc.internal.pageSize.height;  
-                                    specialElementHandlers = {  
-                                        // element with id of "bypass" - jQuery style selector  
-                                        '#bypassme': function(element, renderer) {  
-                                         // true = "handled elsewhere, bypass text extraction"  
-                                        return true  
-                                        }  
-                                    };  
-                                    margins = {  
-                                        top: 150,  
-                                        bottom: 60,  
-                                        left: 40,  
-                                        right: 40,  
-                                        width: 600  
-                                    };  
-                                    var y = 20;
-                                    //var res = doc.autoTableHtmlToJson(a);  
-                                    doc.setLineWidth(2);  
-                                    doc.text(document.getElementById("colony_name").value+" "+"TYPE - "+document.getElementById("colony_type").value,980, y = y + 200, );
-                                    doc.page=1; // use this as a counter.
 
-                                    function footer(){ 
-                                        doc.text(2900,1000, 'page ' + doc.page); //print number bottom right
-                                        doc.page ++;
-                                    };  
-                                    //doc.autoTable(res.columns, res.data);
-                                    doc.autoTable({  
-                                        html: '#new_table',  
-                                        startY: 300,  
-                                        theme: 'striped',  
-                                        columnStyles: {  
-                                                0: {  
-                                                    cellWidth: 'auto',  
-                                                },  
-                                                1: {  
-                                                    cellWidth: 'auto',  
-                                                },  
-                                                2: {  
-                                                    cellWidth: 'auto', 
-                                                },
-                                                3:{
-                                                    cellWidth: 'auto',
-                                                },
-                                                4:{
-                                                    cellWidth: 'auto',
-                                                },  
-                                                5:{
-                                                    cellWidth: 'auto',
-                                                },
-                                                6:{
-                                                    cellWidth: 'auto',
-                                                },
-                                                7:{
-                                                    cellWidth: 'auto',
-                                                },
-                                                8:{
-                                                    cellWidth: 'auto',
-                                                },
-                                                9:{
-                                                    cellWidth: 'auto',
-                                                }
+                        
+                })
+
+                document.getElementById("generate").addEventListener("click",function(){ //WIP
+                    var colony_name=document.getElementById("colony_name").value;
+                    var colony_type=document.getElementById("colony_type").value;
+                    $.ajax({
+                        url: 'meter_server.php',
+                        type: 'POST',
+                        data:{
+                            "input":"edit_records",
+                            "name": colony_name,
+                            "type": colony_type
+                        },
+                        success:function(response){
+                            var count=0;
+                            const prev=[];
+                            const curr=[];
+                            //alert(response);
+                            if(response[0] == '['){
+                                const arr=JSON.parse(response);
+                                var x=arr.length*9;
+                                for(var i=0; i<x/9; i++){
+                                    var row = a.insertRow(r);
+                                    var cell = row.insertCell(0);
+                                    var cell1 = row.insertCell(1);
+                                    var cell2 = row.insertCell(2);
+                                    var cell3 = row.insertCell(3);
+                                    var cell4 = row.insertCell(4);
+                                    var cell5 = row.insertCell(5);
+                                    var cell6 = row.insertCell(6);
+                                    var cell7 = row.insertCell(7);
+                                    var cell8 = row.insertCell(8);
+                                    var cell9 = row.insertCell(9);
+                                    var cell10 = row.insertCell(10);
+
+                                    cell.innerHTML=arr[i][count];
+                                    ++count;
+                                    cell1.innerHTML=arr[i][count];
+                                    ++count;
+                                    cell2.innerHTML=arr[i][count];
+                                    ++count;
+                                    cell3.innerHTML=arr[i][count];
+                                    ++count;
+                                    cell4.innerHTML=arr[i][count];
+                                    ++count;
+                                    cell5.innerHTML=arr[i][count];
+                                    ++count;
+                                    cell6.innerHTML=arr[i][count];
+                                    ++count;
+                                    cell7.innerHTML=arr[i][count];
+                                    ++count;
+                                    cell8.innerHTML=arr[i][count];
+                                    ++count;
+                                    cell9.innerHTML=arr[i][count];
+                                    ++count;
+                                    cell10.innerHTML=arr[i][count];
+
+                                    count=0;
+                                    r+=1;
+                                }
+                            var doc = new jsPDF('1', 'pt', 'a0');  
+                            doc.setFontSize(50); 
+                            doc.setFontStyle('arial');
+                            var htmlstring = '';  
+                            var tempVarToCheckPageHeight = 0;  
+                            var pageHeight = 0;  
+                            pageHeight = doc.internal.pageSize.height;  
+                            specialElementHandlers = {  
+                                // element with id of "bypass" - jQuery style selector  
+                                '#bypassme': function(element, renderer) {  
+                                 // true = "handled elsewhere, bypass text extraction"  
+                                return true  
+                                }  
+                            };  
+                            margins = {  
+                                top: 150,  
+                                bottom: 60,  
+                                left: 40,  
+                                right: 40,  
+                                width: 600  
+                            };  
+                            var y = 20;
+                            //var res = doc.autoTableHtmlToJson(a);  
+                            doc.setLineWidth(2);  
+                            doc.text(document.getElementById("colony_name").value+" "+"TYPE - "+document.getElementById("colony_type").value,980, y = y + 200, );
+                            doc.page=1; // use this as a counter.
+
+                            function footer(){ 
+                                doc.text(2900,1000, 'page ' + doc.page); //print number bottom right
+                                doc.page ++;
+                            };  
+                            //doc.autoTable(res.columns, res.data);
+                            doc.autoTable({  
+                                html: '#new_table',  
+                                startY: 300,  
+                                theme: 'striped',  
+                                columnStyles: {  
+                                        0: {  
+                                            cellWidth: 'auto',  
                                         },  
-                                        styles: {  
-                                            fontSize: 30,
-                                            cellWidth: 'wrap' 
-                                        }  
-                                    })
-                                    doc.setFontSize(20);
-                                    //footer();
-                                    doc.save(document.getElementById("colony_name").value+" "+"TYPE -"+document.getElementById("colony_type").value+".pdf");
-                                    charge1=0;
-                                    days_difference=0;
-                                    r=1;
-                                    fixed_charge=[];
-                                    c=[];
-                                    counter=0; 
-                                    while (a.rows.length > 1) {
-                                        a.deleteRow(1);
-                                    }
-                                }
-                                else{
-                                     alert(response);
-                                }
-                            },
-                            complete:function(){
-                
+                                        1: {  
+                                            cellWidth: 'auto',  
+                                        },  
+                                        2: {  
+                                            cellWidth: 'auto', 
+                                        },
+                                        3:{
+                                            cellWidth: 'auto',
+                                        },
+                                        4:{
+                                            cellWidth: 'auto',
+                                        },  
+                                        5:{
+                                            cellWidth: 'auto',
+                                        },
+                                        6:{
+                                            cellWidth: 'auto',
+                                        },
+                                        7:{
+                                            cellWidth: 'auto',
+                                        },
+                                        8:{
+                                            cellWidth: 'auto',
+                                        },
+                                        9:{
+                                            cellWidth: 'auto',
+                                        }
+                                },  
+                                styles: {  
+                                    fontSize: 30,
+                                    cellWidth: 'wrap' 
+                                }  
+                            })
+                            doc.setFontSize(20);
+                            //footer();
+                            doc.save(document.getElementById("colony_name").value+" "+"TYPE -"+document.getElementById("colony_type").value+".pdf");
+                            charge1=0;
+                            days_difference=0;
+                            r=1;
+                            fixed_charge=[];
+                            c=[];
+                            counter=0; 
+                            while (a.rows.length > 1) {
+                                a.deleteRow(1);
                             }
-    
-                        });
-                    },2000);
-                        
+                        }
+                        else{
+                             alert(response);
+                        }
+                    },
+                    complete:function(){
+        
+                    }
 
-                        
+                });
                 })
             }
             else{
                 //document.getElementById("colony_type").disabled=true;
                 if(response.includes("No quarters are occupied in this colony")){
                     if(confirm("No quarters are currently occupied in this colony. Please ensure that they are occupied from the redirected site")==true){
-                        window.open("http://localhost//Electric%20billing%20system/Quarter%20Occupancy%20entry/index.html");
+                        window.open("http://localhost//Electric%20billing%20system/Quarter%20master%20occupancy/index.html");
                         location.reload();
                     }
                 }

@@ -1,145 +1,157 @@
 body{
-    background-color: rgb(255, 221, 205);
+  background-color: rgb(255, 221, 205);
 }
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+-webkit-appearance: none;
+margin: 0;
 }
 
 /* Firefox */
 input[type=number] {
-  -moz-appearance: textfield;
+-moz-appearance: textfield;
 }
 
 #quarter_details{
-    position: absolute;
-    top:10em;
-    left:25em;
-    width:50em;
+  position: absolute;
+  top:10em;
+  left:25em;
+  width:50em;
 }
 
 #date{
-  text-align: center;
+text-align: center;
 }
 
 #quarter_details td{
-    animation: fadeIn 2s;
-    -webkit-animation: fadeIn 2s;
-    -moz-animation: fadeIn 2s;
-    -o-animation: fadeIn 2s;
-    -ms-animation: fadeIn 2s;
-    height:40px;
-    text-align: center;
-    width:5em;
-}
-
-#employee_details{
-  display:none;
-  position: absolute;
-  top:15em;
-  left:20em;
-  width:85em;
-  height: 20em;
-  overflow: auto;
-}
-
-#new_table{
-  display: none;
-  width:85em;
-  height: 20em;
-}
-
-#new_table td{
-  height:60px;
-  text-align: center;
-  width:12em;
-}
-
-#employee_details td{
   animation: fadeIn 2s;
   -webkit-animation: fadeIn 2s;
   -moz-animation: fadeIn 2s;
   -o-animation: fadeIn 2s;
   -ms-animation: fadeIn 2s;
-  height:60px;
+  height:40px;
   text-align: center;
-  width:12em;
+  width:5em;
+}
+
+#employee_details{
+display:none;
+position: absolute;
+top:15em;
+left:20em;
+width:85em;
+height: 20em;
+overflow: auto;
+}
+
+#new_table{
+display: none;
+width:85em;
+height: 20em;
+}
+
+#new_table td{
+height:60px;
+text-align: center;
+width:12em;
+}
+
+#employee_details td{
+animation: fadeIn 2s;
+-webkit-animation: fadeIn 2s;
+-moz-animation: fadeIn 2s;
+-o-animation: fadeIn 2s;
+-ms-animation: fadeIn 2s;
+height:60px;
+text-align: center;
+width:12em;
 }
 
 #save{
-  display: none;
-  position: absolute;
-  top:37em;
-  left:25em;
-  font-size: medium;
+display: none;
+position: absolute;
+top:37em;
+left:47em;
+font-size: medium;
+}
+
+#generate{
+display: block;
+position: absolute;
+top:11em;
+left:83em;
+font-size: medium;
 }
 
 #reset{
-  display: block;
-  position: absolute;
-  top:11em;
-  left:78em;
-  font-size: medium;
+display: block;
+position: absolute;
+top:11em;
+left:70em;
+font-size: medium;
 }
 
 #emp{
-  height: 20em;
-  overflow: auto;
-  width: 40em;
+height: 20em;
+overflow: auto;
+width: 40em;
 }
 
 @keyframes fadeIn {
-    0% {opacity:0;}
-    100% {opacity:1;}
-  }
-  
-  @-moz-keyframes fadeIn {
-    0% {opacity:0;}
-    100% {opacity:1;}
-  }
-  
-  @-webkit-keyframes fadeIn {
-    0% {opacity:0;}
-    100% {opacity:1;}
-  }
-  
-  @-o-keyframes fadeIn {
-    0% {opacity:0;}
-    100% {opacity:1;}
-  }
-  
-  @-ms-keyframes fadeIn {
-    0% {opacity:0;}
-    100% {opacity:1;}
-  }
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@-moz-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@-webkit-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@-o-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@-ms-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
 
 h2{
-    text-align: center;
-    background-color: lightblue;
+  text-align: center;
+  background-color: lightblue;
 }
 
 @media (min-width:320px)  {
-  #quarter_details{
-    left:1px;
-  }
+#quarter_details{
+  left:1px;
+}
 
-  #employee_details{
-    left:1px;
-  }
+#employee_details{
+  left:1px;
+}
 
-  #save{
-    left:20em;
-  }
+#save{
+  left:30em;
+}
 
-  #reset{
-    left:60em;
-  }
+#reset{
+  left:53em;
+}
+
+#generate{
+  left:58em;
+}
 }
 
 @media (min-width:480px)  { 
- 
+
 
 }
 
@@ -152,23 +164,55 @@ h2{
 }
 
 @media (min-width:1025px) { 
-  #quarter_details{
-    left:8em;
-  }
-  #employee_details{
-    left:8em;
-  }
+#quarter_details{
+  left:8em;
+}
+#employee_details{
+  left:8em;
+}
+#save{
+  left:35em;
+}
+
+#reset{
+  left:61em;
+}
+
+#generate{
+  left:66em;
+}
 }
 
 @media (min-width:1281px) {
-  #quarter_details{
-    left:24em;
-  }
-  #save{
-    left:25em;
-  }
+#quarter_details{
+  left:15em;
+}
+#save{
+  left:41em;
+}
 
-  #reset{
-    left:78em;
-  }
+#reset{
+  left:68em;
+}
+
+#generate{
+  left:74em;
+}
+}
+
+@media (min-width:1536px) {
+#quarter_details{
+  left:24em;
+}
+#save{
+  left:47em;
+}
+
+#reset{
+  left:78em;
+}
+
+#generate{
+  left:83em;
+}
 }
