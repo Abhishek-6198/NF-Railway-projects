@@ -119,8 +119,22 @@ h2{
 @media (min-width:1281px) { 
     /* hi-res laptops and desktops */
     #quarter_details{
+        left:21em;
+        width:40em;
+    }
+
+    #save{
+        left:24em;
+    }
+
+    #reset{
+        left:54em;
+    } 
+}
+@media (min-width:1536px){
+    #quarter_details{
         left:25em;
-        width:50em;
+        width:50em;  
     }
 
     #save{
@@ -130,4 +144,4 @@ h2{
     #reset{
         left:63em;
     } 
- }
+}

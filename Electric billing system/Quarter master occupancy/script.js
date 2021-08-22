@@ -38,7 +38,7 @@ function get_types() {
             document.getElementById("colony_type").disabled=true;
             var c= confirm(response[i]);
                 if (c==true) {
-                  window.open("http://localhost//Electric%20billing%20system/Quarter%20master%20entry/index.html");
+                  window.open("http://localhost//Electric%20billing%20system/Quarter_master_entry/index.html");
                 } 
           }
         }
@@ -70,7 +70,7 @@ function get_numbers() {
           flag=true;
           var c= confirm(response[i]);
               if (c==true) {
-                window.open("http://localhost//Electric%20billing%20system/Quarter%20master%20entry/index.html");
+                window.open("http://localhost//Electric%20billing%20system/Quarter_master_entry/index.html");
               } 
         }
       }
