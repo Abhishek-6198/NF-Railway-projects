@@ -151,3 +151,122 @@ h1{
     100% {opacity:1;}
   }
   
+@media (min-width:320px)  { 
+    /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */ 
+ #new{
+     
+    left:3.5em;
+     padding-bottom: 12px;
+ }
+ #old{
+    left:3.5em;
+    padding-bottom: 2px;
+ }
+
+ #box{
+     left:5em;
+     padding-right: 25em;
+ }
+
+ #rate_table{
+     left:5em;
+     width:25em;
+ }
+ #save{
+     left:17em;
+ }
+
+}
+@media (min-width:480px)  { 
+    /* smartphones, Android phones, landscape iPhone */ 
+
+}
+@media (min-width:600px)  { 
+    /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */ 
+    #box{
+        padding-right: 30em;
+    }
+
+    #rate_table{
+        width:30em;
+    }
+
+    #save{
+        left:20em;
+    }
+
+}
+@media (min-width:801px)  { 
+    /* tablet, landscape iPad, lo-res laptops ands desktops */ 
+    #box{
+        padding-right: 40em;
+    }
+
+    #rate_table{
+        width:40em;
+    }
+
+    #save{
+        left:25em;
+    }
+
+}
+@media (min-width:1025px) { 
+    /* big landscape tablets, laptops, and desktops */
+    #new{
+        left:10em;
+     }
+     #old{
+        left:10em;
+     }
+    
+     #box{
+        left:15em;
+     }
+    
+     #rate_table{
+        left:15em;
+     }
+     #save{
+         left:35em;
+     }
+}
+@media (min-width:1281px) { 
+    /* hi-res laptops and desktops */
+    #new{
+        left:13.5em;
+     }
+     #old{
+        left:13.5em;
+     }
+    
+     #box{
+        left:20em;
+     }
+    
+     #rate_table{
+        left:20em;
+     }
+     #save{
+         left:40em;
+     }
+}
+@media (min-width:1536px){
+    #new{
+        left:18.5em;
+     }
+     #old{
+        left:18.5em;
+     }
+    
+     #box{
+        left:28em;
+     }
+    
+     #rate_table{
+        left:28em;
+     }
+     #save{
+         left:48em;
+     }
+}
