@@ -64,6 +64,10 @@ $.ajax({
             for(var j=1;j<a.rows.length;j++){
                 if(a.rows[j].cells.item(1).innerHTML=="" || a.rows[j].cells.item(1).innerHTML==null){
                     document.getElementById("fdate").value= a.rows[j].cells.item(0).innerHTML;
+                    document.getElementById("funit").value=a.rows[j].cells.item(2).innerHTML;
+                    document.getElementById("tunit").value=a.rows[j].cells.item(3).innerHTML;
+                    document.getElementById("r").value=a.rows[j].cells.item(4).innerHTML;
+                    document.getElementById("type").value=a.rows[j].cells.item(5).innerHTML;
                     document.getElementById("fdate").disabled=true;
                 }
             }
@@ -120,6 +124,7 @@ document.getElementById("save").addEventListener("click",function(){
                     success:function(response){
                         if(response.includes("-")){
                             const a=response.split("-");
+                            alert(a[0]);
                             fdate=a[1];
                             document.getElementById("fdate").disabled=true;
                         }
@@ -142,7 +147,7 @@ document.getElementById("save").addEventListener("click",function(){
         else{ //updation
             //console.log("updating");
             if(curr>prev || tdate==""){
-                //console.log("Yes");
+                console.log(tdate);
                 $.ajax({
                     url: 'server.php',
                     type: 'POST',
