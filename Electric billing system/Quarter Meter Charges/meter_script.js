@@ -395,7 +395,18 @@ function fetch(){
                                             table.rows[index+1].cells.item(5).innerHTML=arr[1];
                                             table.rows[index+1].cells.item(7).innerHTML=0;
                                             table.rows[index+1].cells.item(8).innerHTML=0;
-                                            
+                                            setTimeout(function(){
+                                                for(var i=0; i<table.rows[index+1].cells.length; i++){
+                                                    table.rows[index+1].cells.item(i).style.fontWeight = "500";
+                                            }},2000);
+                                            setTimeout(function(){
+                                                for(var i=0; i<table.rows[index+1].cells.length; i++){
+                                                    table.rows[index+1].cells.item(i).style.fontWeight = "900";
+                                            }},1000);
+                                            table.rows[index+1].scrollIntoView({
+                                                behavior: 'smooth',
+                                              block: 'center'
+                                            });
                                             document.getElementById("save").disabled=true;
                                             document.getElementById("date").disabled=false;
                                             document.getElementById("date").value="";
