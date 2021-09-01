@@ -24,29 +24,20 @@
                                                 VALUES (?,?,?,?,?)");
                         $stmt->bind_param("siiss",$_POST["from_date"],$_POST["from_unit"],$_POST["to_unit"],$_POST["rate"],$_POST["type"]);
                         if($stmt->execute()){
-                            $sql="SELECT * FROM `electric rate table` WHERE `From Date`='".$_POST["from_date"]."' AND `To Date` IS NULL ORDER BY `from_unit` ASC";
+                            $sql="SELECT * FROM `electric rate table` WHERE `From Date`='".$_POST["from_date"]."' AND `from_unit`=".$_POST["from_unit"]." AND `to_unit`=".$_POST["to_unit"]." AND `Rate/unit`='".$_POST["rate"]."' AND `Unit type`='".$_POST["type"]."'";
                             $result = $con->query($sql);
-                            if ($result->num_rows > 0) {
+                            if ($result->num_rows > 0){
                                 while($row = $result->fetch_assoc()) {
-                                    $stmt = $con->prepare("UPDATE `electric rate table` SET  `from_unit`=?, `to_unit`=?, `Rate/unit`=?, `Unit type`=? WHERE `From Date`='".$_POST["from_date"]."' AND `To Date`IS NULL"); 
-                                    $stmt->bind_param("iiss",$row["from_unit"],$row["to_unit"],$row["Rate/unit"],$row["Unit type"]);
+                                    $no=$row["Sl_No"];
+                                    $fdate=$row["From Date"];
+                                    $funit=$row["from_unit"];
+                                    $tunit=$row["to_unit"];
+                                    $rate=$row["Rate/unit"];
+                                    $type=$row["Unit type"];
                                 }
-                                $sql="SELECT * FROM `electric rate table` WHERE `From Date`='".$_POST["from_date"]."' AND `from_unit`=".$_POST["from_unit"]." AND `to_unit`=".$_POST["to_unit"]." AND `Rate/unit`='".$_POST["rate"]."' AND `Unit type`='".$_POST["type"]."'";
-                                $result = $con->query($sql);
-                                if ($result->num_rows > 0){
-                                    while($row = $result->fetch_assoc()) {
-                                        $no=$row["Sl_No"];
-                                        $fdate=$row["From Date"];
-                                        $funit=$row["from_unit"];
-                                        $tunit=$row["to_unit"];
-                                        $rate=$row["Rate/unit"];
-                                        $type=$row["Unit type"];
-                                    }
-                                    echo $no."-".$fdate."-".$funit."-".$tunit."-".$rate."-".$type;
-                                }
-                                //echo $sql;
+                                echo $no."-".$fdate."-".$funit."-".$tunit."-".$rate."-".$type;
                             }
-                           
+                            //echo $sql;
                         }
                         else{
                             echo $con->error;
@@ -61,28 +52,20 @@
                                                 VALUES (?,?,?,?,?,?)");
                         $stmt->bind_param("ssiiss",$_POST["from_date"],$_POST["to_date"],$_POST["from_unit"],$_POST["to_unit"],$_POST["rate"],$_POST["type"]);
                         if($stmt->execute()){
-                            $sql="SELECT * FROM `electric rate table` WHERE `From Date`='".$_POST["from_date"]."' AND `To Date`='".$_POST["to_date"]."' ORDER BY `from_unit` ASC";
+                            $sql="SELECT * FROM `electric rate table` WHERE `From Date`='".$_POST["from_date"]."' AND `To Date`='".$_POST["to_date"]."'AND `from_unit`=".$_POST["from_unit"]." AND `to_unit`=".$_POST["to_unit"]." AND `Rate/unit`='".$_POST["rate"]."' AND `Unit type`='".$_POST["type"]."'";
                             $result = $con->query($sql);
-                            if ($result->num_rows > 0) {
+                            if ($result->num_rows > 0){
                                 while($row = $result->fetch_assoc()) {
-                                    $stmt = $con->prepare("UPDATE `electric rate table` SET  `from_unit`=?, `to_unit`=?, `Rate/unit`=?, `Unit type`=? WHERE `From Date`='".$_POST["from_date"]."' AND `To Date`='".$_POST["to_date"]."'"); 
-                                    $stmt->bind_param("iiss",$row["from_unit"],$row["to_unit"],$row["Rate/unit"],$row["Unit type"]);
+                                    $no=$row["Sl_No"];
+                                    $fdate=$row["From Date"];
+                                    $tdate=$row["To Date"];
+                                    $funit=$row["from_unit"];
+                                    $tunit=$row["to_unit"];
+                                    $rate=$row["Rate/unit"];
+                                    $type=$row["Unit type"];
                                 }
-                                $sql="SELECT * FROM `electric rate table` WHERE `From Date`='".$_POST["from_date"]."' AND `To Date`='".$_POST["to_date"]."'AND `from_unit`=".$_POST["from_unit"]." AND `to_unit`=".$_POST["to_unit"]." AND `Rate/unit`='".$_POST["rate"]."' AND `Unit type`='".$_POST["type"]."'";
-                                $result = $con->query($sql);
-                                if ($result->num_rows > 0){
-                                    while($row = $result->fetch_assoc()) {
-                                        $no=$row["Sl_No"];
-                                        $fdate=$row["From Date"];
-                                        $tdate=$row["To Date"];
-                                        $funit=$row["from_unit"];
-                                        $tunit=$row["to_unit"];
-                                        $rate=$row["Rate/unit"];
-                                        $type=$row["Unit type"];
-                                    }
-                                    echo $no."-".$fdate."-".$tdate."-".$funit."-".$tunit."-".$rate."-".$type;
-                                }
-                            }  
+                                echo $no."-".$fdate."-".$tdate."-".$funit."-".$tunit."-".$rate."-".$type;
+                            }
                         }
                         else{
                             echo $con->error;
