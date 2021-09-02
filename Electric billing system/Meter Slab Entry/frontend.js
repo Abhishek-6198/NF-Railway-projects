@@ -2,6 +2,7 @@ var flag=false;
 var table=document.getElementById("slab_details");
 var table1=document.getElementById("old_table");
 var x=0;
+
 //console.log(table1)
 
 setTimeout(function(){
@@ -19,6 +20,7 @@ $.ajax({
         var k=1;
         var count=0;
         if(response[0]=='['){
+            document.getElementById("slab_info").style.display="block";
             document.getElementById("old").innerText="Old slab entries:";
             if(table1.rows.length!=1){
                 var row = table1.insertRow(0);
@@ -78,13 +80,13 @@ $.ajax({
         }
         else{
             document.getElementById("old").innerText="No old slabs";
+            document.getElementById("slab_info").style.display="none";
         }
     },
     complete:function(){
 
     }
 });
-
 
 
 document.getElementById("save").addEventListener("click",function(){
@@ -97,7 +99,12 @@ document.getElementById("save").addEventListener("click",function(){
 
     if(fdate!="" && funit.toString()!="" && tunit.toString()!="" && rate.toString()!=""){
         if(document.getElementById("save").innerText=="Save"){
-            $.ajax({
+            var arr=[];
+            var temp=[];
+            temp.push(fdate,tdate,funit,tunit,rate,type);
+            arr.push(temp);
+            temp=[];
+            /*$.ajax({
                 url: 'server.php',
                 type: 'POST',
                 data:{
@@ -110,8 +117,6 @@ document.getElementById("save").addEventListener("click",function(){
                         "type":type
                 },
                 success:function(response){
-                    //console.log(response.length);
-                    //alert(response);
                     if(response.includes("-")){
                         const arr=response.split("-");
     
@@ -206,123 +211,215 @@ document.getElementById("save").addEventListener("click",function(){
             complete:function(){
     
             }
-        });
+        });*/
     
                 if(flag==true){  
                     document.querySelectorAll(".from_unit").forEach((item,index) => {
+                        
                         if(item.value.toString()!="" && document.getElementsByClassName("to_unit")[index].value.toString()!="" && document.getElementsByClassName("rate")[index].value.toString()!=""){
                             //console.log(item.value+"-"+document.getElementsByClassName("to_unit")[index].value+"-"+document.getElementsByClassName("rate")[index].value);
-                            $.ajax({
-                                url: 'server.php',
-                                type: 'POST',
-                                data:{
-                                    "input":"append",
-                                    "from_date":fdate,
-                                    "to_date":tdate,
-                                    "from_unit":item.value,
-                                    "to_unit":document.getElementsByClassName("to_unit")[index].value,
-                                    "rate":document.getElementsByClassName("rate")[index].value,
-                                    "type":document.getElementsByClassName("unit_type")[index].value
-                                },
-                                success:function(response){
-                                     if(response.includes("-")){
-                                        const arr=response.split("-");
-                                        document.getElementById("old").innerText="Old slab entries:";
+                                temp.push(fdate,tdate,item.value,document.getElementsByClassName("to_unit")[index].value,document.getElementsByClassName("rate")[index].value,document.getElementsByClassName("unit_type")[index].value);
+                                arr.push(temp);
+                                temp=[];
+                                /*$.ajax({
+                                    url: 'server.php',
+                                    type: 'POST',
+                                    data:{
+                                        "input":"append",
+                                        "from_date":fdate,
+                                        "to_date":tdate,
+                                        "from_unit":item.value,
+                                        "to_unit":document.getElementsByClassName("to_unit")[index].value,
+                                        "rate":document.getElementsByClassName("rate")[index].value,
+                                        "type":document.getElementsByClassName("unit_type")[index].value
+                                    },
+                                    success:function(response){
+                                        if(response.includes("-")){
+                                            const arr=response.split("-");
+                                            document.getElementById("old").innerText="Old slab entries:";
                             
-                                        if(table1.rows.length>=1){
-                                            var row=table1.insertRow(table1.rows.length);
-                                            row.style.backgroundColor="rgb(243, 242, 189)";
-                                            row.addEventListener("click",updation);
-                                            row.addEventListener("mouseover",func);
-                                            row.addEventListener("mouseout",func1);
-                                            var cell = row.insertCell(0);
-                                            var cell1 = row.insertCell(1);
-                                            var cell2 = row.insertCell(2);
-                                            var cell3 = row.insertCell(3);
-                                            var cell4 = row.insertCell(4);
-                                            var cell5 = row.insertCell(5);
-                                            var cell6 = row.insertCell(6);
+                                            if(table1.rows.length>=1){
+                                                var row=table1.insertRow(table1.rows.length);
+                                                row.style.backgroundColor="rgb(243, 242, 189)";
+                                                row.addEventListener("click",updation);
+                                                row.addEventListener("mouseover",func);
+                                                row.addEventListener("mouseout",func1);
+                                                var cell = row.insertCell(0);
+                                                var cell1 = row.insertCell(1);
+                                                var cell2 = row.insertCell(2);
+                                                var cell3 = row.insertCell(3);
+                                                var cell4 = row.insertCell(4);
+                                                var cell5 = row.insertCell(5);
+                                                var cell6 = row.insertCell(6);
     
-                                            if(arr.length<7){
-                                                cell.innerHTML=arr[0];
-                                                cell1.innerHTML=arr[1];
-                                                cell2.innerHTML="-";
-                                                cell3.innerHTML=arr[2];
-                                                cell4.innerHTML=arr[3];
-                                                cell5.innerHTML=arr[4];
-                                                cell6.innerHTML=arr[5];
-                                            }else{
-                                                cell.innerHTML=arr[0];
-                                                cell1.innerHTML=arr[1];
-                                                cell2.innerHTML=arr[2];
-                                                cell3.innerHTML=arr[3];
-                                                cell4.innerHTML=arr[4];
-                                                cell5.innerHTML=arr[5];
-                                                cell6.innerHTML=arr[6];
+                                                if(arr.length<7){
+                                                    cell.innerHTML=arr[0];
+                                                    cell1.innerHTML=arr[1];
+                                                    cell2.innerHTML="-";
+                                                    cell3.innerHTML=arr[2];
+                                                    cell4.innerHTML=arr[3];
+                                                    cell5.innerHTML=arr[4];
+                                                    cell6.innerHTML=arr[5];
+                                                }else{
+                                                    cell.innerHTML=arr[0];
+                                                    cell1.innerHTML=arr[1];
+                                                    cell2.innerHTML=arr[2];
+                                                    cell3.innerHTML=arr[3];
+                                                    cell4.innerHTML=arr[4];
+                                                    cell5.innerHTML=arr[5];
+                                                    cell6.innerHTML=arr[6];
+                                                }
                                             }
-                                        }
-                                        else{
-                                            var row = table1.insertRow(0);
-                                            var cell = row.insertCell(0);
-                                            var cell1 = row.insertCell(1);
-                                            var cell2 = row.insertCell(2);
-                                            var cell3 = row.insertCell(3);
-                                            var cell4 = row.insertCell(4);
-                                            var cell5 = row.insertCell(5);
-                                            var cell6 = row.insertCell(6);
+                                            else{
+                                                var row = table1.insertRow(0);
+                                                var cell = row.insertCell(0);
+                                                var cell1 = row.insertCell(1);
+                                                var cell2 = row.insertCell(2);
+                                                var cell3 = row.insertCell(3);
+                                                var cell4 = row.insertCell(4);
+                                                var cell5 = row.insertCell(5);
+                                                var cell6 = row.insertCell(6);
                                 
-                                            cell.innerHTML="<b>Sl No</b>:";
-                                            cell1.innerHTML="<b>From date</b>:";
-                                            cell2.innerHTML="<b>To date</b>:";
-                                            cell3.innerHTML="<b>From unit</b>:";
-                                            cell4.innerHTML="<b>To unit</b>:";
-                                            cell5.innerHTML="<b>Rate/unit</b>:";
-                                            cell6.innerHTML="<b>Unit type</b>:";
+                                                cell.innerHTML="<b>Sl No</b>:";
+                                                cell1.innerHTML="<b>From date</b>:";
+                                                cell2.innerHTML="<b>To date</b>:";
+                                                cell3.innerHTML="<b>From unit</b>:";
+                                                cell4.innerHTML="<b>To unit</b>:";
+                                                cell5.innerHTML="<b>Rate/unit</b>:";
+                                                cell6.innerHTML="<b>Unit type</b>:";
     
-                                            table1.rows[0].style.position="sticky";
-                                            table1.rows[0].style.top="0";
-                                            table1.rows[0].style.backgroundColor="rgb(233, 124, 74)";
+                                                table1.rows[0].style.position="sticky";
+                                                table1.rows[0].style.top="0";
+                                                table1.rows[0].style.backgroundColor="rgb(233, 124, 74)";
     
-                                            var row=table1.insertRow(table1.rows.length);
-                                            row.style.backgroundColor="rgb(243, 242, 189)";
-                                            row.addEventListener("click",updation);
-                                            row.addEventListener("mouseover",func);
-                                            row.addEventListener("mouseout",func1);
-                                            var cell = row.insertCell(0);
-                                            var cell1 = row.insertCell(1);
-                                            var cell2 = row.insertCell(2);
-                                            var cell3 = row.insertCell(3);
-                                            var cell4 = row.insertCell(4);
-                                            var cell5 = row.insertCell(5);
-                                            var cell6 = row.insertCell(6);
+                                                var row=table1.insertRow(table1.rows.length);
+                                                row.style.backgroundColor="rgb(243, 242, 189)";
+                                                row.addEventListener("click",updation);
+                                                row.addEventListener("mouseover",func);
+                                                row.addEventListener("mouseout",func1);
+                                                var cell = row.insertCell(0);
+                                                var cell1 = row.insertCell(1);
+                                                var cell2 = row.insertCell(2);
+                                                var cell3 = row.insertCell(3);
+                                                var cell4 = row.insertCell(4);
+                                                var cell5 = row.insertCell(5);
+                                                var cell6 = row.insertCell(6);
     
-                                            if(arr.length<7){
-                                                cell.innerHTML=arr[0];
-                                                cell1.innerHTML=arr[1];
-                                                cell2.innerHTML="-";
-                                                cell3.innerHTML=arr[2];
-                                                cell4.innerHTML=arr[3];
-                                                cell5.innerHTML=arr[4];
-                                                cell6.innerHTML=arr[5];
-                                            }else{
-                                                cell.innerHTML=arr[0];
-                                                cell1.innerHTML=arr[1];
-                                                cell2.innerHTML=arr[2];
-                                                cell3.innerHTML=arr[3];
-                                                cell4.innerHTML=arr[4];
-                                                cell5.innerHTML=arr[5];
-                                                cell6.innerHTML=arr[6];
+                                                if(arr.length<7){
+                                                    cell.innerHTML=arr[0];
+                                                    cell1.innerHTML=arr[1];
+                                                    cell2.innerHTML="-";
+                                                    cell3.innerHTML=arr[2];
+                                                    cell4.innerHTML=arr[3];
+                                                    cell5.innerHTML=arr[4];
+                                                    cell6.innerHTML=arr[5];
+                                                }else{
+                                                    cell.innerHTML=arr[0];
+                                                    cell1.innerHTML=arr[1];
+                                                    cell2.innerHTML=arr[2];
+                                                    cell3.innerHTML=arr[3];
+                                                    cell4.innerHTML=arr[4];
+                                                    cell5.innerHTML=arr[5];
+                                                    cell6.innerHTML=arr[6];
+                                                }
                                             }
                                         }
-                                    }
-                                },
-                                complete:function(){
+                                    
+                                    },
+                                    complete:function(){
                 
-                                }
-                            });
+                                    }
+                            
+                                });*/
+                           
                         }
+                    
                     })
                 }
+                console.log(arr);
+                var jsonString = JSON.stringify(arr);
+                $.ajax({
+                    url: 'server.php',
+                    type: 'POST',
+                    data: {"input":"append",
+                            data:jsonString},
+                    cache: false,
+                    success:function(response){
+                        //alert(response);
+                        var count=0;
+                        if(response[0]=='['){
+                            while (table1.rows.length > 1) {
+                                table1.deleteRow(1);
+                            }
+                            //document.getElementById("slab_info").style.display="block";
+                            document.getElementById("old").innerText="Old slab entries:";
+                            if(!table1.rows.length>=1){
+                                var row = table1.insertRow(0);
+                                var cell = row.insertCell(0);
+                                var cell1 = row.insertCell(1);
+                                var cell2 = row.insertCell(2);
+                                var cell3 = row.insertCell(3);
+                                var cell4 = row.insertCell(4);
+                                var cell5 = row.insertCell(5);
+                                var cell6 = row.insertCell(6);
+                                
+                                cell.innerHTML="<b>Sl No</b>:";
+                                cell1.innerHTML="<b>From date</b>:";
+                                cell2.innerHTML="<b>To date</b>:";
+                                cell3.innerHTML="<b>From unit</b>:";
+                                cell4.innerHTML="<b>To unit</b>:";
+                                cell5.innerHTML="<b>Rate/unit</b>:";
+                                cell6.innerHTML="<b>Unit type</b>:";
+
+                                table1.rows[0].style.position="sticky";
+                                table1.rows[0].style.top="0";
+                                table1.rows[0].style.backgroundColor="rgb(233, 124, 74)";
+                            }
+                            
+                            const arr=JSON.parse(response);
+                
+                            var x=arr.length*6;
+                            for(var i=0; i<x/6; i++){
+                                var row=table1.insertRow(table1.rows.length);
+                                row.style.backgroundColor="rgb(243, 242, 189)";
+                                row.addEventListener("click",updation);
+                                row.addEventListener("mouseover",func);
+                                row.addEventListener("mouseout",func1);
+                                var cell = row.insertCell(0);
+                                var cell1 = row.insertCell(1);
+                                var cell2 = row.insertCell(2);
+                                var cell3 = row.insertCell(3);
+                                var cell4 = row.insertCell(4);
+                                var cell5 = row.insertCell(5);
+                                var cell6 = row.insertCell(6);
+                
+                                cell.innerHTML=arr[i][count];
+                                ++count;
+                                cell1.innerHTML=arr[i][count];
+                                ++count;
+                                cell2.innerHTML=arr[i][count];
+                                ++count;
+                                cell3.innerHTML=arr[i][count];
+                                ++count;
+                                cell4.innerHTML=arr[i][count];
+                                ++count;
+                                cell5.innerHTML=arr[i][count];
+                                ++count;
+                                cell6.innerHTML=arr[i][count];
+                
+                                count=0;
+                            }
+                        }
+                        else{
+                            document.getElementById("old").innerText="No old slabs";
+                            document.getElementById("slab_info").style.display="none";
+                        }
+                    },
+                    complete:function(){
+
+                    }
+                });
+                    
         }
         else if(document.getElementById("save").innerText=="Update"){
             $.ajax({

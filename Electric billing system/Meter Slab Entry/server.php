@@ -13,10 +13,55 @@
 
     if(isset($_POST["input"])){
         if($_POST["input"]=="append"){
+            $final=array();
+            $flag=FALSE;
             if(!$connection)
                 echo "Connection to database failed! Please try again";
             else{
-                if($_POST["to_date"]==""){
+                $data = json_decode(stripslashes($_POST['data']));
+                //echo $data;
+                foreach($data as $d){
+                    if(count($d)==6){
+                        $data1 = json_decode(stripslashes(json_encode($d)));
+                        $from_date=$data1[0];
+                        $sql="SELECT * FROM `electric rate table` WHERE `From Date`='".$data1[0]."' AND `To Date`='".$data1[1]."'AND `from_unit`=".$data1[2]." AND `to_unit`=".$data1[3]." AND `Rate/unit`='".$data1[4]."' AND `Unit type`='".$data1[5]."'";
+                        $result = $con->query($sql);
+                        if ($result->num_rows == 0) {
+                            $stmt = $con->prepare("INSERT INTO `electric rate table`(`From Date`,`To Date`,`from_unit`,`to_unit`,`Rate/unit`,`Unit type`)
+                                                    VALUES (?,?,?,?,?,?)");
+                            $stmt->bind_param("ssiiss",$data1[0],$data1[1],$data1[2],$data1[3],$data1[4],$data1[5]);
+                            $stmt->execute();
+                        }
+                    }
+                    elseif(count($d)==5){
+                        $data1 = json_decode(stripslashes(json_encode($d)));
+                        $from_date=$data1[0];
+                        $sql="SELECT * FROM `electric rate table` WHERE `From Date`='".$data1[0]."' AND `from_unit`=".$data1[1]." AND `to_unit`=".$data1[2]." AND `Rate/unit`='".$data1[3]."' AND `Unit type`='".$data1[4]."'";
+                        $result = $con->query($sql);
+                        if ($result->num_rows == 0) {
+                            $stmt = $con->prepare("INSERT INTO `electric rate table`(`From Date`,`from_unit`,`to_unit`,`Rate/unit`,`Unit type`)
+                                                    VALUES (?,?,?,?,?)");
+                            $stmt->bind_param("siiss",$data1[0],$data1[1],$data1[2],$data1[3],$data1[4]);
+                            $stmt->execute();
+                        }  
+                    }
+                }
+                $sql="SELECT * FROM `electric rate table`";
+                $result = $con->query($sql);
+                if ($result->num_rows > 0) {
+                    $flag=TRUE;
+                    while($row = $result->fetch_assoc()) {
+                        $temp=array();
+                        array_push($temp,$row["Sl_No"],$row["From Date"],$row["To Date"],$row["from_unit"],$row["to_unit"],$row["Rate/unit"],$row["Unit type"]);
+                        array_push($final,$temp);
+                    }
+                }
+                if($flag==TRUE)
+                    echo json_encode($final);
+                else
+                    echo "No previous slab records found";
+
+                /*if($_POST["to_date"]==""){
                     $sql="SELECT * FROM `electric rate table` WHERE `From Date`='".$_POST["from_date"]."' AND `from_unit`=".$_POST["from_unit"]." AND `to_unit`=".$_POST["to_unit"]." AND `Rate/unit`='".$_POST["rate"]."' AND `Unit type`='".$_POST["type"]."'";
                     $result = $con->query($sql);
                     if ($result->num_rows == 0) {
@@ -71,7 +116,7 @@
                             echo $con->error;
                         }
                     }
-                }
+                }*/
                 
             }
         }
