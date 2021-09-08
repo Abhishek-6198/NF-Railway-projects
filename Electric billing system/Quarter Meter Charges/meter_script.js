@@ -123,7 +123,7 @@ document.getElementById("date").addEventListener("change",() => {
                             var prev=new Date(dt1);
                             var time_difference = curr.getTime() - prev.getTime(); 
                             days_difference = time_difference / (1000 * 60 * 60 * 24);
-                            charge1=(item.value-parseInt(table.rows[index+1].cells.item(4).innerHTML))/days_difference;  
+                            charge1=item.value-parseInt(table.rows[index+1].cells.item(4).innerHTML);  
                             $.ajax({
                                 url: 'meter_server.php',
                                 type: 'POST',
@@ -134,6 +134,7 @@ document.getElementById("date").addEventListener("change",() => {
                                         "prev_date": table.rows[index+1].cells.item(5).innerHTML,
                                         "curr_date": document.getElementById("date").value},
                                 success:function(response){ 
+                                    setTimeout(function(){
                                     if(response.includes("-")){
                                         const arr=response.split("-");
                                         document.getElementById("save").style.display="block"; 
@@ -159,7 +160,9 @@ document.getElementById("date").addEventListener("change",() => {
                                         counter+=1;
 
                                     }
-                                    
+                                    else
+                                        console.log(response);
+                                    },1200)
 
                                 },
                                 complete:function(){
@@ -324,12 +327,13 @@ function fetch(){
                                 url: 'meter_server.php',
                                 type: 'POST',
                                 data:{"input": "calculate_charges",
-                                        "rate": charge1,
+                                        "rate": charge,
                                         "days": days_difference,
                                         "id": table.rows[index+1].cells.item(0).innerHTML,
                                         "prev_date": table.rows[index+1].cells.item(5).innerHTML,
                                         "curr_date": document.getElementById("date").value},
                                 success:function(response){ 
+                                    setTimeout(function(){
                                     if(response.includes("-")){
                                         const arr=response.split("-");
                                         document.getElementById("save").style.display="block"; 
@@ -357,6 +361,9 @@ function fetch(){
 
 
                                     }
+                                    else
+                                        console.log(response);
+                                },1200)
                                 },
                                 complete:function(){
         
