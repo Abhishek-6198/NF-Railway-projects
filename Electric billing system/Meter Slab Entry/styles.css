@@ -315,6 +315,7 @@ h1{
   }
   #slab_info{
     display: block;
+    font-size: medium;
     left:1em;
     top:40em;
   }

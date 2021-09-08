@@ -104,321 +104,141 @@ document.getElementById("save").addEventListener("click",function(){
             temp.push(fdate,tdate,funit,tunit,rate,type);
             arr.push(temp);
             temp=[];
-            /*$.ajax({
-                url: 'server.php',
-                type: 'POST',
-                data:{
-                        "input":"append",
-                        "from_date":fdate,
-                        "to_date":tdate,
-                        "from_unit":funit,
-                        "to_unit":tunit,
-                        "rate":rate,
-                        "type":type
-                },
-                success:function(response){
-                    if(response.includes("-")){
-                        const arr=response.split("-");
-    
-                    document.getElementById("old").innerText="Old slab entries:";
-                    if(table1.rows.length>=1){
-                        var row=table1.insertRow(table1.rows.length);
-                        row.style.backgroundColor="rgb(243, 242, 189)";
-                        row.addEventListener("click",updation);
-                        row.addEventListener("mouseover",func);
-                        row.addEventListener("mouseout",func1);
-                        var cell = row.insertCell(0);
-                        var cell1 = row.insertCell(1);
-                        var cell2 = row.insertCell(2);
-                        var cell3 = row.insertCell(3);
-                        var cell4 = row.insertCell(4);
-                        var cell5 = row.insertCell(5);
-                        var cell6 = row.insertCell(6);
-    
-                        if(arr.length<7){
-                            cell.innerHTML=arr[0];
-                            cell1.innerHTML=arr[1];
-                            cell2.innerHTML="-";
-                            cell3.innerHTML=arr[2];
-                            cell4.innerHTML=arr[3];
-                            cell5.innerHTML=arr[4];
-                            cell6.innerHTML=arr[5];
-                        }else{
-                            cell.innerHTML=arr[0];
-                            cell1.innerHTML=arr[1];
-                            cell2.innerHTML=arr[2];
-                            cell3.innerHTML=arr[3];
-                            cell4.innerHTML=arr[4];
-                            cell5.innerHTML=arr[5];
-                            cell6.innerHTML=arr[6];
-                        }
-                    }
-                    else{
-                        var row = table1.insertRow(0);
-                        var cell = row.insertCell(0);
-                        var cell1 = row.insertCell(1);
-                        var cell2 = row.insertCell(2);
-                        var cell3 = row.insertCell(3);
-                        var cell4 = row.insertCell(4);
-                        var cell5 = row.insertCell(5);
-                        var cell6 = row.insertCell(6);
-                                
-                        cell.innerHTML="<b>Sl No</b>:";
-                        cell1.innerHTML="<b>From date</b>:";
-                        cell2.innerHTML="<b>To date</b>:";
-                        cell3.innerHTML="<b>From unit</b>:";
-                        cell4.innerHTML="<b>To unit</b>:";
-                        cell5.innerHTML="<b>Rate/unit</b>:";
-                        cell6.innerHTML="<b>Unit type</b>:";
-    
-                        table1.rows[0].style.position="sticky";
-                        table1.rows[0].style.top="0";
-                        table1.rows[0].style.backgroundColor="rgb(233, 124, 74)";
-    
-                        var row=table1.insertRow(table1.rows.length);
-                        row.addEventListener("click",updation);
-                        row.addEventListener("mouseover",func);
-                        row.addEventListener("mouseout",func1);
-                        row.style.backgroundColor="rgb(243, 242, 189)";
-                        var cell = row.insertCell(0);
-                        var cell1 = row.insertCell(1);
-                        var cell2 = row.insertCell(2);
-                        var cell3 = row.insertCell(3);
-                        var cell4 = row.insertCell(4);
-                        var cell5 = row.insertCell(5);
-                        var cell6 = row.insertCell(6);
-    
-                        if(arr.length<7){
-                            cell.innerHTML=arr[0];
-                            cell1.innerHTML=arr[1];
-                            cell2.innerHTML="-";
-                            cell3.innerHTML=arr[2];
-                            cell4.innerHTML=arr[3];
-                            cell5.innerHTML=arr[4];
-                            cell6.innerHTML=arr[5];
-                        }else{
-                            cell.innerHTML=arr[0];
-                            cell1.innerHTML=arr[1];
-                            cell2.innerHTML=arr[2];
-                            cell3.innerHTML=arr[3];
-                            cell4.innerHTML=arr[4];
-                            cell5.innerHTML=arr[5];
-                            cell6.innerHTML=arr[6];
-                        }
-                    }
-                }
-            },
-            complete:function(){
-    
-            }
-        });*/
     
                 if(flag==true){  
                     document.querySelectorAll(".from_unit").forEach((item,index) => {
-                        
                         if(item.value.toString()!="" && document.getElementsByClassName("to_unit")[index].value.toString()!="" && document.getElementsByClassName("rate")[index].value.toString()!=""){
-                            //console.log(item.value+"-"+document.getElementsByClassName("to_unit")[index].value+"-"+document.getElementsByClassName("rate")[index].value);
                                 temp.push(fdate,tdate,item.value,document.getElementsByClassName("to_unit")[index].value,document.getElementsByClassName("rate")[index].value,document.getElementsByClassName("unit_type")[index].value);
                                 arr.push(temp);
                                 temp=[];
-                                /*$.ajax({
-                                    url: 'server.php',
-                                    type: 'POST',
-                                    data:{
-                                        "input":"append",
-                                        "from_date":fdate,
-                                        "to_date":tdate,
-                                        "from_unit":item.value,
-                                        "to_unit":document.getElementsByClassName("to_unit")[index].value,
-                                        "rate":document.getElementsByClassName("rate")[index].value,
-                                        "type":document.getElementsByClassName("unit_type")[index].value
-                                    },
-                                    success:function(response){
-                                        if(response.includes("-")){
-                                            const arr=response.split("-");
-                                            document.getElementById("old").innerText="Old slab entries:";
-                            
-                                            if(table1.rows.length>=1){
-                                                var row=table1.insertRow(table1.rows.length);
-                                                row.style.backgroundColor="rgb(243, 242, 189)";
-                                                row.addEventListener("click",updation);
-                                                row.addEventListener("mouseover",func);
-                                                row.addEventListener("mouseout",func1);
-                                                var cell = row.insertCell(0);
-                                                var cell1 = row.insertCell(1);
-                                                var cell2 = row.insertCell(2);
-                                                var cell3 = row.insertCell(3);
-                                                var cell4 = row.insertCell(4);
-                                                var cell5 = row.insertCell(5);
-                                                var cell6 = row.insertCell(6);
-    
-                                                if(arr.length<7){
-                                                    cell.innerHTML=arr[0];
-                                                    cell1.innerHTML=arr[1];
-                                                    cell2.innerHTML="-";
-                                                    cell3.innerHTML=arr[2];
-                                                    cell4.innerHTML=arr[3];
-                                                    cell5.innerHTML=arr[4];
-                                                    cell6.innerHTML=arr[5];
-                                                }else{
-                                                    cell.innerHTML=arr[0];
-                                                    cell1.innerHTML=arr[1];
-                                                    cell2.innerHTML=arr[2];
-                                                    cell3.innerHTML=arr[3];
-                                                    cell4.innerHTML=arr[4];
-                                                    cell5.innerHTML=arr[5];
-                                                    cell6.innerHTML=arr[6];
-                                                }
-                                            }
-                                            else{
-                                                var row = table1.insertRow(0);
-                                                var cell = row.insertCell(0);
-                                                var cell1 = row.insertCell(1);
-                                                var cell2 = row.insertCell(2);
-                                                var cell3 = row.insertCell(3);
-                                                var cell4 = row.insertCell(4);
-                                                var cell5 = row.insertCell(5);
-                                                var cell6 = row.insertCell(6);
-                                
-                                                cell.innerHTML="<b>Sl No</b>:";
-                                                cell1.innerHTML="<b>From date</b>:";
-                                                cell2.innerHTML="<b>To date</b>:";
-                                                cell3.innerHTML="<b>From unit</b>:";
-                                                cell4.innerHTML="<b>To unit</b>:";
-                                                cell5.innerHTML="<b>Rate/unit</b>:";
-                                                cell6.innerHTML="<b>Unit type</b>:";
-    
-                                                table1.rows[0].style.position="sticky";
-                                                table1.rows[0].style.top="0";
-                                                table1.rows[0].style.backgroundColor="rgb(233, 124, 74)";
-    
-                                                var row=table1.insertRow(table1.rows.length);
-                                                row.style.backgroundColor="rgb(243, 242, 189)";
-                                                row.addEventListener("click",updation);
-                                                row.addEventListener("mouseover",func);
-                                                row.addEventListener("mouseout",func1);
-                                                var cell = row.insertCell(0);
-                                                var cell1 = row.insertCell(1);
-                                                var cell2 = row.insertCell(2);
-                                                var cell3 = row.insertCell(3);
-                                                var cell4 = row.insertCell(4);
-                                                var cell5 = row.insertCell(5);
-                                                var cell6 = row.insertCell(6);
-    
-                                                if(arr.length<7){
-                                                    cell.innerHTML=arr[0];
-                                                    cell1.innerHTML=arr[1];
-                                                    cell2.innerHTML="-";
-                                                    cell3.innerHTML=arr[2];
-                                                    cell4.innerHTML=arr[3];
-                                                    cell5.innerHTML=arr[4];
-                                                    cell6.innerHTML=arr[5];
-                                                }else{
-                                                    cell.innerHTML=arr[0];
-                                                    cell1.innerHTML=arr[1];
-                                                    cell2.innerHTML=arr[2];
-                                                    cell3.innerHTML=arr[3];
-                                                    cell4.innerHTML=arr[4];
-                                                    cell5.innerHTML=arr[5];
-                                                    cell6.innerHTML=arr[6];
-                                                }
-                                            }
-                                        }
-                                    
-                                    },
-                                    complete:function(){
-                
-                                    }
-                            
-                                });*/
-                           
                         }
                     
                     })
                 }
-                console.log(arr);
-                var jsonString = JSON.stringify(arr);
-                $.ajax({
-                    url: 'server.php',
-                    type: 'POST',
-                    data: {"input":"append",
-                            data:jsonString},
-                    cache: false,
-                    success:function(response){
-                        //alert(response);
-                        var count=0;
-                        if(response[0]=='['){
-                            while (table1.rows.length > 1) {
-                                table1.deleteRow(1);
-                            }
-                            //document.getElementById("slab_info").style.display="block";
-                            document.getElementById("old").innerText="Old slab entries:";
-                            if(!table1.rows.length>=1){
-                                var row = table1.insertRow(0);
-                                var cell = row.insertCell(0);
-                                var cell1 = row.insertCell(1);
-                                var cell2 = row.insertCell(2);
-                                var cell3 = row.insertCell(3);
-                                var cell4 = row.insertCell(4);
-                                var cell5 = row.insertCell(5);
-                                var cell6 = row.insertCell(6);
-                                
-                                cell.innerHTML="<b>Sl No</b>:";
-                                cell1.innerHTML="<b>From date</b>:";
-                                cell2.innerHTML="<b>To date</b>:";
-                                cell3.innerHTML="<b>From unit</b>:";
-                                cell4.innerHTML="<b>To unit</b>:";
-                                cell5.innerHTML="<b>Rate/unit</b>:";
-                                cell6.innerHTML="<b>Unit type</b>:";
-
-                                table1.rows[0].style.position="sticky";
-                                table1.rows[0].style.top="0";
-                                table1.rows[0].style.backgroundColor="rgb(233, 124, 74)";
-                            }
-                            
-                            const arr=JSON.parse(response);
-                
-                            var x=arr.length*6;
-                            for(var i=0; i<x/6; i++){
-                                var row=table1.insertRow(table1.rows.length);
-                                row.style.backgroundColor="rgb(243, 242, 189)";
-                                row.addEventListener("click",updation);
-                                row.addEventListener("mouseover",func);
-                                row.addEventListener("mouseout",func1);
-                                var cell = row.insertCell(0);
-                                var cell1 = row.insertCell(1);
-                                var cell2 = row.insertCell(2);
-                                var cell3 = row.insertCell(3);
-                                var cell4 = row.insertCell(4);
-                                var cell5 = row.insertCell(5);
-                                var cell6 = row.insertCell(6);
-                
-                                cell.innerHTML=arr[i][count];
-                                ++count;
-                                cell1.innerHTML=arr[i][count];
-                                ++count;
-                                cell2.innerHTML=arr[i][count];
-                                ++count;
-                                cell3.innerHTML=arr[i][count];
-                                ++count;
-                                cell4.innerHTML=arr[i][count];
-                                ++count;
-                                cell5.innerHTML=arr[i][count];
-                                ++count;
-                                cell6.innerHTML=arr[i][count];
-                
-                                count=0;
-                            }
-                        }
-                        else{
-                            document.getElementById("old").innerText="No old slabs";
-                            document.getElementById("slab_info").style.display="none";
-                        }
-                    },
-                    complete:function(){
-
+                var temp1=[];
+                for(var i=0;i<arr.length;i++){
+                    if(arr[i].length==6){
+                        temp.push(Number(arr[i][2]));
                     }
-                });
+                    else if(arr[i].length==5){
+                        temp.push(Number(arr[i][1]));
+                    } 
+                }
+                for(var i=0;i<temp.length; i++){
+                    temp1.push(temp[i]);
+                }
+                temp.sort(function(a, b){return a - b});
+                console.log(temp);
+
+                var count=0;
+                for(var i=0; i<temp.length; i++){
+                    if(temp1[i]==temp[i])
+                        count+=1;
+                    else
+                        break;
+                }
+
+                if(count==temp.length){
+                    var jsonString = JSON.stringify(arr);
+                    $.ajax({
+                        url: 'server.php',
+                        type: 'POST',
+                        data: {"input":"append",
+                                data:jsonString},
+                        cache: false,
+                        success:function(response){
+                            //alert(response);
+                            var count=0;
+                            if(response[0]=='['){
+                                while (table1.rows.length > 1) {
+                                    table1.deleteRow(1);
+                                }
+                                //document.getElementById("slab_info").style.display="block";
+                                document.getElementById("old").innerText="Old slab entries:";
+                                if(!table1.rows.length>=1){
+                                    var row = table1.insertRow(0);
+                                    var cell = row.insertCell(0);
+                                    var cell1 = row.insertCell(1);
+                                    var cell2 = row.insertCell(2);
+                                    var cell3 = row.insertCell(3);
+                                    var cell4 = row.insertCell(4);
+                                    var cell5 = row.insertCell(5);
+                                    var cell6 = row.insertCell(6);
+                                    
+                                    cell.innerHTML="<b>Sl No</b>:";
+                                    cell1.innerHTML="<b>From date</b>:";
+                                    cell2.innerHTML="<b>To date</b>:";
+                                    cell3.innerHTML="<b>From unit</b>:";
+                                    cell4.innerHTML="<b>To unit</b>:";
+                                    cell5.innerHTML="<b>Rate/unit</b>:";
+                                    cell6.innerHTML="<b>Unit type</b>:";
+    
+                                    table1.rows[0].style.position="sticky";
+                                    table1.rows[0].style.top="0";
+                                    table1.rows[0].style.backgroundColor="rgb(233, 124, 74)";
+                                }
+                                
+                                const arr=JSON.parse(response);
+                    
+                                var x=arr.length*6;
+                                for(var i=0; i<x/6; i++){
+                                    var row=table1.insertRow(table1.rows.length);
+                                    row.style.backgroundColor="rgb(243, 242, 189)";
+                                    row.addEventListener("click",updation);
+                                    row.addEventListener("mouseover",func);
+                                    row.addEventListener("mouseout",func1);
+                                    var cell = row.insertCell(0);
+                                    var cell1 = row.insertCell(1);
+                                    var cell2 = row.insertCell(2);
+                                    var cell3 = row.insertCell(3);
+                                    var cell4 = row.insertCell(4);
+                                    var cell5 = row.insertCell(5);
+                                    var cell6 = row.insertCell(6);
+                    
+                                    cell.innerHTML=arr[i][count];
+                                    ++count;
+                                    cell1.innerHTML=arr[i][count];
+                                    ++count;
+                                    cell2.innerHTML=arr[i][count];
+                                    ++count;
+                                    cell3.innerHTML=arr[i][count];
+                                    ++count;
+                                    cell4.innerHTML=arr[i][count];
+                                    ++count;
+                                    cell5.innerHTML=arr[i][count];
+                                    ++count;
+                                    cell6.innerHTML=arr[i][count];
+                    
+                                    count=0;
+                                }
+                            }
+                            else{
+                                document.getElementById("old").innerText="No old slabs";
+                                document.getElementById("slab_info").style.display="none";
+                            }
+                        },
+                        complete:function(){
+    
+                        }
+                    });
+                }
+                else{
+                    alert("The units should be in increasing order.");
+                    setTimeout(function(){
+                        document.getElementById("funit").value="";
+                        document.getElementById("tunit").value="";
+                        document.getElementById("r").value="";
+
+                        if(flag==true){  
+                            document.querySelectorAll(".from_unit").forEach((item,index) => {
+                                item.value="";
+                                document.getElementsByClassName("to_unit")[index].value="";
+                                document.getElementsByClassName("rate")[index].value="";
+                            })
+                        }
+
+                    },1000);
+                }
                     
         }
         else if(document.getElementById("save").innerText=="Update"){
