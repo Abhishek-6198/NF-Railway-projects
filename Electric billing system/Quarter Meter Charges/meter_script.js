@@ -4,7 +4,10 @@ var r=1;
 let fixed_charge=[];
 let c=[];
 var counter=0;
-
+var flag=false;
+var flag1=false;
+var array=[];
+var arr2=[];
 var table=document.getElementById("employee_details");
 var a = document.getElementById("new_table");
 if(a.rows.length!=1){
@@ -124,54 +127,16 @@ document.getElementById("date").addEventListener("change",() => {
                             var time_difference = curr.getTime() - prev.getTime(); 
                             days_difference = time_difference / (1000 * 60 * 60 * 24);
                             charge1=item.value-parseInt(table.rows[index+1].cells.item(4).innerHTML);  
-                            $.ajax({
-                                url: 'meter_server.php',
-                                type: 'POST',
-                                data:{"input": "calculate_charges",
-                                        "rate": charge1,
-                                        "days": days_difference,
-                                        "id": table.rows[index+1].cells.item(0).innerHTML,
-                                        "prev_date": table.rows[index+1].cells.item(5).innerHTML,
-                                        "curr_date": document.getElementById("date").value},
-                                success:function(response){ 
-                                    setTimeout(function(){
-                                    if(response.includes("-")){
-                                        const arr=response.split("-");
-                                        document.getElementById("save").style.display="block"; 
-                                        //document.getElementById('reset').style.top="37em";
-                                        //document.getElementById('generate').style.top="37em";
-                                        //table.rows[index+1].cells.item(7).innerHTML=charge;
-                                        document.getElementById("save").disabled=false;
-                                        document.getElementById("date").disabled=true;
-                                        if(table.rows[0].cells.length<9){
-                                            var cell = table.rows[0].insertCell(8);     
-                                            cell.innerHTML = "<b>Total charge (Rs):</b>"   
-                                        }
-                                        if(table.rows[index+1].cells.length<9){
-                                            var cell1 = table.rows[index+1].insertCell(8);
-                                            cell1.innerHTML = arr[0];
-                                        }
-                                        else{
-                                            table.rows[index+1].cells.item(8).innerHTML=arr[0];
-                                        }
-                                        
-                                        c[counter]=arr[2];
-                                        fixed_charge[counter]=arr[1];
-                                        counter+=1;
-
-                                    }
-                                    else
-                                        console.log(response);
-                                    },1200)
-
-                                },
-                                complete:function(){
-        
-                                }
-
-                             });
+                            table.rows[index+1].cells.item(7).innerHTML=charge1;
+                            var temp=[];
+                            temp.push(charge1,table.rows[index+1].cells.item(0).innerHTML,table.rows[index+1].cells.item(5).innerHTML, document.getElementById("date").value);
+                            array.push(temp);   
+                            arr2.push(index);
                         }
                     })
+                    
+
+                    
                 }
             }       
             else{
@@ -323,58 +288,15 @@ function fetch(){
                                 table.rows[index+1].cells.item(8).innerHTML=0;
                           }
                           else{  
-                             $.ajax({
-                                url: 'meter_server.php',
-                                type: 'POST',
-                                data:{"input": "calculate_charges",
-                                        "rate": charge,
-                                        "days": days_difference,
-                                        "id": table.rows[index+1].cells.item(0).innerHTML,
-                                        "prev_date": table.rows[index+1].cells.item(5).innerHTML,
-                                        "curr_date": document.getElementById("date").value},
-                                success:function(response){ 
-                                    setTimeout(function(){
-                                    if(response.includes("-")){
-                                        const arr=response.split("-");
-                                        document.getElementById("save").style.display="block"; 
-                                        //document.getElementById('reset').style.top="37em";
-                                        //document.getElementById('generate').style.top="37em";
-                                        //document.getElementById('generate').style.left="45em";
-                                        table.rows[index+1].cells.item(7).innerHTML=charge;
-                                        document.getElementById("save").disabled=false;
-                                        document.getElementById("date").disabled=true;
-                                        if(table.rows[0].cells.length<9){
-                                            var cell = table.rows[0].insertCell(8);     
-                                            cell.innerHTML = "<b>Total charge (Rs):</b>"   
-                                        }
-                                        if(table.rows[index+1].cells.length<9){
-                                            var cell1 = table.rows[index+1].insertCell(8);
-                                            cell1.innerHTML = arr[0];
-                                        }
-                                        else{
-                                            table.rows[index+1].cells.item(8).innerHTML=arr[0];
-                                        }
-                                        
-                                        c[counter]=arr[2];
-                                        fixed_charge[counter]=arr[1];
-                                        counter+=1;
-
-
-                                    }
-                                    else
-                                        console.log(response);
-                                },1200)
-                                },
-                                complete:function(){
-        
-                                }
-
-                             });
-                              
+                              table.rows[index+1].cells.item(7).innerHTML=charge;
+                              var temp=[];
+                              temp.push(charge,table.rows[index+1].cells.item(0).innerHTML,table.rows[index+1].cells.item(5).innerHTML,document.getElementById("date").value);
+                              array.push(temp);
+                              arr2.push(index);
                           }
                         })
                     })
-
+                    //console.log(arr1.length+" "+arr2.length);
                     document.getElementById("save").addEventListener("click",function(){
                         counter=0;
                         document.querySelectorAll('.current_read').forEach((item,index) => {
@@ -618,3 +540,49 @@ function parseDateStringToObject(dateStr) {
 document.getElementById("reset").addEventListener("click",function(){
     location.reload();
 })
+
+document.addEventListener("keyup", function(event) {
+    if (event.key === "Enter") {
+        if(array.length!=0 && arr2.length!=0){
+            var jsonString = JSON.stringify(array);
+            $.ajax({
+                url: 'meter_server.php',
+                type: 'POST',
+                data: {"input":"calculate_charges",
+                        data:jsonString},
+                        cache: false,
+            success:function(response){
+                if(response[0]=='['){
+                    document.getElementById("save").style.display="block";
+                    document.getElementById("save").disabled=false;
+                    document.getElementById("date").disabled=true;
+                    if(table.rows[0].cells.length<9){
+                        var cell = table.rows[0].insertCell(8);     
+                        cell.innerHTML = "<b>Total charge (Rs):</b>"   
+                    }
+                    const arr3=JSON.parse(response);
+                    for(var i=0; i<arr3.length; i++){
+                        if(table.rows[arr2[i]+1].cells.length<9){
+                            var cell1 = table.rows[arr2[i]+1].insertCell(8);
+                            cell1.innerHTML = arr3[i][0];
+                        }
+                        else{
+                            table.rows[arr2[i]+1].cells.item(8).innerHTML=arr3[i][0];
+                        }
+                        c[counter]=arr3[i][2];
+                        fixed_charge[counter]=arr3[i][1];
+                        counter+=1;
+                    }
+                    array=[];
+                    arr2=[];
+                }
+                else
+                    console.log(response);
+            },
+            complete:function(){
+
+            }
+        });
+    }
+    }
+});
