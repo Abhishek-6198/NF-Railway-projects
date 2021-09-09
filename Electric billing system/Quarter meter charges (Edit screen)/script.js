@@ -211,7 +211,7 @@ function fetch(){
                                             //console.log(charge1);
                                             table.rows[index+1].cells.item(8).innerHTML=document.getElementsByClassName("current_read")[index].value-parseInt(table.rows[index+1].cells.item(4).innerHTML);
                                             var temp=[];
-                                            temp.push(charge1,table.rows[index+1].cells.item(0).innerHTML,table.rows[index+1].cells.item(5).innerHTML,document.getElementById("date").value);
+                                            temp.push(charge1,table.rows[index+1].cells.item(0).innerHTML,date1,date);
                                             array.push(temp);
                                             arr2.push(index);
                                         }
@@ -310,7 +310,7 @@ function fetch(){
                                 else{  
                                     table.rows[index+1].cells.item(8).innerHTML=document.getElementsByClassName("current_read")[index].value-parseInt(table.rows[index+1].cells.item(4).innerHTML);
                                     var temp=[];
-                                    temp.push(charge,table.rows[index+1].cells.item(0).innerHTML,table.rows[index+1].cells.item(6).innerHTML,document.getElementsByClassName("current_date")[index].value);
+                                    temp.push(charge,table.rows[index+1].cells.item(0).innerHTML,date1,date);
                                     array.push(temp);
                                     arr2.push(index);
                               

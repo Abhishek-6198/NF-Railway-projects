@@ -101,9 +101,6 @@
                 }           
         }
         elseif($_POST["input"]=="calculate_charges"){
-            if(!$connection)
-                echo "Connection to database failed! Please try again";
-            else{
                 $final=array();
                 if(!$connection)
                     echo "Connection to database failed! Please try again";
@@ -374,7 +371,7 @@
                     if(count($final)!=0)
                         echo json_encode($final);
                 }
-            }
+            
         }
         elseif($_POST["input"]=="insert_records"){
             if(!$connection)
