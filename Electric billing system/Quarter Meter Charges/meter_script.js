@@ -559,7 +559,9 @@ document.addEventListener("keyup", function(event) {
                         cell.innerHTML = "<b>Total charge (Rs):</b>"   
                     }
                     const arr3=JSON.parse(response);
-                    for(var i=0; i<arr3.length; i++){
+                    var x = arr3.length*3;
+                    for(var i=0; i<x/3; i++){
+                        //alert(arr3[i]);
                         if(table.rows[arr2[i]+1].cells.length<9){
                             var cell1 = table.rows[arr2[i]+1].insertCell(8);
                             cell1.innerHTML = arr3[i][0];
