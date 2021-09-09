@@ -68,6 +68,7 @@ function fetch(){
 
                 var k=1;
                 var count=0;
+                //alert(response);
                 if(response[0]=="["){
                     document.getElementById("save").style.display="block";
                     document.getElementById("confirm").style.display="block";
@@ -113,6 +114,7 @@ function fetch(){
                     var x=arr.length*12;
 
                     for(var i=0; i<x/12; i++){
+                        //alert(arr[i][4]+" "+arr[i][6]);
                         var row=table.insertRow(k);
                         var cell = row.insertCell(0);
                         var cell1 = row.insertCell(1);
@@ -428,7 +430,8 @@ document.addEventListener("keyup", function(event) {
                     //document.getElementById("date").disabled=true;
                                                         
                     const arr3=JSON.parse(response);
-                    for(var i=0; i<arr3.length; i++){
+                    var x= arr3.length*3;
+                    for(var i=0; i<x/3; i++){
                         table.rows[arr2[i]+1].cells.item(9).innerHTML=arr3[i][2];
                         table.rows[arr2[i]+1].cells.item(10).innerHTML=arr3[i][1];
                         table.rows[arr2[i]+1].cells.item(11).innerHTML=arr3[i][0];

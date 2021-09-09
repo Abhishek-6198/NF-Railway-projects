@@ -84,11 +84,11 @@
                     }
 
                     for($x=0; $x<count($qtrid); $x++){
-                        $temp=array();
                         $sql="SELECT * from `electric transaction` WHERE `Qtr_ID`='".$qtrid[$x]."' AND `Flag`=0";
                         $result = $con->query($sql);
                         if ($result->num_rows > 0) {
                             while($row = $result->fetch_assoc()) {
+                                $temp=array();
                                 array_push($temp,$row["Qtr_ID"],$row["EmpNo"],$row["EmpName"],$row["Qtr_No"],$row["Prev read"],$row["Current read"],$row["Prev Date"],$row["Current Date"],$row["Unit consumed"],$row["Elec_charge"],$row["Fixed_charge"],$row["Total charge"]);
                                 array_push($final,$temp);
                             }  
