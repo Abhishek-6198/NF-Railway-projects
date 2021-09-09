@@ -1,11 +1,9 @@
 var charge1=0;
 var days_difference=0;
 var r=1;
-let fixed_charge=[];
-let c=[];
+let fixed_charge={};
+let c={};
 var counter=0;
-var flag=false;
-var flag1=false;
 var array=[];
 var arr2=[];
 var table=document.getElementById("employee_details");
@@ -298,7 +296,7 @@ function fetch(){
                     })
                     //console.log(arr1.length+" "+arr2.length);
                     document.getElementById("save").addEventListener("click",function(){
-                        counter=0;
+                        //counter=0;
                         document.querySelectorAll('.current_read').forEach((item,index) => {
                             if(item.value.toString().length>0){
                                 $.ajax({
@@ -306,9 +304,9 @@ function fetch(){
                                     type: 'POST',
                                     data:{"input": "insert_records",
                                             "rate": table.rows[index+1].cells.item(8).innerHTML,
-                                            "charge":c[counter],
+                                            "charge":c[index],
                                             "unit_consumed":table.rows[index+1].cells.item(7).innerHTML,
-                                            "fixed_charge":fixed_charge[counter],
+                                            "fixed_charge":fixed_charge[index],
                                             "qtr_no":table.rows[index+1].cells.item(2).innerHTML,
                                             "name":table.rows[index+1].cells.item(3).innerHTML,
                                             "qtrid": table.rows[index+1].cells.item(0).innerHTML,
@@ -569,12 +567,13 @@ document.addEventListener("keyup", function(event) {
                         else{
                             table.rows[arr2[i]+1].cells.item(8).innerHTML=arr3[i][0];
                         }
-                        c[counter]=arr3[i][2];
-                        fixed_charge[counter]=arr3[i][1];
-                        counter+=1;
+                        c[arr2[i]]=arr3[i][2];
+                        fixed_charge[arr2[i]]=arr3[i][1];
                     }
                     array=[];
                     arr2=[];
+
+                    //console.log(c);
                 }
                 else
                     console.log(response);

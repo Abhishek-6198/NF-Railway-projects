@@ -428,7 +428,7 @@
                 if($stmt->execute())
                     echo $_POST["curr_met"]."-".$_POST["curr_date"];
                 else
-                    $con->error();
+                    echo $con->error;
             }
         }
         elseif($_POST["input"]=="edit_records"){
