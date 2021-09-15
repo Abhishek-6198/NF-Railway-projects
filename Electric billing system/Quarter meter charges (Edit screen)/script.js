@@ -5,6 +5,7 @@ var array=[];
 var arr2=[];
 var arr3=[];
 var arr4=[];
+var arr5=[];
 var table=document.getElementById("employee_details");
 function get_names() {
     let $select = $("#colony_name");
@@ -104,9 +105,9 @@ function fetch(){
                     cell6.innerHTML = "<b>Prev Date</b>";
                     cell7.innerHTML = "<b>Current Date:</b>";
                     cell8.innerHTML = "<b>Total unit consumed:</b>";
-                    cell9.innerHTML = "<b>Electric charge:</b>";
-                    cell10.innerHTML = "<b>Fixed charge:</b>";
-                    cell11.innerHTML = "<b>Total charge:</b>";
+                    cell9.innerHTML = "<b>Electric charge (Rs):</b>";
+                    cell10.innerHTML = "<b>Fixed charge (Rs):</b>";
+                    cell11.innerHTML = "<b>Total charge (Rs):</b>";
 
                     table.rows[0].style.position="sticky";
                     table.rows[0].style.top="0";
@@ -372,6 +373,7 @@ function fetch(){
                                     arr3.push(item.value);
                                     arr4.push(arr3);
                                     arr3=[];
+                                    arr5.push(index+1);
                                 }
                                 
                             }
@@ -386,6 +388,18 @@ function fetch(){
                                         "data": jsonString},
                                 success:function(response){
                                     arr4=[];
+                                    for(var i=0; i<arr5.length; i++){
+                                        table.rows[arr5[i]].removeEventListener("click",fun);
+                                        if(table.rows[arr5[i]].style.backgroundColor=="rgb(118, 230, 238)")
+                                            table.rows[arr5[i]].style.backgroundColor="rgb(255, 221, 205)";
+                                        document.getElementsByClassName("current_date")[arr5[i]-1].disabled=true;
+                                        document.getElementsByClassName("current_read")[arr5[i]-1].disabled=true;
+                                        for(var j=0; j<table.rows[arr5[i]].cells.length; j++){
+                                            var text=table.rows[arr5[i]].cells.item(j).innerHTML.strike();
+                                            table.rows[arr5[i]].cells.item(j).innerHTML=text;
+                                        }
+                                    }
+                                    arr5=[];
                                     alert(response);
                                 },
                                 complete:function(){

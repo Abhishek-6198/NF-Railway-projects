@@ -572,9 +572,9 @@
                                 }
                             }
                         }
-                        $electric_charge=$charge1;
+                        $electric_charge=round($charge1);
                         //echo $electric_charge;
-    
+
                         if($days%30==0){
                             $months=intdiv($days,30);
                         }
@@ -586,20 +586,22 @@
                                 $months=intdiv($days,30);
                             }
                         }
-    
+
                         $sql="SELECT * from `quarter_master_entry` WHERE `Qtr_ID`='".$qtr_id."'";
                         $result = $con->query($sql);
                         if ($result->num_rows > 0) {
                             while($row = $result->fetch_assoc()) {
                                 $fixed_charge=$months*$row["Meter capacity"]*50;
-                            }
                         }
+                        }
+                        $fixed_charge=round($fixed_charge);
                         $total_charge=($electric_charge*$days)+$fixed_charge; 
+                        $electric_charge=$electric_charge*$days;
                         //echo $total_charge."-".$fixed_charge."-".$electric_charge;
                         $temp=array();
-                        array_push($temp,round($total_charge),round($fixed_charge),round($electric_charge));
+                        array_push($temp,$total_charge,$fixed_charge,$electric_charge);
                         array_push($final,$temp);
-                    }
+                        }
                     if(count($final)!=0)
                         echo json_encode($final);
                 }
