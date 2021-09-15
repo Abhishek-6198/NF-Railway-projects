@@ -3,6 +3,8 @@ var days_difference=0;
 var r=1;
 var array=[];
 var arr2=[];
+var arr3=[];
+var arr4=[];
 var table=document.getElementById("employee_details");
 function get_names() {
     let $select = $("#colony_name");
@@ -116,6 +118,7 @@ function fetch(){
                     for(var i=0; i<x/12; i++){
                         //alert(arr[i][4]+" "+arr[i][6]);
                         var row=table.insertRow(k);
+                        row.addEventListener("click",fun);
                         var cell = row.insertCell(0);
                         var cell1 = row.insertCell(1);
                         var cell2 = row.insertCell(2);
@@ -322,74 +325,75 @@ function fetch(){
                     })
 
                     document.getElementById("save").addEventListener("click",function(){
-                        var count=0;
                         document.querySelectorAll('.current_read').forEach((item,index) => {
                             if(item.value.toString().length>0 && document.getElementsByClassName("current_date")[index].value.length>0){
-                                $.ajax({
-                                    url: 'server.php',
-                                    type: 'POST',
-                                    data:   {"input": "update_records",
-                                            "qtrid": table.rows[index+1].cells.item(0).innerHTML,
-                                            "unit_consumed":table.rows[index+1].cells.item(8).innerHTML,
-                                            "charge":table.rows[index+1].cells.item(9).innerHTML,
-                                            "fixed_charge":table.rows[index+1].cells.item(10).innerHTML,
-                                            "rate": table.rows[index+1].cells.item(11).innerHTML,
-                                            "curr_date": document.getElementsByClassName("current_date")[index].value,
-                                            "curr_met": item.value},
-                                    success:function(response){
-                                        count+=1;
-                                        if(count==table.rows.length-1){
-                                            alert(response);
-                                            //document.getElementById("save").disabled=true;
-                                            //document.getElementById("confirm").disabled=true;
-                                        }
-                                        
-                                    },
-                                    complete:function(){
-        
-                                    }
-                                });
+                                if(table.rows[index+1].style.backgroundColor=="rgb(118, 230, 238)"){
+                                    arr3.push(table.rows[index+1].cells.item(0).innerHTML);
+                                    arr3.push(table.rows[index+1].cells.item(8).innerHTML);
+                                    arr3.push(table.rows[index+1].cells.item(9).innerHTML);
+                                    arr3.push(table.rows[index+1].cells.item(10).innerHTML);
+                                    arr3.push(table.rows[index+1].cells.item(11).innerHTML);
+                                    arr3.push(document.getElementsByClassName("current_date")[index].value);
+                                    arr3.push(item.value);
+                                    arr4.push(arr3);
+                                    arr3=[];
+                                }
                             }
 
                         })
+                        if(arr4.length!=0){
+                            var jsonString = JSON.stringify(arr4);
+                            $.ajax({
+                                url: 'server.php',
+                                type: 'POST',
+                                data:   {"input": "update_records",
+                                        "data": jsonString},
+                                success:function(response){
+                                    arr4=[];
+                                    alert(response);
+                                },
+                                complete:function(){
+        
+                                }
+                            }); 
+                        }
                     })
 
                     document.getElementById("confirm").addEventListener("click",function(){
-                        var count=0;
                         document.querySelectorAll('.current_read').forEach((item,index) => {
                             if(item.value.toString().length>0 && document.getElementsByClassName("current_date")[index].value.length>0){
-                                $.ajax({
-                                    url: 'server.php',
-                                    type: 'POST',
-                                    data:   {"input": "insert_records",
-                                            "rate": table.rows[index+1].cells.item(11).innerHTML,
-                                            "charge":table.rows[index+1].cells.item(9).innerHTML,
-                                            "unit_consumed":table.rows[index+1].cells.item(8).innerHTML,
-                                            "fixed_charge":table.rows[index+1].cells.item(10).innerHTML,
-                                            "qtr_no":table.rows[index+1].cells.item(3).innerHTML,
-                                            "name":table.rows[index+1].cells.item(2).innerHTML,
-                                            "qtrid": table.rows[index+1].cells.item(0).innerHTML,
-                                            "empno": table.rows[index+1].cells.item(1).innerHTML,
-                                            "prev_met": table.rows[index+1].cells.item(4).innerHTML,
-                                            "prev_date": table.rows[index+1].cells.item(6).innerHTML,
-                                            "curr_date": document.getElementsByClassName("current_date")[index].value,
-                                            "curr_met": item.value},
-                                    success:function(response){
-                                        count+=1;
-                                        if(count==table.rows.length-1){
-                                            alert(response);
-                                            //document.getElementById("save").disabled=true;
-                                            //document.getElementById("confirm").disabled=true;
-                                            location.reload();
-                                        }  
-                                    },
-                                    complete:function(){
-            
-                                    }
-                                });
+                                if(table.rows[index+1].style.backgroundColor=="rgb(118, 230, 238)"){
+                                    arr3.push(table.rows[index+1].cells.item(0).innerHTML);
+                                    arr3.push(table.rows[index+1].cells.item(8).innerHTML);
+                                    arr3.push(table.rows[index+1].cells.item(9).innerHTML);
+                                    arr3.push(table.rows[index+1].cells.item(10).innerHTML);
+                                    arr3.push(table.rows[index+1].cells.item(11).innerHTML);
+                                    arr3.push(document.getElementsByClassName("current_date")[index].value);
+                                    arr3.push(item.value);
+                                    arr4.push(arr3);
+                                    arr3=[];
+                                }
+                                
                             }
 
                         })
+                        if(arr4.length!=0){
+                            var jsonString = JSON.stringify(arr4);
+                            $.ajax({
+                                url: 'server.php',
+                                type: 'POST',
+                                data:   {"input": "insert_records",
+                                        "data": jsonString},
+                                success:function(response){
+                                    arr4=[];
+                                    alert(response);
+                                },
+                                complete:function(){
+        
+                                }
+                            }); 
+                        }
+                        
                     })
                 }
                 else{
@@ -402,6 +406,15 @@ function fetch(){
             }
         });
     }
+}
+
+function fun(){
+    //alert(this);
+    if(this.style.backgroundColor!="rgb(118, 230, 238)"){
+        this.style.backgroundColor="rgb(118, 230, 238)";
+    }
+    else
+        this.style.backgroundColor="rgb(255, 221, 205)";
 }
 function parseDateStringToObject(dateStr) {
     const [day, month, year] = dateStr.split('/');
