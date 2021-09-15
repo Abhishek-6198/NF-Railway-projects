@@ -97,7 +97,7 @@ document.getElementById("save").addEventListener("click",function(){
     var rate = document.getElementById("r").value;
     var type=document.getElementById("type").value;
 
-    if(fdate!="" && funit.toString()!="" && tunit.toString()!="" && rate.toString()!=""){
+    if(fdate!="" && funit.toString()!="" &&  rate.toString()!=""){
         if(document.getElementById("save").innerText=="Save"){
             var arr=[];
             var temp=[];
@@ -107,7 +107,7 @@ document.getElementById("save").addEventListener("click",function(){
     
                 if(flag==true){  
                     document.querySelectorAll(".from_unit").forEach((item,index) => {
-                        if(item.value.toString()!="" && document.getElementsByClassName("to_unit")[index].value.toString()!="" && document.getElementsByClassName("rate")[index].value.toString()!=""){
+                        if(item.value.toString()!=""  && document.getElementsByClassName("rate")[index].value.toString()!=""){
                                 temp.push(fdate,tdate,item.value,document.getElementsByClassName("to_unit")[index].value,document.getElementsByClassName("rate")[index].value,document.getElementsByClassName("unit_type")[index].value);
                                 arr.push(temp);
                                 temp=[];
@@ -260,15 +260,16 @@ document.getElementById("save").addEventListener("click",function(){
                     if(response.includes("-")){
                         const arr=response.split("-");
                         document.getElementById("old").innerText="Old slab entries:";
-                        if(arr.length<7){
+                        if(arr.length==5){
                             for(var i=0; i<table1.rows.length; i++){
                                 if(table1.rows[i].cells.item(0).innerHTML==x){
                                     table1.rows[i].cells.item(0).innerHTML=arr[0];
                                     table1.rows[i].cells.item(1).innerHTML=arr[1];
+                                    table1.rows[i].cells.item(2).innerHTML="";
                                     table1.rows[i].cells.item(3).innerHTML=arr[2];
-                                    table1.rows[i].cells.item(4).innerHTML=arr[3];
-                                    table1.rows[i].cells.item(5).innerHTML=arr[4];
-                                    table1.rows[i].cells.item(6).innerHTML=arr[5];
+                                    table1.rows[i].cells.item(4).innerHTML="";
+                                    table1.rows[i].cells.item(5).innerHTML=arr[3];
+                                    table1.rows[i].cells.item(6).innerHTML=arr[4];
                                     table1.rows[i].addEventListener("click",updation);
                                     table1.rows[i].addEventListener("mouseover",func);
                                     table1.rows[i].addEventListener("mouseout",func1);
@@ -287,7 +288,7 @@ document.getElementById("save").addEventListener("click",function(){
                                 }
                             }
                         }
-                        else{
+                        else if(arr.length==7){
                             for(var i=0; i<table1.rows.length; i++){
                                 if(table1.rows[i].cells.item(0).innerHTML==x){
                                     table1.rows[i].cells.item(0).innerHTML=arr[0];
@@ -312,6 +313,64 @@ document.getElementById("save").addEventListener("click",function(){
                                     document.getElementById("tunit").value="";
                                     document.getElementById("r").value="";
                                     break;
+                                }
+                            }
+                        }
+                        else if(arr.length==6){
+                            if(arr[2].includes("/")){
+                                for(var i=0; i<table1.rows.length; i++){
+                                    if(table1.rows[i].cells.item(0).innerHTML==x){
+                                        table1.rows[i].cells.item(0).innerHTML=arr[0];
+                                        table1.rows[i].cells.item(1).innerHTML=arr[1];
+                                        table1.rows[i].cells.item(2).innerHTML=arr[2];
+                                        table1.rows[i].cells.item(3).innerHTML=arr[3];
+                                        table1.rows[i].cells.item(4).innerHTML=""
+                                        table1.rows[i].cells.item(5).innerHTML=arr[4];
+                                        table1.rows[i].cells.item(6).innerHTML=arr[5];
+                                        table1.rows[i].addEventListener("click",updation);
+                                        table1.rows[i].addEventListener("mouseover",func);
+                                        table1.rows[i].addEventListener("mouseout",func1);
+                                        table1.rows[i].style.backgroundColor="rgb(39, 243, 148)";
+                                        setTimeout(function(){table1.rows[i].style.backgroundColor="rgb(243, 242, 189)"},1000);
+                                        table1.rows[i].scrollIntoView({
+                                            behavior: 'smooth',
+                                          block: 'center'
+                                        });
+                                        document.getElementById("fdate").value="";
+                                        document.getElementById("tdate").value="";
+                                        document.getElementById("funit").value="";
+                                        document.getElementById("tunit").value="";
+                                        document.getElementById("r").value="";
+                                        break;
+                                    }
+                                }
+                            }
+                            else{
+                                for(var i=0; i<table1.rows.length; i++){
+                                    if(table1.rows[i].cells.item(0).innerHTML==x){
+                                        table1.rows[i].cells.item(0).innerHTML=arr[0];
+                                        table1.rows[i].cells.item(1).innerHTML=arr[1];
+                                        table1.rows[i].cells.item(2).innerHTML="";
+                                        table1.rows[i].cells.item(3).innerHTML=arr[2];
+                                        table1.rows[i].cells.item(4).innerHTML=arr[3];
+                                        table1.rows[i].cells.item(5).innerHTML=arr[4];
+                                        table1.rows[i].cells.item(6).innerHTML=arr[5];
+                                        table1.rows[i].addEventListener("click",updation);
+                                        table1.rows[i].addEventListener("mouseover",func);
+                                        table1.rows[i].addEventListener("mouseout",func1);
+                                        table1.rows[i].style.backgroundColor="rgb(39, 243, 148)";
+                                        setTimeout(function(){table1.rows[i].style.backgroundColor="rgb(243, 242, 189)"},1000);
+                                        table1.rows[i].scrollIntoView({
+                                            behavior: 'smooth',
+                                          block: 'center'
+                                        });
+                                        document.getElementById("fdate").value="";
+                                        document.getElementById("tdate").value="";
+                                        document.getElementById("funit").value="";
+                                        document.getElementById("tunit").value="";
+                                        document.getElementById("r").value="";
+                                        break;
+                                    }
                                 }
                             }
                         }
