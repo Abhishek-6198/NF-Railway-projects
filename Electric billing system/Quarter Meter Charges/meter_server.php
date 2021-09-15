@@ -618,7 +618,7 @@
                             }
                         }
                     }
-                    $electric_charge=$charge1;
+                    $electric_charge=round($charge1);
                     //echo $electric_charge;
 
                     if($days%30==0){
@@ -640,10 +640,12 @@
                             $fixed_charge=$months*$row["Meter capacity"]*50;
                         }
                     }
-                    $total_charge=($electric_charge*$days)+$fixed_charge; 
+                    $fixed_charge=round($fixed_charge);
+                    $total_charge=($electric_charge*$days)+$fixed_charge;
+                    $electric_charge=$electric_charge*$days; 
                     //echo $total_charge."-".$fixed_charge."-".$electric_charge;
                     $temp=array();
-                    array_push($temp,round($total_charge),round($fixed_charge),round($electric_charge));
+                    array_push($temp,$total_charge,$fixed_charge,$electric_charge);
                     array_push($final,$temp);
                 }
                 if(count($final)!=0)

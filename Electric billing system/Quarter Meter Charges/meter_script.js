@@ -21,6 +21,8 @@ if(a.rows.length!=1){
     var cell8 = row.insertCell(8);
     var cell9 = row.insertCell(9);
     var cell10 = row.insertCell(10);
+    var cell11 = row.insertCell(11);
+    var cell12 = row.insertCell(12);
 
     
     cell.innerHTML="<b>EmpNo</b>:";
@@ -32,9 +34,11 @@ if(a.rows.length!=1){
     cell6.innerHTML="<b>Curr date</b>:";
 
     cell7.innerHTML="<b>Total unit consumed</b>:";
-    cell8.innerHTML="<b>Electric charge</b>:";
-    cell9.innerHTML="<b>Fixed charge</b>:";
-    cell10.innerHTML="<b>Total charge</b>:";
+    cell8.innerHTML="<b>Electric charge (Rs)</b>:";
+    cell9.innerHTML="<b>Fixed charge (Rs)</b>:";
+    cell10.innerHTML="<b>Total charge (Rs)</b>:";
+    cell11.innerHTML="<b>No of installments</b>:";
+    cell12.innerHTML="<b>Amount per installment</b>:";
 }
 
 
