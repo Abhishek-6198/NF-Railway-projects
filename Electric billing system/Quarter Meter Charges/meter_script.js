@@ -392,6 +392,8 @@ function fetch(){
                                     var cell8 = row.insertCell(8);
                                     var cell9 = row.insertCell(9);
                                     var cell10 = row.insertCell(10);
+                                    var cell11 = row.insertCell(11);
+                                    var cell12 = row.insertCell(12);
 
                                     cell.innerHTML=arr[i][count];
                                     ++count;
@@ -415,6 +417,9 @@ function fetch(){
                                     ++count;
                                     cell10.innerHTML=arr[i][count];
 
+                                    cell11.innerHTML=6;
+                                    cell12.innerHTML=arr[i][count]/6;
+                                    
                                     count=0;
                                     r+=1;
                                 }
@@ -453,7 +458,7 @@ function fetch(){
                             doc.autoTable({  
                                 html: '#new_table',  
                                 startY: 300,  
-                                theme: 'striped',  
+                                theme: 'grid',  
                                 columnStyles: {  
                                         0: {  
                                             cellWidth: 'auto',  
