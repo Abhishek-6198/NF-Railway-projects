@@ -76,14 +76,6 @@ left:47em;
 font-size: medium;
 }
 
-#generate{
-display: block;
-position: absolute;
-top:11em;
-left:83em;
-font-size: medium;
-}
-
 #reset{
 display: block;
 position: absolute;
@@ -145,9 +137,6 @@ h2{
   left:53em;
 }
 
-#generate{
-  left:58em;
-}
 }
 
 @media (min-width:480px)  { 
@@ -178,9 +167,6 @@ h2{
   left:61em;
 }
 
-#generate{
-  left:66em;
-}
 }
 
 @media (min-width:1281px) {
@@ -195,9 +181,6 @@ h2{
   left:68em;
 }
 
-#generate{
-  left:74em;
-}
 }
 
 @media (min-width:1536px) {
@@ -212,7 +195,4 @@ h2{
   left:78em;
 }
 
-#generate{
-  left:83em;
-}
 }

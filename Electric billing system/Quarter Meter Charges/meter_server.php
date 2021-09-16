@@ -666,45 +666,6 @@
                     echo $con->error;
             }
         }
-        elseif($_POST["input"]=="edit_records"){
-            $qtrid=array();
-            $final=array();
-            if(!$connection)
-                echo "Connection to database failed! Please try again";
-            else{
-                $sql="SELECT * from `colony_master` WHERE `Colony_name`='".$_POST["name"]."'";
-                $result = $con->query($sql);
-                if ($result->num_rows > 0) {
-                    while($row = $result->fetch_assoc()) {
-                        $code=$row["Colony_code"];
-                    } 
-                }
-                $sql = "SELECT * from `quarter_master_entry` WHERE `Colony_code`='".$code."' AND `Qtr_type`='".$_POST["type"]."'";
-                $result = $con->query($sql);
-                if ($result->num_rows > 0) {
-                    while($row = $result->fetch_assoc()) {
-                        array_push($qtrid,$row["Qtr_ID"]);
-                    }
-                }
-                for($i=0;$i<count($qtrid);$i++){
-                    $sql="SELECT * from `electric transaction` WHERE `Qtr_ID`='".$qtrid[$i]."' AND `Flag`=0";
-                    $result = $con->query($sql);
-                    if ($result->num_rows > 0) {
-                        while($row = $result->fetch_assoc()) {
-                            $temp=array();
-                            array_push($temp,$row["EmpNo"],$row["EmpName"],$row["Qtr_No"],$row["Prev read"],$row["Current read"],$row["Prev Date"],$row["Current Date"],$row["Unit consumed"],$row["Elec_charge"],$row["Fixed_charge"],$row["Total charge"]);
-                            array_push($final,$temp);
-                        }
-                        //echo $result->num_rows;
-                    }
-                }
-                
-            }
-            if(count($final)!=0)
-                echo json_encode($final);
-            else
-                echo "Report cannot be generated as no data exists";
-        }
     }
     $con->close();
 ?>
