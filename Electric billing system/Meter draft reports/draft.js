@@ -673,7 +673,13 @@ document.getElementById("generate1").addEventListener("click",function(){
           var y = 20;
           //var res = doc.autoTableHtmlToJson(a);  
           doc.setLineWidth(2);  
-          doc.text("Electric draft",860, y = y + 200, );
+          var today = new Date();
+          var dd = String(today.getDate()).padStart(2, '0');
+          var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+          var yyyy = today.getFullYear();
+
+          today = dd + '/' + mm + '/' + yyyy;
+          doc.text("Electric draft generated on "+today,860, y = y + 200, );
           doc.page=1; // use this as a counter.
 
           function footer(){ 
