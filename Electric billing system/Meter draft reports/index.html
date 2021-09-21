@@ -11,16 +11,22 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 </head>
 <body>
-    <h2>Electric draft report</h2>
+    <h2>Quarter meter charges report</h2>
     <div id="box">
-        <p id="current_date"><b>Date:</b></p>
-        <input type="text" size=10 id="date" placeholder="dd/mm/yyyy" autocomplete="off"><br><br>
-        <p id="colony"><b>Colony:</b></p>
+        <p id="current_date"><b>Current meter reading date:</b></p>
+
+        <select name="c_date" id="c_date" style="text-align-last: center;" onclick="get_dates()">
+            <option value="default" selected="selected_date"></option></select><br>
+
+        <p id="colony"><b>Colony name:</b></p>
+
         <select name="colony_name" id="colony_name" style="text-align-last: center;" onclick="get_names()">
-            <option value="default" selected="selected_code">Select your colony</option></select>
+            <option value="default" selected="selected_code"></option></select>
     </div>
+    <p id="disclaimer">(Date and colony names are optional for electric draft report)</p>
     <table id="new_table" border="2"></table>
-    <button id="generate">Generate</button>
+    <button id="generate">Generate list</button>
+    <button id="generate1">Generate draft</button>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>  
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js"></script> 
     <script src="draft.js"></script>
