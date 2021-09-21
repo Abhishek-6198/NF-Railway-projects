@@ -342,6 +342,12 @@ function fetch(){
                                             document.getElementById("date").value="";
                                             //window.scrollTo(table.rows[index+1]);
                                             item.value="";
+                                            charge1=0;
+                                            days_difference=0;
+                                            r=1;
+                                            fixed_charge=[];
+                                            c=[];
+                                            counter=0; 
                                         } 
                                         else{
                                             alert(response);
