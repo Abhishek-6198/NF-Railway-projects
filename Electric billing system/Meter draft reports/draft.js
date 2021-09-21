@@ -40,16 +40,16 @@ function get_names(){
       data: { "input": "names" }, 
       dataType: 'json', 
       success: function(response) {
-        let selectedValue = $select.val();
-        let html = response.filter((e, i, a) => a.indexOf(e) === i).map(item => `<option value="${item}">${item}</option>`);
-        $select.html(html).val(selectedValue);
-        //alert(response);
+        if(!response.includes("No colony name")){
+          let selectedValue = $select.val();
+          let html = response.filter((e, i, a) => a.indexOf(e) === i).map(item => `<option value="${item}">${item}</option>`);
+          $select.html(html).val(selectedValue);
+        }
+        else
+          alert(response);
       },
       error: function(xhr, status, error) {
-        var error1 = eval("(" + xhr.responseText + ")");
-        console.log(error1.Message);
-        console.log(geturl.getAllResponseHeaders());
-        alert("error!"+ geturl.getAllResponseHeaders());
+        alert(xhr.responseText)
       },
       complete: function() {}
     });
@@ -63,10 +63,13 @@ function get_dates(){
     data: { "input": "abcdef" }, 
     dataType: 'json', 
     success: function(response) {
-      let selectedValue = $select.val();
-      let html = response.filter((e, i, a) => a.indexOf(e) === i).map(item => `<option value="${item}">${item}</option>`);
-      $select.html(html).val(selectedValue);
-      //alert(response);
+      if(!response.includes("Records")){
+        let selectedValue = $select.val();
+        let html = response.filter((e, i, a) => a.indexOf(e) === i).map(item => `<option value="${item}">${item}</option>`);
+        $select.html(html).val(selectedValue);
+      }
+      else
+        alert(response);
     },
     error: function(xhr, status, error) {
       alert(xhr.responseText)

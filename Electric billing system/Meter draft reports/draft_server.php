@@ -42,6 +42,8 @@
                     }
                     echo json_encode($dates);
                 }
+                else
+                    echo "Records don't exist";
             }
         }
         elseif($_POST["input"] == "names"){
@@ -66,7 +68,7 @@
                     echo json_encode($codes);
                 }
                 else
-                    echo "No colony name information found in table!!";
+                    echo "Records don't exist";
             }
         }
         elseif($_POST["input"] == "generate_report"){
