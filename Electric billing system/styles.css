@@ -79,60 +79,183 @@ h1{
 }
 
 @media (min-width:320px)  {
-    h1{
+    #navbar{
+        position: absolute;
+        top:3em;
+        width: 24em;
+        display: block;
+        background-color: rgb(184, 217, 247);
+    }
+    .fas.fa-ellipsis-v{
+        display: block;
         font-size: large;
-        width:61em;
+    }
+    h1{
+        font-size: small;
+        width:24.5em;
     }
     #nav{
-        overflow: hidden;
-        width:60.75em;
-        height: 3em;
-        top:3.2em;
+        display: none;
+        overflow: initial;
+        width: 10em;
+        top:4em;
+        left:6em;
+        height:35em;
+        animation: fadeIn 0.5s;
+        -webkit-animation: fadeIn 2s;
+        -moz-animation: fadeIn 2s;
+        -o-animation: fadeIn 2s;
+        -ms-animation: fadeIn 2s;
     }
+    
     #nav > li a{
         font-size: small;
-        padding: 14px 16px;
-        margin-left: 1px;
-        margin-top: 1px;
+        padding-bottom: 50px;
+        margin-top: 10px;
+        margin-left: 15px;
     }
-
-    #nav > li{
-        display: inline;
+    
+    #nav > li a:hover{
+        color: white;
+    }
+    
+    #nav > li {
         width:10em;
-        float: left;
-        border:1px solid #000;
+        border-bottom: 1px solid #555;
+        height: 5em;
+    }
+      
+    #nav > li:last-child {
         border-bottom: none;
     }
     #box{
-        margin-left:19em;
+        width: 18em;
+        margin-left:1px;
+        height: 26em;
+    }
+    #box > p, #box > ol li{
+        font-size: small;
     }
     body{
-        background-position: center top;
-        background-size: 50em;
+        background-position: 5em 5em;
+        background-size: 10em;
     }
     .fas.fa-fan.fa-spin{
-        top:11em;
-        left:23em;
+        top:10.3em;
+        left:5em;
     }
+    @keyframes fadeIn {
+        0% {opacity:0;}
+        100% {opacity:1;}
+      }
+      
+      @-moz-keyframes fadeIn {
+        0% {opacity:0;}
+        100% {opacity:1;}
+      }
+      
+      @-webkit-keyframes fadeIn {
+        0% {opacity:0;}
+        100% {opacity:1;}
+      }
+      
+      @-o-keyframes fadeIn {
+        0% {opacity:0;}
+        100% {opacity:1;}
+      }
+      
+      @-ms-keyframes fadeIn {
+        0% {opacity:0;}
+        100% {opacity:1;}
+      }
+    
     
 }
 
 @media (min-width:480px)  { 
+    #navbar{
+        width:33em;
+    }
+    h1{
+        width:33.5em;
+    }
+    #nav{
+        left:10em;
+    }
+    #box{
+        width:26em;
+        height: 18em;
+    }
+    body{
+        background-position: 5em 5em;
+        background-size: 20em;
+    }
 }
 
 @media (min-width:600px)  {
+    #navbar{
+        width:45em;
+    }
+    h1{
+        width:45.9em;
+    }
+    #nav{
+        left:12em;
+        width:15em;
+        height: 33em;
+    }
+    #box{
+        width:36em;
+        height: 18em;
+    }
+    body{
+        background-position: 7em 5em;
+        background-size: 25em;
+    }
+    #nav > li{
+        width:15em;
+    }
 }
 
 @media (min-width:801px)  {
+    #navbar{
+        width:60em;
+    }
+    h1{
+        width:60.9em;
+    }
+    #box{
+        width:48em;
+        height: 16em;
+    }
+    body{
+        background-position: 10em 5em;
+        background-size: 30em;
+    }
+    #nav{
+        left:19em;
+    }
 }
 
 @media (min-width:1025px) {
+    #navbar{
+        display: none;
+    }
+    .fas.fa-ellipsis-v{
+        display: none;
+        font-size: large;
+    }
     body{
         background-size: 40em;
         background-position: 27em 4em;
     }
     #box{
         margin-left: 32em;
+        width: 28em;
+        height: 20em;
+    }
+    #box > p, #box > ol li{
+        font-size: medium;
     }
     h1{
         font-size: x-large;
@@ -140,17 +263,19 @@ h1{
         width:63em;
     }
     #nav{
+        display: block;
         overflow: initial;
         width: 15em;
         top:4em;
-        height:59em;
+        left:10px;
+        height:34em;
     }
     
     #nav > li a{
         font-size: large;
         padding-bottom: 50px;
-        margin-top: 3em;
-        margin-left: 2em;
+        margin-top: 10px;
+        margin-left: 20px;
     }
     
     #nav > li a:hover{
@@ -160,6 +285,7 @@ h1{
     #nav > li {
         width:15em;
         border-bottom: 1px solid #555;
+        height: 5em;
     }
       
     #nav > li:last-child {
