@@ -209,34 +209,34 @@
                         while($row = $result->fetch_assoc()) {
                             $number=$row["EmpNo"];
                         }
-                        $sql="UPDATE `quarter_occupancy` SET `Vacation Date`=? WHERE `Qtr_ID`= '".$_POST["qtr_id"]. "' AND (`EmpNo`= '".$number."' AND `Vacation Date`IS NULL)";
+                        $sql="UPDATE `quarter_occupancy` SET `Vacation Date`=?, `EmpName`=? WHERE `Qtr_ID`= '".$_POST["qtr_id"]. "' AND (`EmpNo`= '".$number."' AND `Vacation Date`IS NULL)";
                         $statement = $con->prepare($sql);
                         //echo $_POST["occ_date"];
-                        $statement->bind_param("s",$_POST["vac_date"]);
+                        $statement->bind_param("ss",$_POST["vac_date"],$_POST["emp_name"]);
                         if($statement->execute())
-                            echo "Vacation date ".$_POST["vac_date"]." added for emp no ".$number." occupying qtr id ".$_POST["qtr_id"];
+                            echo "Vacation date ".$_POST["vac_date"]." added for ".$_POST["emp_name"]." occupying qtr id ".$_POST["qtr_id"];
                         else
                             $con->error();
                     }
                 }
                 else{
                     if(!isset($_POST["occ_date"])){
-                        $sql="UPDATE `quarter_occupancy` SET `Vacation Date`=? WHERE `Qtr_ID`= '".$_POST["qtr_id"]. "' AND (`EmpNo`= '".$_POST["emp_no"]."' AND `Vacation Date`IS NULL)";
+                        $sql="UPDATE `quarter_occupancy` SET `Vacation Date`=?, `EmpName`=? WHERE `Qtr_ID`= '".$_POST["qtr_id"]. "' AND (`EmpNo`= '".$_POST["emp_no"]."' AND `Vacation Date`IS NULL)";
                         $statement = $con->prepare($sql);
                         //echo $_POST["occ_date"];
-                        $statement->bind_param("s",$_POST["vac_date"]);
+                        $statement->bind_param("ss",$_POST["vac_date"],$_POST["emp_name"]);
                         if($statement->execute())
-                            echo "Vacation date ".$_POST["vac_date"]." added for emp no ".$_POST["emp_no"]." occupying qtr id ".$_POST["qtr_id"];
+                            echo "Vacation date ".$_POST["vac_date"]." added for ".$_POST["emp_name"]." occupying qtr id ".$_POST["qtr_id"];
                         else
                             $con->error();
 
                     }
                     else{
-                        $stmt = $con->prepare("INSERT INTO `quarter_occupancy`(`EmpNo`,`Qtr_ID`,`Occupation Date`) 
-                                                            VALUES (?, ?, ?)");
-                        $stmt->bind_param("sss", $_POST["emp_no"], $_POST["qtr_id"], $_POST["occ_date"]);
+                        $stmt = $con->prepare("INSERT INTO `quarter_occupancy`(`EmpNo`,`EmpName`,`Qtr_ID`,`Occupation Date`) 
+                                                            VALUES (?, ?, ?, ?)");
+                        $stmt->bind_param("ssss", $_POST["emp_no"], $_POST["emp_name"], $_POST["qtr_id"], $_POST["occ_date"]);
                         if( $stmt->execute()){
-                            echo $_POST["emp_no"]." has successfully occupied the quarter ".$_POST["qtr_id"]." on ".$_POST["occ_date"];
+                            echo $_POST["emp_name"]." has successfully occupied the quarter ".$_POST["qtr_id"]." on ".$_POST["occ_date"];
                         }
                         else
                             $con->error();

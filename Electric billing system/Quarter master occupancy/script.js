@@ -517,11 +517,13 @@ function send_message(){
       }
       else if(count3>0){
         datum["emp_no"]=document.getElementById("emp_no").value;
+        datum["emp_name"]=document.getElementById("quarter_details").rows[5].cells.item(1).innerHTML;
         datum["qtr_id"]=document.getElementById("quarter_details").rows[3].cells.item(1).innerHTML;
         datum["occ_date"]=document.getElementById("occ").value;
       }
       else if(count4>0){
         datum["emp_no"]=document.getElementById("emp_no").value;;
+        datum["emp_name"]=document.getElementById("quarter_details").rows[7].cells.item(1).innerHTML;
         datum["qtr_id"]=document.getElementById("quarter_details").rows[5].cells.item(1).innerHTML;
         datum["vac_date"] = document.getElementById("vac").value;
       }
