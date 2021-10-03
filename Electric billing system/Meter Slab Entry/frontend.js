@@ -4,7 +4,6 @@ var table1=document.getElementById("old_table");
 var x=0;
 
 //console.log(table1)
-
 setTimeout(function(){
     document.getElementById("add_info").style.display="none";
     document.getElementById("slab_info").style.display="none";
@@ -31,22 +30,26 @@ $.ajax({
                 var cell4 = row.insertCell(4);
                 var cell5 = row.insertCell(5);
                 var cell6 = row.insertCell(6);
+                var cell7 = row.insertCell(7);
+                var cell8 = row.insertCell(8);
                 
                 cell.innerHTML="<b>Sl No</b>:";
-                cell1.innerHTML="<b>From date</b>:";
-                cell2.innerHTML="<b>To date</b>:";
-                cell3.innerHTML="<b>From unit</b>:";
-                cell4.innerHTML="<b>To unit</b>:";
-                cell5.innerHTML="<b>Rate/unit</b>:";
-                cell6.innerHTML="<b>Unit type</b>:";
+                cell1.innerHTML="<b>Load (in KW)</b>:";
+                cell2.innerHTML="<b>From date</b>:";
+                cell3.innerHTML="<b>To date</b>:";
+                cell4.innerHTML="<b>From unit</b>:";
+                cell5.innerHTML="<b>To unit</b>:";
+                cell6.innerHTML="<b>Rate/unit</b>:";
+                cell7.innerHTML="<b>Unit type</b>:";
+                cell8.innerHTML="<b>Fixed charge/day</b>:";
             }
             table1.rows[0].style.position="sticky";
             table1.rows[0].style.top="0";
             table1.rows[0].style.backgroundColor="rgb(233, 124, 74)";
             const arr=JSON.parse(response);
 
-            var x=arr.length*6;
-            for(var i=0; i<x/6; i++){
+            var x=arr.length*9;
+            for(var i=0; i<x/9; i++){
                 var row=table1.insertRow(k);
                 row.style.backgroundColor="rgb(243, 242, 189)";
                 row.addEventListener("click",updation);
@@ -59,6 +62,8 @@ $.ajax({
                 var cell4 = row.insertCell(4);
                 var cell5 = row.insertCell(5);
                 var cell6 = row.insertCell(6);
+                var cell7 = row.insertCell(7);
+                var cell8 = row.insertCell(8);
 
                 cell.innerHTML=arr[i][count];
                 ++count;
@@ -73,7 +78,10 @@ $.ajax({
                 cell5.innerHTML=arr[i][count];
                 ++count;
                 cell6.innerHTML=arr[i][count];
-
+                ++count;
+                cell7.innerHTML=arr[i][count];
+                ++count;
+                cell8.innerHTML=arr[i][count];
                 count=0;
                 ++k;
             }
@@ -90,25 +98,27 @@ $.ajax({
 
 
 document.getElementById("save").addEventListener("click",function(){
+    var load = document.getElementById("load").value;
     var fdate = document.getElementById("fdate").value;
     var tdate = document.getElementById("tdate").value;
     var funit = document.getElementById("funit").value;
     var tunit = document.getElementById("tunit").value;
     var rate = document.getElementById("r").value;
-    var type=document.getElementById("type").value;
+    var type = document.getElementById("type").value;
+    var fcharge = document.getElementById("fcharge").value;
 
-    if(fdate!="" && funit.toString()!="" &&  rate.toString()!=""){
+    if(load.toString()!="" && fdate!="" && funit.toString()!="" &&  rate.toString()!="" && fcharge.toString()!=""){
         if(document.getElementById("save").innerText=="Save"){
             var arr=[];
             var temp=[];
-            temp.push(fdate,tdate,funit,tunit,rate,type);
+            temp.push(load,fdate,tdate,funit,tunit,rate,type,fcharge);
             arr.push(temp);
             temp=[];
     
                 if(flag==true){  
                     document.querySelectorAll(".from_unit").forEach((item,index) => {
                         if(item.value.toString()!=""  && document.getElementsByClassName("rate")[index].value.toString()!=""){
-                                temp.push(fdate,tdate,item.value,document.getElementsByClassName("to_unit")[index].value,document.getElementsByClassName("rate")[index].value,document.getElementsByClassName("unit_type")[index].value);
+                                temp.push(load,fdate,tdate,item.value,document.getElementsByClassName("to_unit")[index].value,document.getElementsByClassName("rate")[index].value,document.getElementsByClassName("unit_type")[index].value,fcharge);
                                 arr.push(temp);
                                 temp=[];
                         }
@@ -117,18 +127,18 @@ document.getElementById("save").addEventListener("click",function(){
                 }
                 var temp1=[];
                 for(var i=0;i<arr.length;i++){
-                    if(arr[i].length==6){
-                        temp.push(Number(arr[i][2]));
+                    if(arr[i].length==8){
+                        temp.push(Number(arr[i][3]));
                     }
-                    else if(arr[i].length==5){
-                        temp.push(Number(arr[i][1]));
+                    else{
+                        temp.push(Number(arr[i][2]));
                     } 
                 }
                 for(var i=0;i<temp.length; i++){
                     temp1.push(temp[i]);
                 }
                 temp.sort(function(a, b){return a - b});
-                console.log(temp);
+                //console.log(temp);
 
                 var count=0;
                 for(var i=0; i<temp.length; i++){
@@ -164,14 +174,18 @@ document.getElementById("save").addEventListener("click",function(){
                                     var cell4 = row.insertCell(4);
                                     var cell5 = row.insertCell(5);
                                     var cell6 = row.insertCell(6);
+                                    var cell7 = row.insertCell(7);
+                                    var cell8 = row.insertCell(8);
                                     
                                     cell.innerHTML="<b>Sl No</b>:";
-                                    cell1.innerHTML="<b>From date</b>:";
-                                    cell2.innerHTML="<b>To date</b>:";
-                                    cell3.innerHTML="<b>From unit</b>:";
-                                    cell4.innerHTML="<b>To unit</b>:";
-                                    cell5.innerHTML="<b>Rate/unit</b>:";
-                                    cell6.innerHTML="<b>Unit type</b>:";
+                                    cell1.innerHTML="<b>Load (in KW)</b>:";
+                                    cell2.innerHTML="<b>From date</b>:";
+                                    cell3.innerHTML="<b>To date</b>:";
+                                    cell4.innerHTML="<b>From unit</b>:";
+                                    cell5.innerHTML="<b>To unit</b>:";
+                                    cell6.innerHTML="<b>Rate/unit</b>:";
+                                    cell7.innerHTML="<b>Unit type</b>:";
+                                    cell8.innerHTML="<b>Fixed charge/day</b>:";
     
                                     table1.rows[0].style.position="sticky";
                                     table1.rows[0].style.top="0";
@@ -180,8 +194,8 @@ document.getElementById("save").addEventListener("click",function(){
                                 
                                 const arr=JSON.parse(response);
                     
-                                var x=arr.length*6;
-                                for(var i=0; i<x/6; i++){
+                                var x=arr.length*9;
+                                for(var i=0; i<x/9; i++){
                                     var row=table1.insertRow(table1.rows.length);
                                     row.style.backgroundColor="rgb(243, 242, 189)";
                                     row.addEventListener("click",updation);
@@ -194,6 +208,8 @@ document.getElementById("save").addEventListener("click",function(){
                                     var cell4 = row.insertCell(4);
                                     var cell5 = row.insertCell(5);
                                     var cell6 = row.insertCell(6);
+                                    var cell7 = row.insertCell(7);
+                                    var cell8 = row.insertCell(8);
                     
                                     cell.innerHTML=arr[i][count];
                                     ++count;
@@ -208,9 +224,19 @@ document.getElementById("save").addEventListener("click",function(){
                                     cell5.innerHTML=arr[i][count];
                                     ++count;
                                     cell6.innerHTML=arr[i][count];
-                    
+                                    ++count;
+                                    cell7.innerHTML=arr[i][count];
+                                    ++count;
+                                    cell8.innerHTML=arr[i][count];
                                     count=0;
                                 }
+                                document.getElementById("load").value=""
+                                document.getElementById("fdate").value="";
+                                document.getElementById("tdate").value="";
+                                document.getElementById("funit").value="";
+                                document.getElementById("tunit").value="";
+                                document.getElementById("r").value="";
+                                document.getElementById("fcharge").value="";
                             }
                             else{
                                 document.getElementById("old").innerText="No old slabs";
@@ -226,8 +252,10 @@ document.getElementById("save").addEventListener("click",function(){
                     alert("The units should be in increasing order.");
                     setTimeout(function(){
                         document.getElementById("funit").value="";
+                        document.getElementById("load").value="";
                         document.getElementById("tunit").value="";
                         document.getElementById("r").value="";
+                        document.getElementById("fcharge").value="";
 
                         if(flag==true){  
                             document.querySelectorAll(".from_unit").forEach((item,index) => {
@@ -248,28 +276,32 @@ document.getElementById("save").addEventListener("click",function(){
                 data:{
                         "input":"update",
                         "sl_no":x,
+                        "load":load,
                         "from_date":fdate,
                         "to_date":tdate,
                         "from_unit":funit,
                         "to_unit":tunit,
                         "rate":rate,
-                        "type":type
+                        "type":type,
+                        "fcharge":fcharge
                 },
                 success:function(response){
                     //console.log(response.length);
                     if(response.includes("-")){
                         const arr=response.split("-");
                         document.getElementById("old").innerText="Old slab entries:";
-                        if(arr.length==5){
+                        if(arr.length==7){
                             for(var i=0; i<table1.rows.length; i++){
                                 if(table1.rows[i].cells.item(0).innerHTML==x){
                                     table1.rows[i].cells.item(0).innerHTML=arr[0];
                                     table1.rows[i].cells.item(1).innerHTML=arr[1];
-                                    table1.rows[i].cells.item(2).innerHTML="";
-                                    table1.rows[i].cells.item(3).innerHTML=arr[2];
-                                    table1.rows[i].cells.item(4).innerHTML="";
-                                    table1.rows[i].cells.item(5).innerHTML=arr[3];
+                                    table1.rows[i].cells.item(2).innerHTML=arr[2];
+                                    table1.rows[i].cells.item(3).innerHTML="";
+                                    table1.rows[i].cells.item(4).innerHTML=arr[3];
+                                    table1.rows[i].cells.item(5).innerHTML="";
                                     table1.rows[i].cells.item(6).innerHTML=arr[4];
+                                    table1.rows[i].cells.item(7).innerHTML=arr[5];
+                                    table1.rows[i].cells.item(8).innerHTML=arr[6];
                                     table1.rows[i].addEventListener("click",updation);
                                     table1.rows[i].addEventListener("mouseover",func);
                                     table1.rows[i].addEventListener("mouseout",func1);
@@ -279,16 +311,18 @@ document.getElementById("save").addEventListener("click",function(){
                                         behavior: 'smooth',
                                       block: 'center'
                                     });
+                                    document.getElementById("load").value=""
                                     document.getElementById("fdate").value="";
                                     document.getElementById("tdate").value="";
                                     document.getElementById("funit").value="";
                                     document.getElementById("tunit").value="";
                                     document.getElementById("r").value="";
+                                    document.getElementById("fcharge").value="";
                                     break;
                                 }
                             }
                         }
-                        else if(arr.length==7){
+                        else if(arr.length==9){
                             for(var i=0; i<table1.rows.length; i++){
                                 if(table1.rows[i].cells.item(0).innerHTML==x){
                                     table1.rows[i].cells.item(0).innerHTML=arr[0];
@@ -298,6 +332,8 @@ document.getElementById("save").addEventListener("click",function(){
                                     table1.rows[i].cells.item(4).innerHTML=arr[4];
                                     table1.rows[i].cells.item(5).innerHTML=arr[5];
                                     table1.rows[i].cells.item(6).innerHTML=arr[6];
+                                    table1.rows[i].cells.item(7).innerHTML=arr[7];
+                                    table1.rows[i].cells.item(8).innerHTML=arr[8];
                                     table1.rows[i].addEventListener("click",updation);
                                     table1.rows[i].addEventListener("mouseover",func);
                                     table1.rows[i].addEventListener("mouseout",func1);
@@ -307,26 +343,31 @@ document.getElementById("save").addEventListener("click",function(){
                                         behavior: 'smooth',
                                       block: 'center'
                                     });
+
+                                    document.getElementById("load").value=""
                                     document.getElementById("fdate").value="";
                                     document.getElementById("tdate").value="";
                                     document.getElementById("funit").value="";
                                     document.getElementById("tunit").value="";
                                     document.getElementById("r").value="";
+                                    document.getElementById("fcharge").value="";
                                     break;
                                 }
                             }
                         }
-                        else if(arr.length==6){
-                            if(arr[2].includes("/")){
+                        else if(arr.length==8){
+                            if(arr[3].includes("/")){
                                 for(var i=0; i<table1.rows.length; i++){
                                     if(table1.rows[i].cells.item(0).innerHTML==x){
                                         table1.rows[i].cells.item(0).innerHTML=arr[0];
                                         table1.rows[i].cells.item(1).innerHTML=arr[1];
                                         table1.rows[i].cells.item(2).innerHTML=arr[2];
                                         table1.rows[i].cells.item(3).innerHTML=arr[3];
-                                        table1.rows[i].cells.item(4).innerHTML=""
-                                        table1.rows[i].cells.item(5).innerHTML=arr[4];
+                                        table1.rows[i].cells.item(4).innerHTML=arr[4]
+                                        table1.rows[i].cells.item(5).innerHTML="";
                                         table1.rows[i].cells.item(6).innerHTML=arr[5];
+                                        table1.rows[i].cells.item(7).innerHTML=arr[6];
+                                        table1.rows[i].cells.item(8).innerHTML=arr[7];
                                         table1.rows[i].addEventListener("click",updation);
                                         table1.rows[i].addEventListener("mouseover",func);
                                         table1.rows[i].addEventListener("mouseout",func1);
@@ -336,11 +377,13 @@ document.getElementById("save").addEventListener("click",function(){
                                             behavior: 'smooth',
                                           block: 'center'
                                         });
+                                        document.getElementById("load").value=""
                                         document.getElementById("fdate").value="";
                                         document.getElementById("tdate").value="";
                                         document.getElementById("funit").value="";
                                         document.getElementById("tunit").value="";
                                         document.getElementById("r").value="";
+                                        document.getElementById("fcharge").value="";
                                         break;
                                     }
                                 }
@@ -350,11 +393,13 @@ document.getElementById("save").addEventListener("click",function(){
                                     if(table1.rows[i].cells.item(0).innerHTML==x){
                                         table1.rows[i].cells.item(0).innerHTML=arr[0];
                                         table1.rows[i].cells.item(1).innerHTML=arr[1];
-                                        table1.rows[i].cells.item(2).innerHTML="";
-                                        table1.rows[i].cells.item(3).innerHTML=arr[2];
+                                        table1.rows[i].cells.item(2).innerHTML=arr[2];
+                                        table1.rows[i].cells.item(3).innerHTML="";
                                         table1.rows[i].cells.item(4).innerHTML=arr[3];
                                         table1.rows[i].cells.item(5).innerHTML=arr[4];
                                         table1.rows[i].cells.item(6).innerHTML=arr[5];
+                                        table1.rows[i].cells.item(7).innerHTML=arr[6];
+                                        table1.rows[i].cells.item(8).innerHTML=arr[7];
                                         table1.rows[i].addEventListener("click",updation);
                                         table1.rows[i].addEventListener("mouseover",func);
                                         table1.rows[i].addEventListener("mouseout",func1);
@@ -364,11 +409,13 @@ document.getElementById("save").addEventListener("click",function(){
                                             behavior: 'smooth',
                                           block: 'center'
                                         });
+                                        document.getElementById("load").value=""
                                         document.getElementById("fdate").value="";
                                         document.getElementById("tdate").value="";
                                         document.getElementById("funit").value="";
                                         document.getElementById("tunit").value="";
                                         document.getElementById("r").value="";
+                                        document.getElementById("fcharge").value="";
                                         break;
                                     }
                                 }
@@ -399,35 +446,42 @@ document.getElementById("add").addEventListener("click",function(){
     var cell3 = row.insertCell(3);
     var cell4 = row.insertCell(4);
     var cell5 = row.insertCell(5);
+    var cell6 = row.insertCell(6);
+    var cell7 = row.insertCell(7);
 
     cell.innerHTML="''"
     cell1.innerHTML="''";
+    cell2.innerHTML="''";
+    cell7.innerHTML="''";
 
     var input = document.createElement("input");
     input.type = "number";
     input.className="from_unit";
     input.style.width="80px";
-    input.addEventListener("change",f1);
-    cell2.appendChild(input);
-
-    var input = document.createElement("input");
-    input.type = "number";
-    input.className="to_unit";
-    input.style.width="80px";
+    input.style.textAlign="center";
     input.addEventListener("change",f1);
     cell3.appendChild(input);
 
     var input = document.createElement("input");
     input.type = "number";
+    input.className="to_unit";
+    input.style.width="80px";
+    input.style.textAlign="center";
+    input.addEventListener("change",f1);
+    cell4.appendChild(input);
+
+    var input = document.createElement("input");
+    input.type = "number";
     input.className="rate";
     input.style.width="80px";
-    cell4.appendChild(input);
+    input.style.textAlign="center";
+    cell5.appendChild(input);
 
 
     var selectList = document.createElement("select");
     selectList.className = "unit_type";
     selectList.style.width="100%";
-    cell5.appendChild(selectList);
+    cell6.appendChild(selectList);
 
     var option = document.createElement("option");
     option.value = "Household";
@@ -493,6 +547,25 @@ document.getElementById("fdate").addEventListener("change",() => {
             document.getElementById("fdate").value="";
             document.getElementById("tdate").value="";
         }
+        else{
+            $.ajax({
+                url: 'server.php',
+                type: 'POST',
+                data:{
+                        "input":"calculate_fcharge",
+                        "from_date":document.getElementById("fdate").value,
+                        "load":document.getElementById("load").value
+                },
+                success:function(response){
+                    if(!response.includes("_")){
+                        document.getElementById("fcharge").value=response;
+                    }
+                },
+                complete:function(){
+    
+                }
+            });
+        }
     }
     
 })
@@ -549,13 +622,15 @@ function updation(){
         }
         document.getElementById("add").disabled=true;     
         x=this.cells.item(0).innerHTML;
-        document.getElementById("fdate").value=this.cells.item(1).innerHTML;
-        if(this.cells.item(2).innerHTML!="")
-            document.getElementById("tdate").value=this.cells.item(2).innerHTML;
-        document.getElementById("funit").value=this.cells.item(3).innerHTML;
-        document.getElementById("tunit").value=this.cells.item(4).innerHTML;
-        document.getElementById("r").value=this.cells.item(5).innerHTML;
-        document.getElementById("type").value=this.cells.item(6).innerHTML;
+        document.getElementById("load").value=this.cells.item(1).innerHTML;
+        document.getElementById("fdate").value=this.cells.item(2).innerHTML;
+        if(this.cells.item(3).innerHTML!="")
+            document.getElementById("tdate").value=this.cells.item(3).innerHTML;
+        document.getElementById("funit").value=this.cells.item(4).innerHTML;
+        document.getElementById("tunit").value=this.cells.item(5).innerHTML;
+        document.getElementById("r").value=this.cells.item(6).innerHTML;
+        document.getElementById("type").value=this.cells.item(7).innerHTML;
+        document.getElementById("fcharge").value=this.cells.item(8).innerHTML;
 
         btn.innerText="Update";
     }
@@ -610,3 +685,25 @@ function f1(){
         }
     }
 }
+
+document.getElementById("load").addEventListener("change",function(){
+    if(document.getElementById("fdate").value!="" && document.getElementById("load").value!=""){
+        $.ajax({
+            url: 'server.php',
+            type: 'POST',
+            data:{
+                    "input":"calculate_fcharge",
+                    "from_date":document.getElementById("fdate").value,
+                    "load":document.getElementById("load").value
+            },
+            success:function(response){
+                if(!response.includes("_")){
+                    document.getElementById("fcharge").value=response;
+                }
+            },
+            complete:function(){
+
+            }
+        });
+    }
+})

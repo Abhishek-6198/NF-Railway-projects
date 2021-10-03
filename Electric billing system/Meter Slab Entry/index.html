@@ -19,23 +19,27 @@
     <div id="new_slab">
         <table id="slab_details" border="2">
             <tr>
+                <th>Load (in KW)</th>
                 <th>From date</th>
                 <th>To date</th>
                 <th>From Unit</th>
                 <th>To Unit</th>
                 <th>Rate/unit</th>
                 <th>Unit type</th>
+                <th>Fixed charge/day</th>
             </tr>
             <tr>
-                <td><input type="text" size=10 id="fdate" placeholder="dd/mm/yyyy" autocomplete="off" required></td>
-                <td><input type="text" size=10 id="tdate" placeholder="dd/mm/yyyy" autocomplete="off"></td>
-                <td><input type="number" size=5 style="width:80px;" id="funit" autocomplete="off"  required></td>
-                <td><input type="number" size=5 style="width:80px;" id="tunit" autocomplete="off"></td>
-                <td><input type="number" step="0.01" size=5 style="width:80px;" id="r" autocomplete="off"  required></td>
-                <td><select name="type" id="type" style="max-width:100%;" onclick="">
+                <td><input type="number" size=2 style="width:80px; text-align: center;" id="load" autocomplete="off"  required></td>
+                <td><input type="text" style="text-align: center;"size=10 id="fdate" placeholder="dd/mm/yyyy" autocomplete="off" required></td>
+                <td><input type="text" style="text-align: center;"size=10 id="tdate" placeholder="dd/mm/yyyy" autocomplete="off"></td>
+                <td><input type="number" size=5 style="width:80px; text-align: center;" id="funit" autocomplete="off"  required></td>
+                <td><input type="number" size=5 style="width:80px; text-align: center;" id="tunit" autocomplete="off"></td>
+                <td><input type="number" step="0.01" size=5 style="width:80px; text-align: center;" id="r" autocomplete="off"  required></td>
+                <td><select name="type" id="type" style="max-width:100%; text-align: center;" onclick="">
                     <option value="Household">Household</option>
                     <option value="Commercial">Commercial</option>
                 </select></td>
+                <td><input type="number" step="0.01" size=5 style="width:80px; text-align: center;" id="fcharge" autocomplete="off"  required></td>
             </tr>
         </table>
     </div>

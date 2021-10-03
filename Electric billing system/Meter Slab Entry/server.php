@@ -22,46 +22,46 @@
                 //echo $data;
                 foreach($data as $d){
                     $data1 = json_decode(stripslashes(json_encode($d)));
-                    if($data1[1]=="" && $data1[3]==""){
-                        $sql="SELECT * FROM `electric rate table` WHERE `From Date`='".$data1[0]."' AND `from_unit`=".$data1[2]." AND `Rate/unit`='".$data1[4]."' AND `Unit type`='".$data1[5]."'";
+                    if($data1[2]=="" && $data1[4]==""){
+                        $sql="SELECT * FROM `electric rate table` WHERE `Load (in KW)`='".$data1[0]."' AND `From Date`='".$data1[1]."' AND `from_unit`=".$data1[3]." AND `Rate/unit`='".$data1[5]."' AND `Unit type`='".$data1[6]."' AND `Fixed charge`='".$data1[7]."'";
                         $result = $con->query($sql);
                         if ($result->num_rows == 0) {
-                            $stmt = $con->prepare("INSERT INTO `electric rate table`(`From Date`,`from_unit`,`Rate/unit`,`Unit type`)
-                                                    VALUES (?,?,?,?)");
-                            $stmt->bind_param("siss",$data1[0],$data1[2],$data1[4],$data1[5]);
+                            $stmt = $con->prepare("INSERT INTO `electric rate table`(`Load (in KW)`,`From Date`,`from_unit`,`Rate/unit`,`Unit type`,`Fixed charge`)
+                                                    VALUES (?,?,?,?,?,?)");
+                            $stmt->bind_param("isisss",$data1[0],$data1[1],$data1[3],$data1[5],$data1[6],$data1[7]);
                             $stmt->execute();
                         }
 
                     }
-                    elseif($data1[1]=="" || $data1[3]==""){
-                        if($data1[1]==""){
-                            $sql="SELECT * FROM `electric rate table` WHERE `From Date`='".$data1[0]."' AND `from_unit`=".$data1[2]." AND `to_unit`=".$data1[3]." AND `Rate/unit`='".$data1[4]."' AND `Unit type`='".$data1[5]."'";
+                    elseif($data1[2]=="" || $data1[4]==""){
+                        if($data1[2]==""){
+                            $sql="SELECT * FROM `electric rate table` WHERE `Load (in KW)`='".$data1[0]."' AND `From Date`='".$data1[1]."' AND `from_unit`=".$data1[3]." AND `to_unit`=".$data1[4]." AND `Rate/unit`='".$data1[5]."' AND `Unit type`='".$data1[6]."'AND `Fixed charge`='".$data1[7]."'";
                             $result = $con->query($sql);
                             if ($result->num_rows == 0) {
-                                $stmt = $con->prepare("INSERT INTO `electric rate table`(`From Date`,`from_unit`,`to_unit`,`Rate/unit`,`Unit type`)
-                                                        VALUES (?,?,?,?,?)");
-                                $stmt->bind_param("siiss",$data1[0],$data1[2],$data1[3],$data1[4],$data1[5]);
+                                $stmt = $con->prepare("INSERT INTO `electric rate table`(`Load (in KW)`,`From Date`,`from_unit`,`to_unit`,`Rate/unit`,`Unit type`,`Fixed charge`)
+                                                        VALUES (?,?,?,?,?,?,?)");
+                                $stmt->bind_param("isiisss",$data1[0],$data1[1],$data1[3],$data1[4],$data1[5],$data1[6],$data1[7]);
                                 $stmt->execute();
                             }
                         }
-                        elseif($data1[3]==""){
-                            $sql="SELECT * FROM `electric rate table` WHERE `From Date`='".$data1[0]."' AND `To Date`='".$data1[1]."' AND `from_unit`='".$data1[2]."' AND `Rate/unit`='".$data1[4]."' AND `Unit type`='".$data1[5]."'";
+                        elseif($data1[4]==""){
+                            $sql="SELECT * FROM `electric rate table` WHERE `Load (in KW)`='".$data1[0]."' AND `From Date`='".$data1[1]."' AND `To Date`='".$data1[2]."' AND `from_unit`='".$data1[3]."' AND `Rate/unit`='".$data1[5]."' AND `Unit type`='".$data1[6]."'AND `Fixed charge`='".$data1[7]."'";
                             $result = $con->query($sql);
                             if ($result->num_rows == 0) {
-                                $stmt = $con->prepare("INSERT INTO `electric rate table`(`From Date`,`To Date`,`from_unit`,`Rate/unit`,`Unit type`)
-                                                        VALUES (?,?,?,?,?)");
-                                $stmt->bind_param("ssiss",$data1[0],$data1[1],$data1[2],$data1[4],$data1[5]);
+                                $stmt = $con->prepare("INSERT INTO `electric rate table`(`Load (in KW)`,`From Date`,`To Date`,`from_unit`,`Rate/unit`,`Unit type`,`Fixed charge`)
+                                                        VALUES (?,?,?,?,?,?,?)");
+                                $stmt->bind_param("ississs",$data1[0],$data1[1],$data1[2],$data1[3],$data1[5],$data1[6],$data1[7]);
                                 $stmt->execute();
                             }
                         }
                     }
                     else{
-                        $sql="SELECT * FROM `electric rate table` WHERE `From Date`='".$data1[0]."' AND `To Date`='".$data1[1]."' AND `from_unit`='".$data1[2]."' AND `to_unit`='".$data1[3]."' AND `Rate/unit`='".$data1[4]."' AND `Unit type`='".$data1[5]."'";
+                        $sql="SELECT * FROM `electric rate table` WHERE `Load (in KW)`='".$data1[0]."' AND `From Date`='".$data1[1]."' AND `To Date`='".$data1[2]."' AND `from_unit`='".$data1[3]."' AND `to_unit`='".$data1[4]."' AND `Rate/unit`='".$data1[5]."' AND `Unit type`='".$data1[6]."' AND `Fixed charge`='".$data1[7]."'";
                         $result = $con->query($sql);
                         if ($result->num_rows == 0) {
-                            $stmt = $con->prepare("INSERT INTO `electric rate table`(`From Date`,`To Date`,`from_unit`,`to_unit`,`Rate/unit`,`Unit type`)
-                                                    VALUES (?,?,?,?,?,?)");
-                            $stmt->bind_param("ssiiss",$data1[0],$data1[1],$data1[2],$data1[3],$data1[4],$data1[5]);
+                            $stmt = $con->prepare("INSERT INTO `electric rate table`(`Load (in KW)`,`From Date`,`To Date`,`from_unit`,`to_unit`,`Rate/unit`,`Unit type`,`Fixed charge`)
+                                                    VALUES (?,?,?,?,?,?,?,?)");
+                            $stmt->bind_param("issiisss",$data1[0],$data1[1],$data1[2],$data1[3],$data1[4],$data1[5],$data1[6],$data1[7]);
                             $stmt->execute();
                         }
                     }    
@@ -72,7 +72,7 @@
                     $flag=TRUE;
                     while($row = $result->fetch_assoc()) {
                         $temp=array();
-                        array_push($temp,$row["Sl_No"],$row["From Date"],$row["To Date"],$row["from_unit"],$row["to_unit"],$row["Rate/unit"],$row["Unit type"]);
+                        array_push($temp,$row["Sl_No"],$row["Load (in KW)"],$row["From Date"],$row["To Date"],$row["from_unit"],$row["to_unit"],$row["Rate/unit"],$row["Unit type"],$row["Fixed charge"]);
                         array_push($final,$temp);
                     }
                 }
@@ -95,7 +95,7 @@
                     $flag=TRUE;
                     while($row = $result->fetch_assoc()) {
                         $temp=array();
-                        array_push($temp,$row["Sl_No"],$row["From Date"],$row["To Date"],$row["from_unit"],$row["to_unit"],$row["Rate/unit"],$row["Unit type"]);
+                        array_push($temp,$row["Sl_No"],$row["Load (in KW)"],$row["From Date"],$row["To Date"],$row["from_unit"],$row["to_unit"],$row["Rate/unit"],$row["Unit type"],$row["Fixed charge"]);
                         array_push($final,$temp);
                     }
                 }
@@ -113,8 +113,8 @@
                 $result = $con->query($sql);
                 if ($result->num_rows > 0) {
                     if($_POST["to_date"]=="" && $_POST["to_unit"]==""){
-                        $stmt = $con->prepare("UPDATE `electric rate table` SET `From Date`=?, `from_unit`=?, `Rate/unit`=?, `Unit type`=?  WHERE `From Date`='".$_POST["from_date"]."' AND `Sl_No`=".$_POST["sl_no"]."");
-                        $stmt->bind_param("siss",$_POST["from_date"],$_POST["from_unit"],$_POST["rate"],$_POST["type"]);
+                        $stmt = $con->prepare("UPDATE `electric rate table` SET `Load (in KW)`=?, `From Date`=?, `from_unit`=?, `Rate/unit`=?, `Unit type`=?, `Fixed charge`=?  WHERE `From Date`='".$_POST["from_date"]."' AND `Sl_No`=".$_POST["sl_no"]."");
+                        $stmt->bind_param("isisss",$_POST["load"],$_POST["from_date"],$_POST["from_unit"],$_POST["rate"],$_POST["type"],$_POST["fcharge"]);
                         if($stmt->execute()){
                             //echo "Updated rate table";
                             $sql="SELECT * from `electric rate table` WHERE `Sl_No`=".$_POST["sl_no"]."";
@@ -130,12 +130,14 @@
                                         $res1 = $con->query($sql);
                                     }
                                     $no=$row["Sl_No"];
+                                    $load=$row["Load (in KW)"];
                                     $fdate=$row["From Date"];
                                     $funit=$row["from_unit"];
                                     $rate=$row["Rate/unit"];
                                     $type=$row["Unit type"];
+                                    $fcharge=$row["Fixed charge"];
                                 }
-                                echo $no."-".$fdate."-".$funit."-".$rate."-".$type;
+                                echo $no."-".$load."-".$fdate."-".$funit."-".$rate."-".$type."-".$fcharge;
                             }
                         }
                         else{
@@ -144,8 +146,8 @@
                     }
                     elseif($_POST["to_date"]=="" || $_POST["to_unit"]==""){
                         if($_POST["to_date"]==""){
-                            $stmt = $con->prepare("UPDATE `electric rate table` SET `From Date`=?, `from_unit`=?, `to_unit`=?, `Rate/unit`=?, `Unit type`=?  WHERE `From Date`='".$_POST["from_date"]."' AND `Sl_No`=".$_POST["sl_no"]."");
-                            $stmt->bind_param("siiss",$_POST["from_date"],$_POST["from_unit"],$_POST["to_unit"],$_POST["rate"],$_POST["type"]);
+                            $stmt = $con->prepare("UPDATE `electric rate table` SET `Load (in KW)`=?, `From Date`=?, `from_unit`=?, `to_unit`=?, `Rate/unit`=?, `Unit type`=?, `Fixed charge`=?  WHERE `From Date`='".$_POST["from_date"]."' AND `Sl_No`=".$_POST["sl_no"]."");
+                            $stmt->bind_param("isiisss",$_POST["load"],$_POST["from_date"],$_POST["from_unit"],$_POST["to_unit"],$_POST["rate"],$_POST["type"],$_POST["fcharge"]);
                             if($stmt->execute()){
                                 //echo "Updated rate table";
                                 $sql="SELECT * from `electric rate table` WHERE `Sl_No`=".$_POST["sl_no"]."";
@@ -157,13 +159,15 @@
                                             $res = $con->query($sql);
                                         }
                                         $no=$row["Sl_No"];
+                                        $load=$row["Load (in KW)"];
                                         $fdate=$row["From Date"];
                                         $funit=$row["from_unit"];
                                         $tunit=$row["to_unit"];
                                         $rate=$row["Rate/unit"];
                                         $type=$row["Unit type"];
+                                        $fcharge=$row["Fixed charge"];
                                     }
-                                    echo $no."-".$fdate."-".$funit."-".$tunit."-".$rate."-".$type;
+                                    echo $no."-".$load."-".$fdate."-".$funit."-".$tunit."-".$rate."-".$type."-".$fcharge;
                                 }
                             }
                             else{
@@ -171,8 +175,8 @@
                             }
                         }
                         elseif($_POST["to_unit"]==""){
-                            $stmt = $con->prepare("UPDATE `electric rate table` SET `From Date`=?, `To Date`=?, `from_unit`=?, `Rate/unit`=?, `Unit type`=?  WHERE `From Date`='".$_POST["from_date"]."' AND `Sl_No`=".$_POST["sl_no"]."");
-                            $stmt->bind_param("ssiss",$_POST["from_date"],$_POST["to_date"],$_POST["from_unit"],$_POST["rate"],$_POST["type"]);
+                            $stmt = $con->prepare("UPDATE `electric rate table` SET `Load (in KW)`=?, `From Date`=?, `To Date`=?, `from_unit`=?, `Rate/unit`=?, `Unit type`=?, `Fixed charge`=?  WHERE `From Date`='".$_POST["from_date"]."' AND `Sl_No`=".$_POST["sl_no"]."");
+                            $stmt->bind_param("ississs",$_POST["load"],$_POST["from_date"],$_POST["to_date"],$_POST["from_unit"],$_POST["rate"],$_POST["type"],$_POST["fcharge"]);
                             if($stmt->execute()){
                                 //echo "Updated rate table";
                                 $sql="SELECT * from `electric rate table` WHERE `Sl_No`=".$_POST["sl_no"]."";
@@ -184,13 +188,15 @@
                                             $res = $con->query($sql);
                                         }
                                         $no=$row["Sl_No"];
+                                        $load=$row["Load (in KW)"];
                                         $fdate=$row["From Date"];
                                         $tdate=$row["To Date"];
                                         $funit=$row["from_unit"];
                                         $rate=$row["Rate/unit"];
                                         $type=$row["Unit type"];
+                                        $fcharge=$row["Fixed charge"];
                                     }
-                                    echo $no."-".$fdate."-".$tdate."-".$funit."-".$rate."-".$type;
+                                    echo $no."-".$load."-".$fdate."-".$tdate."-".$funit."-".$rate."-".$type."-".$fcharge;
                                 }
                             }
                             else{
@@ -200,8 +206,8 @@
                         
                     }
                     else{
-                        $stmt = $con->prepare("UPDATE `electric rate table` SET `From Date`=?, `To Date`=?, `from_unit`=?, `to_unit`=?, `Rate/unit`=?, `Unit type`=?  WHERE `From Date`='".$_POST["from_date"]."' AND `Sl_No`=".$_POST["sl_no"]."");
-                        $stmt->bind_param("ssiiss",$_POST["from_date"],$_POST["to_date"],$_POST["from_unit"],$_POST["to_unit"],$_POST["rate"],$_POST["type"]);
+                        $stmt = $con->prepare("UPDATE `electric rate table` SET `Load (in KW)`=?, `From Date`=?, `To Date`=?, `from_unit`=?, `to_unit`=?, `Rate/unit`=?, `Unit type`=?, `Fixed charge`=?  WHERE `From Date`='".$_POST["from_date"]."' AND `Sl_No`=".$_POST["sl_no"]."");
+                        $stmt->bind_param("issiisss",$_POST["load"],$_POST["from_date"],$_POST["to_date"],$_POST["from_unit"],$_POST["to_unit"],$_POST["rate"],$_POST["type"],$_POST["fcharge"]);
                         if($stmt->execute()){
                             //echo "Updated rate table";
                             $sql="SELECT * from `electric rate table` WHERE `Sl_No`=".$_POST["sl_no"]."";
@@ -209,14 +215,16 @@
                             if ($result->num_rows > 0) {
                                 while($row = $result->fetch_assoc()) {
                                     $no=$row["Sl_No"];
+                                    $load=$row["Load (in KW)"];
                                     $fdate=$row["From Date"];
                                     $tdate=$row["To Date"];
                                     $funit=$row["from_unit"];
                                     $tunit=$row["to_unit"];
                                     $rate=$row["Rate/unit"];
                                     $type=$row["Unit type"];
+                                    $fcharge=$row["Fixed charge"];
                                 }
-                                echo $no."-".$fdate."-".$tdate."-".$funit."-".$tunit."-".$rate."-".$type;
+                                echo $no."-".$load."-".$fdate."-".$tdate."-".$funit."-".$tunit."-".$rate."-".$type."-".$fcharge;
                             }
                         }
                         else{
@@ -224,6 +232,23 @@
                         }
                     }
                 }
+            }
+        }
+        elseif($_POST["input"]=="calculate_fcharge"){
+            if(!$connection)
+                echo "Connection to database failed! Please try again";
+            else{
+                $sql="SELECT * from `electric rate table` WHERE `From Date`='".$_POST["from_date"]."' AND `Load (in KW)`=1";
+                $result = $con->query($sql);
+                if ($result->num_rows > 0) {
+                    while($row = $result->fetch_assoc()) {
+                        $total_charge=$row["Fixed charge"]*$_POST["load"];
+                        break;
+                    }
+                    echo $total_charge;
+                }
+                else    
+                    echo "No_record";
             }
         }
     }
