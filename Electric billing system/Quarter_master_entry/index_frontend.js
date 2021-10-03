@@ -1,4 +1,4 @@
-function IsAlphaNumeric(e) {
+/*function IsAlphaNumeric(e) {
     var specialKeys = new Array();
     specialKeys.push(8);  //Backspace
     specialKeys.push(9);  //Tab
@@ -16,7 +16,7 @@ function IsAlphaNumeric(e) {
         document.getElementById("error").style.display ="none";
     }
     return ret;
-}
+}*/
 
 var colony_name="";
 var colony_type="";
@@ -39,24 +39,6 @@ function get_code() {
     });
 }
 
-function get_type(){
-    let $select = $("#colony_type");
-  
-    $.ajax({
-      url: 'index_backend.php',
-      type: 'POST',
-      data: { "input": "type" }, // should 'code' be a variable...?
-      dataType: 'json', // add this property to avoid the need to call JSON.parse in success
-      success: function(response) {
-        let selectedValue = $select.val();
-        let html = response.filter((e, i, a) => a.indexOf(e) === i).map(item => `<option value="${item}">${item}</option>`);
-        $select.html(html).val(selectedValue);
-        colony_type=selectedValue;
-      },
-      complete: function() {}
-    });
-}
-
 function get_qid(){
    var code = document.getElementById("colony_code");
    var type = document.getElementById("colony_type");
@@ -72,7 +54,7 @@ function get_qid(){
       alert("Please enter all the details");
     }
     else{
-        if(!q_no.value.includes('/'))
+        /*if(!q_no.value.includes('/'))
             alert("Your quarter no is incorrect!");
         else{
             //document.getElementById("save").style.backgroundColor="rgb(188, 247, 188)";
@@ -128,11 +110,60 @@ function get_qid(){
                     
                       //$("#qrtr_id").html(quarter_id);
                 }
-            });
-
-            
-            
-        }
+            });   
+        }*/
+        $.ajax({
+            url: 'index_backend.php',
+            type: 'POST',
+            data: { "input": "id","name": document.getElementById("colony_code").value, 
+                                  "number": document.getElementById("qtr_no").value,
+                                  "type": document.getElementById("colony_type").value}, // should 'code' be a variable...?
+            success: function(response) {
+                //console.log(response.length);
+                if(response.includes("0")){
+                    document.getElementById("qid").style.display="inline";
+                    document.getElementById("qrtr_id").style.display="inline";
+                    if(response.length<70){
+                        $("#qrtr_id").html(response);
+                        if(window.innerWidth>=1300)
+                            document.getElementById("qrtr_id").style.left="19em";
+                        setTimeout(function()
+                        { 
+                            var c= confirm("This record has been inserted.");
+                            if (c==true||c==false) {
+                        
+                                window.location.reload();
+                            } 
+                        }, 2000);
+                    }
+                    else if(response.length>70){
+                        let str="";
+                        const arr=response.split(" ");
+                        for(var i=0; i<arr.length-1; i++){
+                            str=str.concat(" ",arr[i]);
+                        }
+                        //console.log(arr);
+                        //console.log(arr[arr.length-1]);
+                        $("#qid").html(str);
+                        $("#qrtr_id").html(arr[arr.length-1]);
+                        //document.getElementById("qrtr_id").innerHTML=arr[arr.length-1];
+                        setTimeout(function(){
+                            window.location.reload();
+                        }, 4000);
+                    }
+                }
+                else{
+                    alert(response);
+                }
+                
+                
+                //alert(response);
+            },
+            complete: function() {
+                
+                  //$("#qrtr_id").html(quarter_id);
+            }
+        });
     }
 }
 
@@ -143,11 +174,14 @@ function mouseover(){
  
     if(code.selectedIndex <=-1 || type.selectedIndex <=-1 || q_no.value.length ==0)
         document.getElementById("save").style.backgroundColor="rgba(245, 175, 175, 0.945)";
-    else{
+    /*else{
         if(!q_no.value.includes('/'))
             document.getElementById("save").style.backgroundColor="rgba(245, 175, 175, 0.945)";
         else
             document.getElementById("save").style.backgroundColor="rgb(188, 247, 188)"; 
+    }*/
+    else{
+        document.getElementById("save").style.backgroundColor="rgb(188, 247, 188)"; 
     }
 }
 

@@ -18,10 +18,17 @@
             <p id="cln_cd"><b>Colony name</b> :&nbsp;<select name="colony_code" id="colony_code" style="max-width:90%;" onclick="get_code()">
                 <option value="" selected="selected_code">Select your colony name</option>
             </select></p>
-            <p id="cln_type"><b>Type</b> :&nbsp;<select name="colony_type" id="colony_type" onclick="get_type()">
+            <p id="cln_type"><b>Type</b> :&nbsp;<select name="colony_type" id="colony_type">
                 <option value="" selected="selected_type">Select your quarter type</option>
+                <option value="I" >I</option>
+                <option value="II" >II</option>
+                <option value="III" >III</option>
+                <option value="IV" >IV</option>
+                <option value="V" >V</option>
+                <option value="VI" >VI</option>
             </select></p>
-            <p id="qrtr_no"><b>Quarter No</b> :&nbsp;<input type="text" id="qtr_no" onkeypress="return IsAlphaNumeric(event);" ondrop="return false;" onpaste="return false;" size="15" onkeyup="return forceUpper(this);"/></p>
+            <!--<p id="qrtr_no"><b>Quarter No</b> :&nbsp;<input type="text" id="qtr_no" onkeypress="return IsAlphaNumeric(event);" ondrop="return false;" onpaste="return false;" size="15" onkeyup="return forceUpper(this);"/></p>-->
+            <p id="qrtr_no"><b>Quarter No</b> :&nbsp;<input type="text" id="qtr_no" size="15" onkeyup="return forceUpper(this);"/></p>
             <span id="error" style="color: Red; display: none">* Only special character <b>/</b> is allowed.</span> <br><br>
             <span id="qid" style="display: none;">Your Quarter ID is :&nbsp;</span>
             <span id="qrtr_id" style="display:none; color: crimson;"></span>

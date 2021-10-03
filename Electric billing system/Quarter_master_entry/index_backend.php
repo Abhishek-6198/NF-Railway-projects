@@ -33,26 +33,6 @@ if(isset($_POST["input"])){
                 echo "No colony name information found in table!!";
         }
     }
-
-    elseif($_POST["input"] == "type"){
-
-        if(!$connection)
-                echo "Connection to database failed! Please try again";
-        else{
-                $codes=array();
-                $sql = "SELECT * from `quarter_master`";
-                $result = $con->query($sql);
-                if ($result->num_rows > 0) {
-                        while($row = $result->fetch_assoc()) {
-                            array_push($codes,$row["Qtr_type"]);
-                        }
-                        echo json_encode($codes);
-                }
-                else
-                    echo "No quarter type information found in table!!";
-        }
-    }
-
     elseif($_POST["input"] == "id"){
         $name=$_POST["name"];
         $type=$_POST["type"];
@@ -103,22 +83,36 @@ if(isset($_POST["input"])){
                                 $result = $con->query($sql);
                                 if($result->num_rows > 0){
                                     while($row = $result->fetch_assoc()) {
-                                        if($type=="I")
+                                        if($type=="I"){
                                             $qid="01000000";
-                                        elseif($type=="II")
+                                            $cap=1;
+                                        }
+                                        elseif($type=="II"){
                                             $qid="02000000";
-                                        elseif($type=="III")
+                                            $cap=1;
+                                        }
+                                        elseif($type=="III"){
                                             $qid="03000000";
-                                        elseif($type=="IV")
+                                            $cap=1;
+                                        }
+                                        elseif($type=="IV"){
                                             $qid="04000000";
-                                        else
+                                            $cap=2;
+                                        }
+                                        elseif($type=="V"){
                                             $qid="05000000";
+                                            $cap=4;
+                                        }
+                                        elseif($type=="VI"){
+                                            $qid="06000000";
+                                            $cap=5;
+                                        }
 
                                         $qid=$qid.(string)$row["Sl_No"];
                                     }
-                                    $statement = $con->prepare("UPDATE `quarter_master_entry` SET `Qtr_ID`=?, `Meter capacity`=? WHERE `Qtr_No`= '".$number. "'");
+                                    $statement = $con->prepare("UPDATE `quarter_master_entry` SET `Qtr_ID`=?, `Meter capacity (in KW)`=? WHERE `Qtr_No`= '".$number. "'");
                                     $code=$code.$qid;
-                                    $cap=rand(1,5);
+                                    //$cap=rand(1,5);
                                     //$inp_code=(int)$code;
                                     $statement->bind_param("si",$code,$cap);
                                     if($statement->execute())
