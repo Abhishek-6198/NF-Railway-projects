@@ -108,16 +108,18 @@
                     $data = json_decode(stripslashes($_POST['data']));
                     foreach($data as $d){
                         $data1 = json_decode(stripslashes(json_encode($d)));
+                        $cap=$electric_charge=0;
+                        $new_period=$to_period="";
                         $prev_date=$data1[2];
                         $curr_date=$data1[3];
                         $qtr_id=$data1[1];
                         $rate=$data1[0];
-                    
-                        $total_period=array();
+                        $fixed_charge=0;
+                        $total_period=$fd=array();
                         $days=$months=0;
-                        $counter1=$charge1=0;
+                        $charge1=0;
                         $flag=FALSE;
-                        $units=$unit_per_day=0;
+                        $units=$unit_per_day=$u=0;
                         $from_dates=array();
                         $to_dates=array();
                         $prev=explode("/",$prev_date); //find out the no of days from the prev met read date to curr met read date
@@ -129,44 +131,58 @@
                             array_push($total_period,$d);
                             $pr = date('Y-m-d', strtotime($pr. ' + 1 day'));
                         }
+                        $sql="SELECT * from `quarter_master_entry` WHERE `Qtr_ID`='".$qtr_id."'";
+                        $result = $con->query($sql);
+                        if ($result->num_rows > 0) {
+                            while($row = $result->fetch_assoc()) {
+                                $cap=$row["Meter capacity (in KW)"];
+                            }
+                        }
+    
+                        $unit_per_day=$rate/count($total_period);
+                        
                         $sql="SELECT * FROM `electric rate table`";
                         $result = $con->query($sql);
                         if ($result->num_rows > 0) {
                             while($row = $result->fetch_assoc()) {
-                                if($counter1==$result->num_rows)
-                                    break;
-                                else{
-                                    $flag1=$flag2=$flag3=$flag4=$flag5=$flag6=$flag7=$flag8=$flag9=$flag10=FALSE;
-                                    if($flag==FALSE){
-                                        $sq="SELECT * from `electric rate table` WHERE `From Date`='".$row["From Date"]."'";
-                                        array_push($from_dates,$row["From Date"]);
-                                        if($row["To Date"]!="")
-                                            array_push($to_dates,$row["To Date"]);
-                                        $flag=TRUE;
-                                    }
-                                    else{
-                                        $s="SELECT * from `electric rate table` WHERE `From Date` NOT IN ( '" . implode( "', '" , $from_dates ) . "' )";
-                                        $res = $con->query($s);
-                                        if ($res->num_rows > 0) {
-                                            while($row = $res->fetch_assoc()) {
-                                                $new_period=$row["From Date"];
-                                                if($row["To Date"]!=""){
-                                                    $to_period=$row["To Date"];
-                                                    array_push($to_dates,$to_period);
-                                                }
-                                                break;
-                                            }
-                                        }
-                                        $sq="SELECT * FROM `electric rate table` WHERE `From Date`='".$new_period."'";
-                                        array_push($from_dates,$new_period);
-                                        /*if($charge1!=0)
-                                            echo $charge1."\n";*/
-                                    }        
+                                $u=$unit_per_day;
+                                $flag1=$flag2=$flag3=$flag4=$flag5=$flag6=$flag7=$flag8=$flag9=$flag10=$flag11=FALSE;
+                                if($flag==FALSE){
+                                    $sq="SELECT * from `electric rate table` WHERE `From Date`='".$row["From Date"]."' AND `Load (in KW)`='".$cap."'";
+                                    array_push($from_dates,$row["From Date"]);
+                                    if($row["To Date"]!=NULL)
+                                        array_push($to_dates,$row["To Date"]);
+                                    $flag=TRUE;
                                 }
+                                else{
+                                    $s="SELECT * from `electric rate table` WHERE `From Date` NOT IN ( '" . implode( "', '" , $from_dates ) . "' )";
+                                    $res = $con->query($s);
+                                    if ($res->num_rows > 0) {
+                                        while($row = $res->fetch_assoc()) {
+                                            $new_period=$row["From Date"];
+                                            if($row["To Date"]!=NULL){
+                                                $to_period=$row["To Date"];
+                                                array_push($to_dates,$to_period);
+                                            }
+                                            break;
+                                        }
+                                    }
+                                    $sq="SELECT * FROM `electric rate table` WHERE `From Date`='".$new_period."'AND `Load (in KW)`='".$cap."'";
+                                    //echo $new_period;
+                                    array_push($from_dates,$new_period);
+                                    /*if($charge1!=0)
+                                        echo $charge1."\n";*/
+                                    $electric_charge+=round($charge1*$days,2);
+                                    //echo $charge1." x ".$days." = ".$electric_charge."\n";
+                                    $days=$charge1=0;
+                                }        
+                                
+                                $fd=array_unique($from_dates);
+                                if(count($fd)!=count($from_dates))
+                                    break;
                                 //echo $sq."\n";
                                 $r = $con->query($sq);
                                 if ($r->num_rows > 0) {
-                                    $counter1+=$r->num_rows;
                                     while($row = $r->fetch_assoc()) {
                                         $row_prev=explode("/",$row["From Date"]);
                                         $rp=$row_prev[2]."-".$row_prev[1]."-".$row_prev[0];
@@ -201,25 +217,22 @@
                                                         $pr = date('Y-m-d', strtotime($pr. ' + 1 day'));
                                                     }
                                                     $flag1=TRUE;
-                                                    if($units==0){
-                                                        $unit_per_day=$rate/$c;
-                                                        //echo $rate."/".$c." = ";
-                                                    }
-                                                    else
-                                                        $unit_per_day=$units;
-                                                    //echo $unit_per_day."\n";
                                                     if($row["to_unit"]!=NULL){
-                                                        if($unit_per_day>$row["to_unit"]){
-                                                            $unit_per_day=$unit_per_day-$row["to_unit"];
-                                                            $units=$unit_per_day;
-                                                            $charge1+=$row["to_unit"]*floatval($row["Rate/unit"]);
+                                                        if($u>($row["to_unit"]-$row["from_unit"])){
+                                                            $u=$u-($row["to_unit"]-$row["from_unit"]);
+                                                            $charge1+=($row["to_unit"]-$row["from_unit"])*floatval($row["Rate/unit"]);
+                                                            if($flag11==FALSE)
+                                                                $fixed_charge+=floatval($row["Fixed charge"]);
+                                                            $flag11=TRUE;
                                                             if(strtotime($cu)<=strtotime($rc)){
                                                                 $flag10=TRUE;
                                                             }
                                                         }
                                                         else{
-                                                            $charge1+=$unit_per_day*floatval($row["Rate/unit"]);
-                                                            $units=0;
+                                                            $charge1+=$u*floatval($row["Rate/unit"]);
+                                                            if($flag11==FALSE)
+                                                                $fixed_charge+=floatval($row["Fixed charge"]);
+                                                            $flag11=TRUE;
                                                             if(strtotime($cu)<=strtotime($rc)){
                                                                 $flag10=TRUE;
                                                             }
@@ -227,8 +240,10 @@
                                                         }
                                                     }
                                                     else{
-                                                        $charge1+=$unit_per_day*floatval($row["Rate/unit"]);
-                                                        $units=0;
+                                                        $charge1+=$u*floatval($row["Rate/unit"]);
+                                                        if($flag11==FALSE)
+                                                            $fixed_charge+=floatval($row["Fixed charge"]);
+                                                        $flag11=TRUE;
                                                         if(strtotime($cu)<=strtotime($rc)){
                                                             $flag10=TRUE;
                                                         }
@@ -240,25 +255,22 @@
                                                     if($flag2==FALSE)
                                                         $days+=count($total_period);
                                                     $flag2=TRUE;
-                                                    if($units==0){
-                                                        $unit_per_day=$rate/count($total_period);
-                                                        //echo $rate."/".count($total_period)." = ";
-                                                    }
-                                                    else
-                                                        $unit_per_day=$units;
-                                                    //echo $unit_per_day."\n";
                                                     if($row["to_unit"]!=NULL){
-                                                        if($unit_per_day>$row["to_unit"]){
-                                                            $unit_per_day=$unit_per_day-$row["to_unit"];
-                                                            $units=$unit_per_day;
-                                                            $charge1+=$row["to_unit"]*floatval($row["Rate/unit"]);
+                                                        if($u>($row["to_unit"]-$row["from_unit"])){
+                                                            $u=$u-($row["to_unit"]-$row["from_unit"]);
+                                                            $charge1+=($row["to_unit"]-$row["from_unit"])*floatval($row["Rate/unit"]);
+                                                            if($flag11==FALSE)
+                                                                $fixed_charge+=floatval($row["Fixed charge"]);
+                                                            $flag11=TRUE;
                                                             if(strtotime($cu)<=strtotime($rc)){
                                                                 $flag10=TRUE;
                                                             }
                                                         }
                                                         else{
-                                                            $charge1+=$unit_per_day*floatval($row["Rate/unit"]);
-                                                            $units=0;
+                                                            $charge1+=$u*floatval($row["Rate/unit"]);
+                                                            if($flag11==FALSE)
+                                                                $fixed_charge+=floatval($row["Fixed charge"]);
+                                                            $flag11=TRUE;
                                                             if(strtotime($cu)<=strtotime($rc)){
                                                                 $flag10=TRUE;
                                                             }
@@ -266,8 +278,10 @@
                                                         }
                                                     }
                                                     else{
-                                                        $charge1+=$unit_per_day*floatval($row["Rate/unit"]);
-                                                        $units=0;
+                                                        $charge1+=$u*floatval($row["Rate/unit"]);
+                                                        if($flag11==FALSE)
+                                                            $fixed_charge+=floatval($row["Fixed charge"]);
+                                                        $flag11=TRUE;
                                                         if(strtotime($cu)<=strtotime($rc)){
                                                             $flag10=TRUE;
                                                         }
@@ -281,25 +295,22 @@
                                                     if($flag7==FALSE)
                                                         $days+=1;
                                                     $flag7=TRUE;
-                                                    if($units==0){
-                                                        $unit_per_day=$rate;
-                                                        //echo $rate;
-                                                    }
-                                                    else
-                                                        $unit_per_day=$units;
-                                                    //echo $unit_per_day."\n";
-                                                    if($row["to_unit"]){
-                                                        if($unit_per_day>$row["to_unit"]){
-                                                            $unit_per_day=$unit_per_day-$row["to_unit"];
-                                                            $units=$unit_per_day;
-                                                            $charge1+=$row["to_unit"]*floatval($row["Rate/unit"]);
+                                                    if($row["to_unit"]!=NULL){
+                                                        if($u>($row["to_unit"]-$row["from_unit"])){
+                                                            $u=$u-($row["to_unit"]-$row["from_unit"]);
+                                                            $charge1+=($row["to_unit"]-$row["from_unit"])*floatval($row["Rate/unit"]);
+                                                            if($flag11==FALSE)
+                                                                $fixed_charge+=floatval($row["Fixed charge"]);
+                                                            $flag11=TRUE;
                                                             if(strtotime($cu)<=strtotime($rc)){
                                                                 $flag10=TRUE;
                                                             }
                                                         }
                                                         else{
-                                                            $charge1+=$unit_per_day*floatval($row["Rate/unit"]);
-                                                            $units=0;
+                                                            $charge1+=$u*floatval($row["Rate/unit"]);
+                                                            if($flag11==FALSE)
+                                                                $fixed_charge+=floatval($row["Fixed charge"]);
+                                                            $flag11=TRUE;
                                                             if(strtotime($cu)<=strtotime($rc)){
                                                                 $flag10=TRUE;
                                                             }
@@ -307,8 +318,10 @@
                                                         }
                                                     }
                                                     else{
-                                                        $charge1+=$unit_per_day*floatval($row["Rate/unit"]);
-                                                        $units=0;
+                                                        $charge1+=$u*floatval($row["Rate/unit"]);
+                                                        if($flag11==FALSE)
+                                                            $fixed_charge+=floatval($row["Fixed charge"]);
+                                                        $flag11=TRUE;
                                                         if(strtotime($cu)<=strtotime($rc)){
                                                             $flag10=TRUE;
                                                         }
@@ -326,25 +339,22 @@
                                                     if($flag3==FALSE)
                                                         $days+=count($slabs);
                                                     $flag3=TRUE;
-                                                    if($units==0){
-                                                        $unit_per_day=$rate/count($slabs);
-                                                        //echo $rate."/".count($slabs)." = ";
-                                                    }
-                                                    else
-                                                        $unit_per_day=$units;
-                                                    //echo $unit_per_day."\n";
-                                                    if($row["to_unit"]){
-                                                        if($unit_per_day>$row["to_unit"]){
-                                                            $unit_per_day=$unit_per_day-$row["to_unit"];
-                                                            $units=$unit_per_day;
-                                                            $charge1+=$row["to_unit"]*floatval($row["Rate/unit"]);
+                                                    if($row["to_unit"]!=NULL){
+                                                        if($u>($row["to_unit"]-$row["from_unit"])){
+                                                            $u=$u-($row["to_unit"]-$row["from_unit"]);
+                                                            $charge1+=($row["to_unit"]-$row["from_unit"])*floatval($row["Rate/unit"]);
+                                                            if($flag11==FALSE)
+                                                                $fixed_charge+=floatval($row["Fixed charge"]);
+                                                            $flag11=TRUE;
                                                             if(strtotime($cu)<=strtotime($rc)){
                                                                 $flag10=TRUE;
                                                             }
                                                         }
                                                         else{
-                                                            $charge1+=$unit_per_day*floatval($row["Rate/unit"]);
-                                                            $units=0;
+                                                            $charge1+=$u*floatval($row["Rate/unit"]);
+                                                            if($flag11==FALSE)
+                                                                $fixed_charge+=floatval($row["Fixed charge"]);
+                                                            $flag11=TRUE;
                                                             if(strtotime($cu)<=strtotime($rc)){
                                                                 $flag10=TRUE;
                                                             }
@@ -352,8 +362,10 @@
                                                         }
                                                     }
                                                     else{
-                                                        $charge1+=$unit_per_day*floatval($row["Rate/unit"]);
-                                                        $units=0;
+                                                        $charge1+=$u*floatval($row["Rate/unit"]);
+                                                        if($flag11==FALSE)
+                                                            $fixed_charge+=floatval($row["Fixed charge"]);
+                                                        $flag11=TRUE;
                                                         if(strtotime($cu)<=strtotime($rc)){
                                                             $flag10=TRUE;
                                                         }
@@ -372,25 +384,22 @@
                                                     }
                                                     //echo $c;
                                                     $flag4=TRUE;
-                                                    if($units==0){
-                                                        //echo $rate."/".$c." = ";
-                                                        $unit_per_day=$rate/$c;
-                                                    }
-                                                    else
-                                                        $unit_per_day=$units;
-                                                    //echo $unit_per_day."\n";
                                                     if($row["to_unit"]!=NULL){
-                                                        if($unit_per_day>$row["to_unit"]){
-                                                            $unit_per_day=$unit_per_day-$row["to_unit"];
-                                                            $units=$unit_per_day;
-                                                            $charge1+=$row["to_unit"]*floatval($row["Rate/unit"]);
+                                                        if($u>($row["to_unit"]-$row["from_unit"])){
+                                                            $u=$u-($row["to_unit"]-$row["from_unit"]);
+                                                            $charge1+=($row["to_unit"]-$row["from_unit"])*floatval($row["Rate/unit"]);
+                                                            if($flag11==FALSE)
+                                                                $fixed_charge+=floatval($row["Fixed charge"]);
+                                                            $flag11=TRUE;
                                                             if(strtotime($cu)<=strtotime($rc)){
                                                                 $flag10=TRUE;
                                                             }
                                                         }
                                                         else{
-                                                            $charge1+=$unit_per_day*floatval($row["Rate/unit"]);
-                                                            $units=0;
+                                                            $charge1+=$u*floatval($row["Rate/unit"]);
+                                                            if($flag11==FALSE)
+                                                                $fixed_charge+=floatval($row["Fixed charge"]);
+                                                            $flag11=TRUE;
                                                             if(strtotime($cu)<=strtotime($rc)){
                                                                 $flag10=TRUE;
                                                             }
@@ -398,8 +407,10 @@
                                                         }
                                                     }
                                                     else{
-                                                        $charge1+=$unit_per_day*floatval($row["Rate/unit"]);
-                                                        $units=0;
+                                                        $charge1+=$u*floatval($row["Rate/unit"]);
+                                                        if($flag11==FALSE)
+                                                            $fixed_charge+=floatval($row["Fixed charge"]);
+                                                        $flag11=TRUE;
                                                         if(strtotime($cu)<=strtotime($rc)){
                                                             $flag10=TRUE;
                                                         }
@@ -417,25 +428,22 @@
                                                     if($flag8==FALSE)
                                                         $days+=count($slabs);
                                                     $flag8=TRUE;
-                                                    if($units==0){
-                                                        $unit_per_day=$rate/count($slabs);
-                                                        //echo $rate."/".count($slabs)." = ";
-                                                    }
-                                                    else
-                                                        $unit_per_day=$units;
-                                                    //echo $unit_per_day."\n";
                                                     if($row["to_unit"]!=NULL){
-                                                        if($unit_per_day>$row["to_unit"]){
-                                                            $unit_per_day=$unit_per_day-$row["to_unit"];
-                                                            $units=$unit_per_day;
-                                                            $charge1+=$row["to_unit"]*floatval($row["Rate/unit"]);
+                                                        if($u>($row["to_unit"]-$row["from_unit"])){
+                                                            $u=$u-($row["to_unit"]-$row["from_unit"]);
+                                                            $charge1+=($row["to_unit"]-$row["from_unit"])*floatval($row["Rate/unit"]);
+                                                            if($flag11==FALSE)
+                                                                $fixed_charge+=floatval($row["Fixed charge"]);
+                                                            $flag11=TRUE;
                                                             if(strtotime($cu)<=strtotime($rc)){
                                                                 $flag10=TRUE;
                                                             }
                                                         }
                                                         else{
-                                                            $charge1+=$unit_per_day*floatval($row["Rate/unit"]);
-                                                            $units=0;
+                                                            $charge1+=$u*floatval($row["Rate/unit"]);
+                                                            if($flag11==FALSE)
+                                                                $fixed_charge+=floatval($row["Fixed charge"]);
+                                                            $flag11=TRUE;
                                                             if(strtotime($cu)<=strtotime($rc)){
                                                                 $flag10=TRUE;
                                                             }
@@ -443,8 +451,10 @@
                                                         }
                                                     }
                                                     else{
-                                                        $charge1+=$unit_per_day*floatval($row["Rate/unit"]);
-                                                        $units=0;
+                                                        $charge1+=$u*floatval($row["Rate/unit"]);
+                                                        if($flag11==FALSE)
+                                                            $fixed_charge+=floatval($row["Fixed charge"]);
+                                                        $flag11=TRUE;
                                                         if(strtotime($cu)<=strtotime($rc)){
                                                             $flag10=TRUE;
                                                         }
@@ -461,25 +471,22 @@
                                                     }
                                                     //echo $c;
                                                     $flag9=TRUE;
-                                                    if($units==0){
-                                                        $unit_per_day=$rate/$c;
-                                                        //echo $rate."/".$c." = ";
-                                                    }
-                                                    else
-                                                        $unit_per_day=$units;
-                                                    //echo $unit_per_day."\n";
                                                     if($row["to_unit"]!=NULL){
-                                                        if($unit_per_day>$row["to_unit"]){
-                                                            $unit_per_day=$unit_per_day-$row["to_unit"];
-                                                            $units=$unit_per_day;
-                                                            $charge1+=$row["to_unit"]*floatval($row["Rate/unit"]);
+                                                        if($u>($row["to_unit"]-$row["from_unit"])){
+                                                            $u=$u-($row["to_unit"]-$row["from_unit"]);
+                                                            $charge1+=($row["to_unit"]-$row["from_unit"])*floatval($row["Rate/unit"]);
+                                                            if($flag11==FALSE)
+                                                                $fixed_charge+=floatval($row["Fixed charge"]);
+                                                            $flag11=TRUE;
                                                             if(strtotime($cu)<=strtotime($rc)){
                                                                 $flag10=TRUE;
                                                             }
                                                         }
                                                         else{
-                                                            $charge1+=$unit_per_day*floatval($row["Rate/unit"]);
-                                                            $units=0;
+                                                            $charge1+=$u*floatval($row["Rate/unit"]);
+                                                            if($flag11==FALSE)
+                                                                $fixed_charge+=floatval($row["Fixed charge"]);
+                                                            $flag11=TRUE;
                                                             if(strtotime($cu)<=strtotime($rc)){
                                                                 $flag10=TRUE;
                                                             }
@@ -487,8 +494,10 @@
                                                         }
                                                     }
                                                     else{
-                                                        $charge1+=$unit_per_day*floatval($row["Rate/unit"]);
-                                                        $units=0;
+                                                        $charge1+=$u*floatval($row["Rate/unit"]);
+                                                        if($flag11==FALSE)
+                                                            $fixed_charge+=floatval($row["Fixed charge"]);
+                                                        $flag11=TRUE;
                                                         if(strtotime($cu)<=strtotime($rc)){
                                                             $flag10=TRUE;
                                                         }
@@ -509,28 +518,27 @@
                                                     $rp = date('Y-m-d', strtotime($rp. ' + 1 day'));
                                                 }
                                                 $flag5=TRUE;
-                                                if($units==0){
-                                                    $unit_per_day=$rate/$c;
-                                                    //echo $rate."/".$c." = ";
-                                                }
-                                                else
-                                                    $unit_per_day=$units;
-                                                //echo $unit_per_day."\n";
                                                 if($row["to_unit"]!=NULL){
-                                                    if($unit_per_day>$row["to_unit"]){
-                                                        $unit_per_day=$unit_per_day-$row["to_unit"];
-                                                        $units=$unit_per_day;
-                                                        $charge1+=$row["to_unit"]*floatval($row["Rate/unit"]);
+                                                    if($u>($row["to_unit"]-$row["from_unit"])){
+                                                        $u=$u-($row["to_unit"]-$row["from_unit"]);
+                                                        $charge1+=($row["to_unit"]-$row["from_unit"])*floatval($row["Rate/unit"]);
+                                                        if($flag11==FALSE)
+                                                            $fixed_charge+=floatval($row["Fixed charge"]);
+                                                        $flag11=TRUE;
                                                     }
                                                     else{
-                                                        $charge1+=$unit_per_day*floatval($row["Rate/unit"]);
-                                                        $units=0;
+                                                        $charge1+=$u*floatval($row["Rate/unit"]);
+                                                        if($flag11==FALSE)
+                                                            $fixed_charge+=floatval($row["Fixed charge"]);
+                                                        $flag11=TRUE;
                                                         break;
                                                     }
                                                 }
                                                 else{
-                                                    $charge1+=$unit_per_day*floatval($row["Rate/unit"]);
-                                                    $units=0;
+                                                    $charge1+=$u*floatval($row["Rate/unit"]);
+                                                    if($flag11==FALSE)
+                                                        $fixed_charge+=floatval($row["Fixed charge"]);
+                                                    $flag11=TRUE;
                                                     break;
                                                 }
                                             }
@@ -539,28 +547,27 @@
                                                 if($flag6==FALSE)
                                                     $days+=count($total_period);
                                                 $flag6=TRUE;
-                                                if($units==0){
-                                                    $unit_per_day=$rate/count($total_period);
-                                                    //echo $rate."/".count($total_period)." = ";
-                                                }
-                                                else
-                                                    $unit_per_day=$units;
-                                                //echo $unit_per_day."\n";
                                                 if($row["to_unit"]!=NULL){
-                                                    if($unit_per_day>$row["to_unit"]){
-                                                        $unit_per_day=$unit_per_day-$row["to_unit"];
-                                                        $units=$unit_per_day;
-                                                        $charge1+=$row["to_unit"]*floatval($row["Rate/unit"]);
+                                                    if($u>($row["to_unit"]-$row["from_unit"])){
+                                                        $u=$u-($row["to_unit"]-$row["from_unit"]);
+                                                        $charge1+=($row["to_unit"]-$row["from_unit"])*floatval($row["Rate/unit"]);
+                                                        if($flag11==FALSE)
+                                                            $fixed_charge+=floatval($row["Fixed charge"]);
+                                                        $flag11=TRUE;
                                                     }
                                                     else{
-                                                        $charge1+=$unit_per_day*floatval($row["Rate/unit"]);
-                                                        $units=0;
+                                                        $charge1+=$u*floatval($row["Rate/unit"]);
+                                                        if($flag11==FALSE)
+                                                            $fixed_charge+=floatval($row["Fixed charge"]);
+                                                        $flag11=TRUE;
                                                         break;
                                                     }
                                                 }
                                                 else{
-                                                    $charge1+=$unit_per_day*floatval($row["Rate/unit"]);
-                                                    $units=0;
+                                                    $charge1+=$u*floatval($row["Rate/unit"]);
+                                                    if($flag11==FALSE)
+                                                        $fixed_charge+=floatval($row["Fixed charge"]);
+                                                    $flag11=TRUE;
                                                     break;
                                                 }
                                             }
@@ -572,10 +579,10 @@
                                 }
                             }
                         }
-                        $electric_charge=round($charge1);
+                        //$electric_charge=round($charge1);
                         //echo $electric_charge;
-
-                        if($days%30==0){
+    
+                        /*if($days%30==0){
                             $months=intdiv($days,30);
                         }
                         else{
@@ -585,23 +592,16 @@
                             elseif($days%30<=15){
                                 $months=intdiv($days,30);
                             }
-                        }
-
-                        $sql="SELECT * from `quarter_master_entry` WHERE `Qtr_ID`='".$qtr_id."'";
-                        $result = $con->query($sql);
-                        if ($result->num_rows > 0) {
-                            while($row = $result->fetch_assoc()) {
-                                $fixed_charge=$months*$row["Meter capacity"]*50;
-                        }
-                        }
-                        $fixed_charge=round($fixed_charge);
-                        $total_charge=($electric_charge*$days)+$fixed_charge; 
-                        $electric_charge=$electric_charge*$days;
+                        }*/
+                        //$fixed_charge=$days*$fixed_charge;
+                        $fixed_charge=round(count($total_period)*$fixed_charge,2);
+                        //$fixed_charge=round($fixed_charge);
+                        $total_charge=round($electric_charge+$fixed_charge,2);
                         //echo $total_charge."-".$fixed_charge."-".$electric_charge;
                         $temp=array();
                         array_push($temp,$total_charge,$fixed_charge,$electric_charge);
                         array_push($final,$temp);
-                        }
+                    }
                     if(count($final)!=0)
                         echo json_encode($final);
                 }
@@ -618,7 +618,7 @@
                 foreach($data as $d){
                     $data1 = json_decode(stripslashes(json_encode($d)));
                     $stmt = $con->prepare("UPDATE `electric transaction` SET `Current read`=?,`Current Date`=?,`Unit consumed`=?,`Elec_charge`=?,`Fixed_charge`=?,`Total charge`=?, `Flag`=? WHERE `Qtr_ID`='".$data1[0]."'");
-                    $stmt->bind_param("isiiiii", $data1[6], $data1[5], $data1[1], $data1[2], $data1[3], $data1[4],$a);
+                    $stmt->bind_param("isiissi", $data1[6], $data1[5], $data1[1], $data1[2], $data1[3], $data1[4],$a);
                     if($stmt->execute()){
                         $count1+=1;
                     }
@@ -644,7 +644,7 @@
                 foreach($data as $d){
                     $data1 = json_decode(stripslashes(json_encode($d)));
                     $stmt = $con->prepare("UPDATE `electric transaction` SET `Current read`=?,`Current Date`=?,`Unit consumed`=?,`Elec_charge`=?,`Fixed_charge`=?,`Total charge`=? WHERE `Qtr_ID`='".$data1[0]."'");
-                    $stmt->bind_param("isiiii", $data1[6], $data1[5], $data1[1], $data1[2], $data1[3], $data1[4]);
+                    $stmt->bind_param("isissi", $data1[6], $data1[5], $data1[1], $data1[2], $data1[3], $data1[4]);
                     if($stmt->execute()){
                         $count1+=1;
                     }
