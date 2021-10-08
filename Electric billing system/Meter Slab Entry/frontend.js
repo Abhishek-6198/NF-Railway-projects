@@ -4,6 +4,10 @@ var table1=document.getElementById("old_table");
 var x=0;
 
 //console.log(table1)
+var n=sessionStorage.getItem("name");
+if (n==null)
+    window.open("http://localhost//Electric%20billing%20system/Login%20screen/index.html","_self");
+    
 setTimeout(function(){
     document.getElementById("add_info").style.display="none";
     document.getElementById("slab_info").style.display="none";
