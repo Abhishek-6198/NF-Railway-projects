@@ -7,6 +7,9 @@ var arr3=[];
 var arr4=[];
 var arr5=[];
 var table=document.getElementById("employee_details");
+var n=sessionStorage.getItem("name");
+if (n==null)
+    window.open("http://localhost//Electric%20billing%20system/Login%20screen/index.html","_self");
 function get_names() {
     let $select = $("#colony_name");
     //refresh_colony_name();
