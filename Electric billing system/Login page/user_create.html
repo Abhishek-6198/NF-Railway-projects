@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="user_create_styles.css">
+    <script src="https://kit.fontawesome.com/03d58ba9c7.js" crossorigin="anonymous"></script>
+    <title>User creation</title>
+</head>
+<body>
+    <div id="heading">
+        <h1>Create/upgrade user &ensp;</h1><i class="fas fa-user-lock"></i><span id="name"></span>
+    </div>
+    <div class="dropdown-content">
+        <span id="signout">Sign out</span>
+    </div>
+    <button id="add">+</button>
+    <div id="emp_table">
+        <table id="emp">
+            <tr>
+                <th>
+                    Empname
+                </th>
+                <th>
+                    Password
+                </th>
+                <th>
+                    Upgrade/downgrade access
+                </th>
+            </tr>
+        </table>
+    </div>
+    <button id="change">Update</button>
+    <button id="skip">Skip</button>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script src="user_create_code.js"></script>
+</body>
+</html>
