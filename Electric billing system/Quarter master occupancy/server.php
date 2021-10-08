@@ -236,7 +236,7 @@
                                                             VALUES (?, ?, ?, ?)");
                         $stmt->bind_param("ssss", $_POST["emp_no"], $_POST["emp_name"], $_POST["qtr_id"], $_POST["occ_date"]);
                         if( $stmt->execute()){
-                            echo $_POST["emp_name"]." has successfully occupied the quarter ".$_POST["qtr_id"]." on ".$_POST["occ_date"];
+                            echo $_POST["emp_name"]." has successfully occupied the quarter ID".$_POST["qtr_id"]." on ".$_POST["occ_date"];
                         }
                         else
                             $con->error();

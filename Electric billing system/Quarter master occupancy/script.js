@@ -3,6 +3,9 @@ var count1=0;
 var count2=0;
 var count3=0;
 var count4=0;
+var n=sessionStorage.getItem("name");
+if (n==null)
+    window.open("http://localhost//Electric%20billing%20system/Login%20screen/index.html","_self");
 function get_names() {
     let $select = $("#colony_name");
     //refresh_colony_name();
