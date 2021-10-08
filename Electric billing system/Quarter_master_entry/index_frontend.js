@@ -20,6 +20,9 @@
 
 var colony_name="";
 var colony_type="";
+var n=sessionStorage.getItem("name");
+if (n==null)
+    window.open("http://localhost//Electric%20billing%20system/Login%20screen/index.html","_self");
 
 function get_code() {
     let $select = $("#colony_code");
