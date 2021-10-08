@@ -8,6 +8,9 @@ var array=[];
 var arr2=[];
 var table=document.getElementById("employee_details");
 var a = document.getElementById("new_table");
+var n=sessionStorage.getItem("name");
+if (n==null)
+    window.open("http://localhost//Electric%20billing%20system/Login%20screen/index.html","_self");
 if(a.rows.length!=1){
     var row = a.insertRow(0);
     var cell = row.insertCell(0);
