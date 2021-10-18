@@ -131,6 +131,20 @@ h2{
         left:54em;
     } 
 }
+
+@media (min-width:1350px) { 
+    #quarter_details{
+        left:25em;
+    }
+
+    #save{
+        left:29em;
+    }
+
+    #reset{
+        left:59em;
+    } 
+}
 @media (min-width:1536px){
     #quarter_details{
         left:25em;

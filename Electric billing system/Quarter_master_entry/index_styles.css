@@ -390,6 +390,36 @@ h1{
     }
 }
 
+@media (min-width:1350px){
+    #cln_cd{
+        left:7em;
+    }
+    #cln_type{
+        left:31em;
+    }
+
+    #qrtr_no{
+        left:53em;
+    }
+
+    #error{
+        top:16em;
+        font-size: large;
+        left: 53em;
+    }
+    #qid{
+        top:20em;
+        font-size: large;
+        left:9em;
+    }
+
+    #qrtr_id{
+        top:20em;
+        left:32em;
+        font-size: large;
+    }
+}
+
 @media (min-width:1536px) {
     #cln_cd{
         font-size: 20px;

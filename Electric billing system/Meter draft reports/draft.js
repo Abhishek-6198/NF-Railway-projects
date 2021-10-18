@@ -1,4 +1,5 @@
 var a = document.getElementById("new_table");
+var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 var n=sessionStorage.getItem("name");
 if (n==null)
     window.open("http://localhost//Electric%20billing%20system/Login%20screen/index.html","_self");
@@ -237,6 +238,12 @@ document.getElementById("generate").addEventListener("click",function(){
                 doc.setFontSize(20);
                 //footer();
                 doc.save(colony+" deduction list"+".pdf");
+                var fp=XLSX.utils.table_to_book(a,{sheet:colony+' list'});
+                XLSX.write(fp,{
+                  bookType:'xlsx',
+                  type:'base64'
+                });
+                XLSX.writeFile(fp,colony+'.xlsx');
                 while (a.rows.length > 1) {
                     a.deleteRow(1);
                 }
@@ -403,6 +410,13 @@ document.getElementById("generate").addEventListener("click",function(){
                 doc.setFontSize(20);
                 //footer();
                 doc.save(date+" meter charge list"+".pdf");
+                var temp=datetoword(date).split(" ");
+                var fp=XLSX.utils.table_to_book(a,{sheet:temp[0]+" "+temp[1]+' list'});
+                XLSX.write(fp,{
+                  bookType:'xlsx',
+                  type:'base64'
+                });
+                XLSX.writeFile(fp,date+' list.xlsx');
                 while (a.rows.length > 1) {
                     a.deleteRow(1);
                 }
@@ -568,6 +582,13 @@ document.getElementById("generate").addEventListener("click",function(){
               doc.setFontSize(20);
               //footer();
               doc.save(colony+" "+date+".pdf");
+              var temp=datetoword(date).split(" ");
+              var fp=XLSX.utils.table_to_book(a,{sheet:colony+' '+temp[0]+' '+temp[1]+' list'});
+                XLSX.write(fp,{
+                  bookType:'xlsx',
+                  type:'base64'
+                });
+                XLSX.writeFile(fp,colony+' '+date+'.xlsx');
               while (a.rows.length > 1) {
                   a.deleteRow(1);
               }
@@ -743,6 +764,12 @@ document.getElementById("generate1").addEventListener("click",function(){
               doc.setFontSize(20);
               //footer();
               doc.save("Electric draft report"+".pdf");
+              var fp=XLSX.utils.table_to_book(a,{sheet:"Draft"});
+                XLSX.write(fp,{
+                  bookType:'xlsx',
+                  type:'base64'
+                });
+                XLSX.writeFile(fp,'Complete electric draft.xlsx');
               while (a.rows.length > 1) {
                   a.deleteRow(1);
               }
@@ -908,6 +935,13 @@ document.getElementById("generate1").addEventListener("click",function(){
                 doc.setFontSize(20);
                 //footer();
                 doc.save(colony+" "+date+".pdf");
+                var temp=datetoword(date).split(" ");
+                var fp=XLSX.utils.table_to_book(a,{sheet:colony+" "+temp[0]+" "+temp[1]+" draft"});
+                XLSX.write(fp,{
+                  bookType:'xlsx',
+                  type:'base64'
+                });
+                XLSX.writeFile(fp,colony+" "+date+" draft.xlsx");
                 while (a.rows.length > 1) {
                     a.deleteRow(1);
                 }
@@ -1070,6 +1104,13 @@ document.getElementById("generate1").addEventListener("click",function(){
                 doc.setFontSize(20);
                 //footer();
                 doc.save(date+" meter charge draft"+".pdf");
+                var temp=datetoword(date).split(" ");
+                var fp=XLSX.utils.table_to_book(a,{sheet:temp[0]+" "+temp[1]+" draft"});
+                XLSX.write(fp,{
+                  bookType:'xlsx',
+                  type:'base64'
+                });
+                XLSX.writeFile(fp,date+" draft.xlsx");
                 while (a.rows.length > 1) {
                     a.deleteRow(1);
                 }
@@ -1232,6 +1273,12 @@ document.getElementById("generate1").addEventListener("click",function(){
                 doc.setFontSize(20);
                 //footer();
                 doc.save(colony+" electric draft"+".pdf");
+                var fp=XLSX.utils.table_to_book(a,{sheet:colony+" draft"});
+                XLSX.write(fp,{
+                  bookType:'xlsx',
+                  type:'base64'
+                });
+                XLSX.writeFile(fp,colony+" draft.xlsx");
                 while (a.rows.length > 1) {
                     a.deleteRow(1);
                 }
@@ -1248,3 +1295,8 @@ document.getElementById("generate1").addEventListener("click",function(){
     }
   }
 })
+
+function datetoword(date){
+  temp_date = date.split("/");
+  return temp_date[0]+" "+months[temp_date[1]-1].substring(0,3)+" "+temp_date[2];
+}

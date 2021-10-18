@@ -183,6 +183,24 @@ h2{
 
 }
 
+@media (min-width:1350px){
+  #quarter_details{
+    left:21em;
+  }
+  #save{
+    left:44em;
+  }
+  
+  #reset{
+    left:74em;
+  }
+
+  #employee_details{
+    width:80em;
+  }
+}
+
+
 @media (min-width:1536px) {
 #quarter_details{
   left:24em;

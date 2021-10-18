@@ -429,6 +429,19 @@ h1{
 }
 
 @media (min-width:1281px) {
+    #name{
+        top:1em;
+        left:74em;
+        font-size: large;
+    }
+    .dropdown-content {
+        top:2.3em;
+        left:83em;
+    }
+    .fas.fa-user-lock,.fas.fa-user-cog,.fas.fa-users-cog,.fas.fa-user-shield{
+        font-size: large;
+        left:72em;
+    }
 }
 
 @media (min-width:1536px) {

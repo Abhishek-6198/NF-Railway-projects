@@ -175,6 +175,24 @@ h2{
         left:24em;
     }
 }
+
+@media (min-width:1350px) {
+    #box{
+        margin-left:35em;
+    }
+    #c_date,#colony_name{
+        left:40em;
+    }
+    #generate1{
+        left:35em;
+    }
+    #generate{
+        left:53em;
+    }
+    #disclaimer{
+        left:29em;
+    }
+}
 @media (min-width:1536px) {
     #box{
         margin-left:39em;
