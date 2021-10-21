@@ -178,7 +178,7 @@ h1{
         width: 10em;
         top:4em;
         left:18em;
-        height:35em;
+        height:41em;
         animation: fadeIn 0.5s;
         -webkit-animation: fadeIn 2s;
         -moz-animation: fadeIn 2s;
@@ -306,7 +306,7 @@ h1{
     #nav{
         left:12em;
         width:15em;
-        height: 33em;
+        height: 39em;
     }
     #box{
         width:36em;
@@ -398,7 +398,7 @@ h1{
         width: 15em;
         top:4em;
         left:10px;
-        height:34em;
+        height:40em;
     }
     
     #nav > li a{

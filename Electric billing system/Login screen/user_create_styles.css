@@ -275,6 +275,17 @@ h1{
   #skip{
     left:69em;
   }
+  #name{
+    left:72em;
+  }
+
+  .fas.fa-user-lock{
+    left:70em;
+  }
+
+  .dropdown-content{
+    left:80em;
+  }
 }
 
 @media (min-width:1536px)  {

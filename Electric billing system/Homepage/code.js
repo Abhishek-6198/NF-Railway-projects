@@ -23,6 +23,9 @@ else{
     }
     else if(t=="user2"){ //senior meter reader
         document.getElementsByClassName("fas fa-user-cog")[0].style.display="block";
+        document.getElementById("imp").removeAttribute('href');
+        document.getElementById("imp").style.cursor="not-allowed";
+        document.getElementById("imp").style.color="red";
         document.getElementById("mce").removeAttribute('href');
         document.getElementById("mce").style.cursor="not-allowed";
         document.getElementById("mce").style.color="red";
@@ -32,6 +35,9 @@ else{
     }
     else if(t=="user3"){ //meter reader
         document.getElementsByClassName("fas fa-users-cog")[0].style.display="block";
+        document.getElementById("imp").removeAttribute('href');
+        document.getElementById("imp").style.cursor="not-allowed";
+        document.getElementById("imp").style.color="red";
         document.getElementById("r").removeAttribute('href');
         document.getElementById("r").style.cursor="not-allowed";
         document.getElementById("r").style.color="red";
