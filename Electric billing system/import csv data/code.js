@@ -18,11 +18,9 @@ else{
     const file = document.getElementById('myfile');
 
     var table = document.getElementById("tab");
-    
-    var flag = false;
-    
+     
     file.addEventListener('change', (event) => {
-    
+        var flag = false;
         document.getElementsByClassName("fas fa-spinner")[0].style.display="block";
         document.getElementById("file-status").style.display="block";
         document.getElementById("file-status").innerHTML="Reading data...";
