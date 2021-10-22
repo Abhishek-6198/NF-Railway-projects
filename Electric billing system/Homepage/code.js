@@ -7,6 +7,9 @@ else{
     var myList = document.getElementById('nav');
     if(t=="user1"){ //meter reader inspector
         document.getElementsByClassName("fas fa-user-shield")[0].style.display="block";
+        document.getElementById("imp").removeAttribute('href');
+        document.getElementById("imp").style.cursor="not-allowed";
+        document.getElementById("imp").style.color="red";
         document.getElementById("r").removeAttribute('href');
         document.getElementById("r").style.cursor="not-allowed";
         document.getElementById("r").style.color="red";
