@@ -75,7 +75,7 @@ else{
                         }
                     } 
                     else if(sheet_data[0][0]=="EmpNo"){ //for quarter occupancy entry & employee master entry
-                        if(sheet_data[0][1]=="EmpName" && (sheet_data[0][2]=="Qtr_ID" || sheet_data[0][2]=="Occupation Date")){
+                        if(sheet_data[0][1]=="EmpName" && sheet_data[0][2]=="Qtr_No" ){
                             flag=true;
                         }
                         else if(sheet_data[0][1]=="Name" && sheet_data[0][2]=="Designation" && sheet_data[0][3]=="BillUnit" && sheet_data[0][4]=="Station")
