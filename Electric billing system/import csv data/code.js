@@ -173,7 +173,7 @@ else{
                         document.getElementById("file-status").style.display="none";
                         document.getElementById("myfile").disabled=false;
                         document.getElementById("message").style.display="block";
-                        document.getElementById("message").innerHTML=file.value+" has been uploaded successfully";
+                        document.getElementById("message").innerHTML=document.getElementById("myfile").files[0].name+" has been uploaded successfully";
                         if(table.rows.length>0){
                             while(table.rows.length>0)
                                 table.deleteRow(0);
@@ -197,7 +197,7 @@ else{
                         document.getElementById("file-status").style.display="none";
                         document.getElementById("myfile").disabled=false;
                         document.getElementById("message").style.display="block";
-                        document.getElementById("message").innerHTML=file.value+" has been uploaded successfully";
+                        document.getElementById("message").innerHTML=document.getElementById("myfile").files[0].name+" has been uploaded successfully";
                         if(table.rows.length>0){
                             while(table.rows.length>0)
                                 table.deleteRow(0);
@@ -221,7 +221,7 @@ else{
                         document.getElementById("file-status").style.display="none";
                         document.getElementById("myfile").disabled=false;
                         document.getElementById("message").style.display="block";
-                        document.getElementById("message").innerHTML=file.value+" has been uploaded successfully";
+                        document.getElementById("message").innerHTML=document.getElementById("myfile").files[0].name+" has been uploaded successfully";
                         if(table.rows.length>0){
                             while(table.rows.length>0)
                                 table.deleteRow(0);
@@ -245,7 +245,7 @@ else{
                         document.getElementById("file-status").style.display="none";
                         document.getElementById("myfile").disabled=false;
                         document.getElementById("message").style.display="block";
-                        document.getElementById("message").innerHTML=file.value+" has been uploaded successfully";
+                        document.getElementById("message").innerHTML=document.getElementById("myfile").files[0].name+" has been uploaded successfully";
                         if(table.rows.length>0){
                             while(table.rows.length>0)
                                 table.deleteRow(0);
