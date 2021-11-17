@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electric charges editing</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+
+
+</head>
+<body>
+
+    <h2>Electric charges editing</h2>
+
+    <table id="quarter_details" border="2">
+        <tr style="background-color: rgb(241, 166, 166);">
+            <td><b>Colony name:</b><br><select name="colony_name" id="colony_name" style="text-align-last: center;" onclick="get_names()" onchange="fetch()">
+                <option value="default" selected="selected_code">Select your colony name</option></select></td>
+            <td><b>Quarter type:</b><br><select name="colony_type" id="colony_type" style="text-align-last: center;" onclick="get_types()" onchange="fetch()">
+                    <option value="default" selected="selected_type">Select your quarter type</option>
+            </select></td>
+            <td><b>Book No:</b><br><select name="book-no" disabled id="book-no" style="text-align-last: center;" onclick="get_bookno()" onchange="fetch()">
+                <option value="default" selected="selected_type">Select the book no</option>
+            </select></td>
+            <td><b>Page No:</b><br><select name="page-no" disabled id="page-no" style="text-align-last: center;" onclick="get_pageno()" onchange="fetch()">
+                <option value="default" selected="selected_type">Select the page no</option>
+            </select></td>
+        </tr>
+    </table>
+    <div id="emp"><table id="employee_details" border="2"></table></div>
+    <button id="save" disabled>Save</button>
+    <button id="confirm" disabled>Confirm</button>
+    <button id="reset">Reset</button>
+    <span id="info" style="display: none;">[To calculate the charge, press <i>Enter</i> key after entering the value. The <i>Save</i> button will update the record(s), whereas the <i>Confirm</i> button will finalize the record(s) in the database]</span>
+    <script src="script.js"></script>
+
+</body>
+</html>
