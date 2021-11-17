@@ -1,1 +1,0 @@
-This includes the report generation of the calculated meter charges of rly qrtrs.
