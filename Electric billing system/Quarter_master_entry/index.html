@@ -1,0 +1,42 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quarter Master Entry</title>
+    <link rel="stylesheet" href="index_styles.css">
+    <script src="index_frontend.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body>
+
+    <h1>Quarter Master Entry</h1>
+    <div id="box">
+        <div id="quarter">
+            <p id="cln_cd"><b>Colony name</b> :&nbsp;<select name="colony_code" id="colony_code" style="max-width:90%;" onclick="get_code()">
+                <option value="" selected="selected_code">Select your colony name</option>
+            </select></p>
+            <p id="cln_type"><b>Type</b> :&nbsp;<select name="colony_type" id="colony_type">
+                <option value="" selected="selected_type">Select your quarter type</option>
+                <option value="I" >I</option>
+                <option value="II" >II</option>
+                <option value="III" >III</option>
+                <option value="IV" >IV</option>
+                <option value="V" >V</option>
+                <option value="VI" >VI</option>
+            </select></p>
+            <!--<p id="qrtr_no"><b>Quarter No</b> :&nbsp;<input type="text" id="qtr_no" onkeypress="return IsAlphaNumeric(event);" ondrop="return false;" onpaste="return false;" size="15" onkeyup="return forceUpper(this);"/></p>-->
+            <p id="qrtr_no"><b>Quarter No</b> :&nbsp;<input type="text" id="qtr_no" size="15" onkeyup="return forceUpper(this);"/></p>
+            <p id="book_no"><b>Book No</b> :&nbsp;<input type="text" id="bno" /></p>
+            <p id="page_no"><b>Page No</b> :&nbsp;<input type="text" id="pno" /></p>
+            <span id="error" style="color: Red; display: none">* Only special character <b>/</b> is allowed.</span> <br><br>
+            <span id="qid" style="display: none;">Your Quarter ID is :&nbsp;</span>
+            <span id="qrtr_id" style="display:none; color: crimson;"></span>
+        </div>
+    </div>
+    <button id="save" onclick="get_qid()" onmouseover="mouseover()" onmouseout="mouseout()">Save</button>
+    
+</body>
+</html>
