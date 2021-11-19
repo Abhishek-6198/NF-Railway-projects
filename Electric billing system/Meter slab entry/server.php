@@ -249,18 +249,28 @@
                 }
                 else  {
                     $arr=array();
-                    $sql="SELECT * FROM `electric rate table` WHERE `To Date`= NULL GROUP BY `From Date` ORDER BY STR_TO_DATE(`From Date`)";
+                    $flag=FALSE;
+                    $sql="SELECT * FROM `electric rate table` WHERE `To Date`IS NULL";
+                    $result = $con->query($sql);
                     if ($result->num_rows > 0) {
-                        while($row = $result->fetch_assoc()) {
-                            array_push($arr,$row["From Date"]);
-                        }
+                        $flag=TRUE;
                     }
-                    $fixedDate = implode('', array_reverse(explode('/', $arr[count($arr)-1])));
-                    $variableDate = implode('', array_reverse(explode('/', $_POST["from_date"])));
-                    if($fixedDate<$variableDate)
-                        echo "Close prev slab";
-                    else
-                        echo "No_record";
+                    if($flag){
+                        $sql="SELECT * FROM `electric rate table` ORDER BY STR_TO_DATE(`From Date`, '%d/%m/%Y')";
+                        $result = $con->query($sql);
+                        if ($result->num_rows > 0) {
+                            while($row = $result->fetch_assoc()) {
+                                array_push($arr,$row["From Date"]);
+                            }
+                            $fixedDate = implode('', array_reverse(explode('/', $arr[count($arr)-1])));
+                            $variableDate = implode('', array_reverse(explode('/', $_POST["from_date"])));
+                            if($fixedDate<$variableDate)
+                                echo "Close prev slab";
+                            else
+                                echo "No_record";
+                        }
+                        
+                    }
                 }  
                    
             }
