@@ -1,0 +1,244 @@
+body{
+    background-color: rgb(184, 253, 255);
+}
+
+#box{
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.5s;
+    height:15em;
+    margin-left: 39em;
+    margin-top: 7em;
+    width: 25em;
+    border-radius: 8px;
+    padding-left: 5em;
+    padding-top: 1em;
+    background-color: #d3f1cb;
+  }
+  
+#box:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+#generate{
+    border-radius: 12px;
+    cursor: pointer;
+    position: absolute;
+    left:56em;
+}
+
+#disclaimer{
+    font-size: medium;
+    font-weight: 500;
+    position: absolute;
+    top:30em;
+    left:33em;
+}
+#generate1{
+    border-radius: 12px;
+    cursor: pointer;
+    position: absolute;
+    left:39em;
+}
+
+#generate2{
+    display: none;
+    border-radius: 12px;
+    cursor: pointer;
+    position: absolute;
+    left:36em;
+}
+h2{
+    text-align: center;
+    background-color: azure;
+}
+
+#new_table{
+    display: none;
+    width:85em;
+    height: 20em;
+}
+    
+#new_table td{
+    height:60px;
+    text-align: center;
+    width:12em;
+}
+
+#c_date{
+    width: 15em;
+    position: absolute;
+    left:44em;
+}
+
+#colony_name{
+    width:15em;
+    position: absolute;
+    left:44em;
+}
+@media (min-width:320px)  {
+    #box{
+        margin-left: 1em;
+    }
+    #generate1{
+        left:1em;
+    }
+    #generate2{
+        left: 7em;
+    }
+    #generate{
+        left:20em;
+    }
+    #c_date,#colony_name{
+        left:6em;
+    }
+    #disclaimer{
+        top:35em;
+        left:5em;
+    }
+    h2{
+        margin-right: 5em;
+    }
+}
+@media (min-width:480px)  { 
+    #box{
+        margin-left:3em;
+    }
+    #c_date,#colony_name{
+        left:8em;
+    }
+    #generate1{
+        left:3em;
+    }
+    #generate2{
+        left: 12em;
+    }
+    #generate{
+        left:21em;
+    }
+    #disclaimer{
+        top:30em;
+        left:1em;
+    }
+}
+@media (min-width:600px)  {
+    #box{
+        margin-left:7em;
+    }
+    #c_date,#colony_name{
+        left:12em;
+    }
+    #generate1{
+        left:7em;
+    }
+    #generate2{
+        left: 14em;
+    }
+    #generate{
+        left:25em;
+    }
+    #disclaimer{
+        top:30em;
+        left:3em;
+    }
+}
+
+@media (min-width:801px)  {
+    #box{
+        margin-left:14em;
+    }
+    #c_date,#colony_name{
+        left:19em;
+    }
+    #generate1{
+        left:14em;
+    }
+    #generate2{
+        left:22em;
+    }
+    #generate{
+        left:32em;
+    }
+    #disclaimer{
+        left:9em;
+    }
+}
+@media (min-width:1025px) {
+    #box{
+        margin-left:21em;
+    }
+    #c_date,#colony_name{
+        left:26em;
+    }
+    #generate1{
+        left:21em;
+    }
+    #generate2{
+        left: 26em;
+    }
+    #generate{
+        left:39em;
+    }
+    #disclaimer{
+        left:15em;
+    }
+}
+@media (min-width:1281px) {
+    #box{
+        margin-left:30em;
+    }
+    #c_date,#colony_name{
+        left:35em;
+    }
+    #generate1{
+        left:30em;
+    }
+    #generate2{
+        left: 34em;
+    }
+    #generate{
+        left:48em;
+    }
+    #disclaimer{
+        left:24em;
+    }
+}
+
+@media (min-width:1350px) {
+    #box{
+        margin-left:35em;
+    }
+    #c_date,#colony_name{
+        left:40em;
+    }
+    #generate1{
+        left:35em;
+    }
+    #generate2{
+        left: 42em;
+    }
+    #generate{
+        left:53em;
+    }
+    #disclaimer{
+        left:29em;
+    }
+}
+@media (min-width:1536px) {
+    #box{
+        margin-left:39em;
+    }
+    #c_date,#colony_name{
+        left:44em;
+    }
+    #generate1{
+        left:39em;
+    }
+    #generate{
+        left:56em;
+    }
+    #generate2{
+        left: 44em;
+    }
+    #disclaimer{
+        left:33em;
+    }
+}
