@@ -1,1 +1,0 @@
-This folder contains the code of calculating the electric meter charges of all occupied quarters
