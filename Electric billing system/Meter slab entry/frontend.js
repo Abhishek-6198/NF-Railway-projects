@@ -646,7 +646,7 @@ function updation(){
         while (table.rows.length > 2) {
             table.deleteRow(2);
         }
-        //btn.disabled=false;
+        btn.disabled=false;
         document.getElementById("add").disabled=true;     
         x=this.cells.item(0).innerHTML;
         document.getElementById("load").value=this.cells.item(1).innerHTML;
