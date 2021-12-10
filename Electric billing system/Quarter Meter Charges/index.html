@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electric charges entry</title>
+    <link rel="stylesheet" href="meter_styles.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+
+
+</head>
+<body>
+
+    <h2>Electric charges entry</h2>
+
+    <table id="quarter_details" border="2">
+        <tr style="background-color: rgb(218, 167, 167);">
+            <td><b>Bill Date:</b><br><input type="text" size=10 id="date" placeholder="dd/mm/yyyy" autocomplete="off"></td>
+            <td><b>Colony name:</b><br><select name="colony_name" id="colony_name" disabled style="text-align-last: center;" onclick="get_names()" onchange="fetch()">
+                <option value="default" selected="selected_code">Select the colony name</option></select></td>
+            <td><b>Quarter type:</b><br><select name="colony_type" disabled id="colony_type" style="text-align-last: center;" onclick="get_types()" onchange="fetch()">
+                    <option value="default" selected="selected_type">Select the quarter type</option>
+            </select></td>
+            <td><b>Book No:</b><br><select name="book-no" disabled id="book-no" style="text-align-last: center;" onclick="get_bookno()" onchange="fetch()">
+                <option value="default" selected="selected_type">Select the book no</option>
+            </select></td>
+        </tr>
+    </table>
+    <div id="emp"><table id="employee_details" border="2"></table></div>
+    <button id="save">Save</button>
+    <button id="reset">Reset</button>
+    <span id="info" style="display: none;">[For calculating the charge, press the Numpad <i>Enter</i> key after entering the meter reading value.]</span>
+    <script src="meter_script.js"></script>
+
+</body>
+</html>
