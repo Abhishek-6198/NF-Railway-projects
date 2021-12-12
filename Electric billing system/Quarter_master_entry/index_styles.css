@@ -1,0 +1,555 @@
+body{
+    background-color: blanchedalmond;
+}
+
+
+h1{
+    text-align: center;
+    background-color: lightskyblue;
+    margin-left: 16em;
+    margin-right: 10em;
+    height: 40px;
+    border: 2px solid black;
+    border-radius: 2px;
+}
+
+
+
+#box{
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.5s;
+    height:30em;
+    margin-left: 8em;
+    margin-top: 7em;
+    border-radius: 8px;
+    background-color: #e5e7ee;
+  }
+  
+#box:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+#quarter{
+    display: flex;
+    flex-direction: row;
+}
+
+#cln_cd{
+    position: absolute;
+    top:12em;
+    left: 10em;
+    font-size: 20px;
+}
+
+#cln_type{
+    position: absolute;
+    top:12em;
+    left: 35em;
+    font-size: 20px;
+}
+
+#qrtr_no{
+    position: absolute;
+    top:12em;
+    left: 60em;
+    font-size: 20px;
+}
+
+#error{
+    position: absolute;
+    top:20em;
+    left: 75em;
+}
+
+#qid{
+    position: absolute;
+    top:20em;
+    left:10em;
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+#qrtr_id{
+    position: absolute;
+    top:20em;
+    left:32em;
+    font-size: 20px;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; 
+}
+
+#save{
+    font-size: 20px; 
+    position: absolute; 
+    left: 39em; 
+    top:31.5em; 
+    border-radius: 12px;
+    padding-left: 20px;
+    padding-right: 20px;
+    cursor: pointer;
+}
+
+@media (min-width:320px)  {
+    h1{
+        font-size: large;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    #box{
+        margin-left: 20px;
+        height: 25em;
+    }
+
+    #cln_cd{
+        font-size: 15px;
+        left:30px;
+    }
+
+    #colony_code{
+        font-size: 10px;
+    }
+
+    #colony_type{
+        font-size: 10px;
+    }
+
+    #qtr_no{
+        font-size: 10px;
+    }
+
+    #cln_type{
+        font-size: 15px;
+        left:30px;
+        top: 16em;
+    }
+
+    #qrtr_no{
+        top:20em;
+        left:30px;
+        font-size: 15px;
+    }
+
+    #book_no{
+        position: absolute;
+        top:24em;
+        left:30px;
+        font-size: 15px;
+    }
+
+    #bno{
+        font-size: 10px;
+    }
+
+    #page_no{
+        position: absolute;
+        top:28em;
+        left:30px;
+        font-size: 15px;
+    }
+
+    #pno{
+        font-size: 10px;
+    }
+
+    #error{
+        top:26em;
+        font-size: small;
+        left: 30px;
+    }
+
+    #qid{
+        top:38em;
+        font-size:small;
+        left:30px
+    }
+
+    #qrtr_id{
+        top:40em;
+        left:30px;
+        font-size:small;
+    }
+
+    #save{
+        font-size: 15px;
+        top:37em;
+        left:140px;
+    }
+}
+
+@media (min-width:480px)  {
+
+    h1{
+        font-size: x-large;
+    }
+
+
+    #cln_cd{
+        font-size: 16px;
+        left:42px;
+    }
+
+    #colony_code{
+        font-size: 11px;
+    }
+
+    #colony_type{
+        font-size: 11px;
+    }
+
+    #qtr_no{
+        font-size: 11px;
+    }
+
+    #bno{
+        font-size: 11px;
+    }
+
+    #pno{
+        font-size: 11px;
+    }
+
+    #cln_type{
+        font-size: 16px;
+        left:42px;
+    }
+
+    #qrtr_no{
+        left:42px;
+        font-size: 16px;
+    }
+
+    #book_no{
+        font-size: 16px;
+        left:42px;
+    }
+
+    #page_no{
+        font-size: 16px;
+        left:42px;
+    }
+
+    #error{
+        top:31em;
+        font-size: small;
+        left: 20em;
+    }
+
+    #qid{
+        top:42em;
+        font-size:small;
+        left:30px
+    }
+
+    #qrtr_id{
+        top:44em;
+        left:30px;
+        font-size:small;
+    }
+
+    #box{
+        height: 30em;
+    }
+
+    #save{
+        top: 42em;
+        font-size: 15px;
+        left:230px;
+    }
+}
+
+@media (min-width:600px)  {
+    #error{
+        top:31em;
+        font-size: small;
+        left: 25em;
+    }
+    #qid,#qrtr_id{
+        left: 6em;
+    }
+    
+    #save{
+        left:18em;
+    }
+}
+
+@media (min-width:801px)  {
+    #cln_cd{
+        font-size: 17px;
+        left:42px;
+    }
+    #book_no,#page_no{
+        font-size: 17px;
+        left:42px;
+    }
+    #bno,#pno{
+        font-size: 12px;
+    }
+
+    #colony_code{
+        font-size: 12px;
+    }
+
+    #colony_type{
+        font-size: 12px;
+    }
+
+    #qtr_no{
+        font-size: 12px;
+    }
+
+    #cln_type{
+        font-size: 17px;
+        left:42px;
+    }
+
+    #qrtr_no{
+        left:42px;
+        font-size: 17px;
+    }
+
+    #error{
+        top:27em;
+        font-size: medium;
+        left: 17em;
+    }
+
+    #qid{
+        top:35em;
+        font-size: medium;
+        left:11em;
+    }
+
+    #qrtr_id{
+        top:35em;
+        left:34em;
+        font-size: medium;
+    }
+
+    #save{
+        font-size: 15px;
+        left:25em;
+    }
+}
+
+@media (min-width:1025px) {
+
+    h1{
+        font-size: xx-large;
+    }
+
+    #cln_cd{
+        font-size: 18px;
+        left:42px;
+    }
+    #book_no{
+        top: 15em;
+        font-size: 18px;
+        left:42px;
+    }
+    #page_no{
+        top: 15em;
+        font-size: 18px;
+        left:23em;
+    }
+
+    #bno,#pno{
+        font-size: 13px;
+    }
+
+    #colony_code{
+        font-size: 13px;
+    }
+
+    #cln_type{
+        top:12em;
+        font-size: 18px;
+        left:23em;
+    }
+
+    #colony_type{
+        font-size: 13px;
+    }
+
+    #qtr_no{
+        font-size: 13px;
+    }
+
+    #qrtr_no{
+        top:12em;
+        left:40em;
+        font-size: 18px;
+    }
+
+    #error{
+        top:16em;
+        font-size: large;
+        left: 40em;
+    }
+
+    #qid{
+        top:22em;
+        font-size: large;
+        left:13em;
+    }
+
+    #qrtr_id{
+        top:22em;
+        left:36em;
+        font-size: large;
+    }
+
+    #save{
+        top:26em;
+        font-size: 18px;
+        left:28em;
+    }
+
+    #box{
+        height:20em;
+    }
+} 
+
+@media (min-width:1281px) {
+    #cln_cd{
+        font-size: 19px;
+        left:5em;
+    }
+    #book_no{
+        font-size: 19px;
+        left:5em;
+        top: 16em;
+    }
+    #page_no{
+        font-size: 19px;
+        left:29em;
+        top: 16em;
+    }
+    #colony_code{
+        font-size: 14px;
+    }
+    #cln_type{
+        font-size: 19px;
+        left:29em;
+    }
+    #colony_type{
+        font-size: 14px;
+    }
+    #qtr_no{
+        font-size: 14px;
+    }
+
+    #qrtr_no{
+        left:50em;
+        font-size: 19px;
+    }
+
+    #error{
+        top:16em;
+        font-size: large;
+        left: 53em;
+    }
+    #qid{
+        top:23em;
+        font-size: large;
+        left:21em;
+    }
+
+    #qrtr_id{
+        top:23em;
+        left:44em;
+        font-size: large;
+    }
+    #save{
+        top:25em;
+        font-size: 19px; 
+        left:34em;
+    }
+}
+
+@media (min-width:1350px){
+    #cln_cd{
+        left:7em;
+    }
+    #cln_type{
+        left:31em;
+    }
+
+    #qrtr_no{
+        left:53em;
+    }
+    #book_no{
+        left: 7em;
+    }
+    #page_no{
+        left: 31em;
+    }
+
+    #error{
+        top:16em;
+        font-size: large;
+        left: 53em;
+    }
+    /*#qid{
+        top:20em;
+        font-size: large;
+        left:9em;
+    }
+
+    #qrtr_id{
+        top:20em;
+        left:32em;
+        font-size: large;
+    }*/
+}
+
+@media (min-width:1536px) {
+    #cln_cd{
+        font-size: 20px;
+        left:8em;
+    }
+    #book_no{
+        font-size: 20px;
+        left:8em; 
+    }
+    #page_no{
+        font-size: 20px;
+        left:33em;
+    }
+    #colony_code,#bno,#pno{
+        font-size: 15px;
+    }
+    #cln_type{
+        font-size: 20px;
+        left:33em;
+    }
+    #colony_type{
+        font-size: 15px;
+    }
+    #qtr_no{
+        font-size: 15px;
+    }
+
+    #qrtr_no{
+        left:56em;
+        font-size: 20px;
+    }
+
+    #error{
+        top:16em;
+        font-size: large;
+        left: 62em;
+    }
+    #qid{
+        left:24em;
+    }
+
+    #qrtr_id{
+        left:47em;
+    }
+    #save{
+        top:24em;
+        font-size: 20px; 
+        left:38em;
+    }
+
+}
