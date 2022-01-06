@@ -1,0 +1,27 @@
+body{
+    background-color: rgb(247, 247, 181);
+}
+
+.table-responsive{
+    border-collapse: collapse;
+    border: 3px solid black;
+    background-color: azure;
+}
+
+.card{
+    width: 20em;
+}
+
+#save{
+    display: none;
+}
+
+#export_table{
+    display: none;
+}
+
+@media (max-width:320px){
+    body{
+        font-size: smaller;
+    }
+}
