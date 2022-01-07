@@ -7,6 +7,10 @@ const label = input.nextElementSibling;
 var onkeypress_code = document.getElementById("emp").getAttribute("onkeypress")
 const label1 = variable.nextElementSibling;
 let n="";
+const username=sessionStorage.getItem("user");
+const password=sessionStorage.getItem("pass");
+if(username!="prime" && password!="prime@hq")
+  window.open("/index.html","_self");
 input.addEventListener('change', function() {
     if (input.checked) {
       //label.textContent = 'EmpNo';

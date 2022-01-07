@@ -1,0 +1,16 @@
+#login{
+    width: 25em;
+    padding: 2em 2em 2em 2em;
+}
+body{
+    background-color: rgb(252, 201, 201);
+}
+.carousel-inner{
+    background-color: rgb(167, 248, 248);
+}
+
+@media (max-width:320px){
+    *{
+        font-size: smaller;
+    }
+}
