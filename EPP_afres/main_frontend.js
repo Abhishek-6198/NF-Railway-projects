@@ -183,4 +183,7 @@ document.getElementById("export").addEventListener("click",function(){
     });
     XLSX.writeFile(fp,n+' pay_details.xlsx');
   }
+  else{
+    alert("Please select at least one column to export");
+  }
 })
