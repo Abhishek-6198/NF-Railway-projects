@@ -11,6 +11,9 @@ const username=sessionStorage.getItem("user");
 const password=sessionStorage.getItem("pass");
 if(username!="prime" && password!="prime@hq")
   window.open("/index.html","_self");
+
+var inst = setInterval(change, 1000);
+//document.getElementById("time").innerHTML=time;
 input.addEventListener('change', function() {
     if (input.checked) {
       //label.textContent = 'EmpNo';
@@ -187,3 +190,9 @@ document.getElementById("export").addEventListener("click",function(){
     alert("Please select at least one column to export");
   }
 })
+
+function change(){
+  var today = new Date();
+  var time = today.getHours() + ":" + ((today.getMinutes()<10?'0':'')+ today.getMinutes());
+  document.getElementById("time").innerHTML=time;
+}

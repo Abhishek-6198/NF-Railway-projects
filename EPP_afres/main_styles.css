@@ -20,6 +20,16 @@ body{
     display: none;
 }
 
+#desg{
+    float: right;
+}
+
+.fas.fa-clock,#time{
+    display: inline-block;
+}
+#time{
+    margin-left: 10px;
+}
 @media (max-width:320px){
     *{
         font-size: smaller;
