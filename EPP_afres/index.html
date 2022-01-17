@@ -10,6 +10,16 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <link rel="stylesheet" href="/styles.css">
     <script src="/cache.php"></script>
+    <script>
+        function preventBack() {
+            window.history.forward(1);
+        }
+    
+        setTimeout(preventBack(), 0);
+        window.onunload = function() {
+            null
+        };
+    </script>
     <title>EPP login</title>
 </head>
 <body>
