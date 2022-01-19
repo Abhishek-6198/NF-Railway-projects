@@ -13,7 +13,10 @@
         if(!$connection)
             echo "Connection to database failed! Please try again";
         else{
-            $sql="SELECT * FROM `emp_pp` WHERE `EMPNO`='".$_POST["value"]."' OR `EMPNAME` LIKE '%".$_POST["value"]."%' GROUP BY `YEARMM` ORDER BY `YEARMM`";
+            $substring="SELECT SUBSTR('".$_POST["value"]."',2,".strlen($_POST["value"]).")";
+            $res = $con->query($substring);
+            $substring=$res->fetch_array()[0];
+            $sql="SELECT * FROM `emp_pp` WHERE `EMPNO` LIKE '%".$substring."%' OR `EMPNAME` LIKE '%".$_POST["value"]."%' GROUP BY `YEARMM` ORDER BY `YEARMM`";
             $result = $con->query($sql);
             if ($result->num_rows > 0) {
                 $final=array();
@@ -101,8 +104,9 @@
                 else
                     echo "Something went wrong.";
             }
-            else
+            else{
                 echo "Employee doesn't exist in database.";
+            }
         }
     }
 ?>
